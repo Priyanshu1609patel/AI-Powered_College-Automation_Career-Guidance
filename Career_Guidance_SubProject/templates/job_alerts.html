@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% block title %}Job Alerts | Career Guidance AI{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <h2 class="mb-4 text-primary text-center">Job Alerts</h2>
+  <a href="{{ url_for('jobs') }}" class="btn btn-secondary mb-3"><i class="bi bi-arrow-left"></i> Back to Job Board</a>
+  <div class="card mb-4">
+    <div class="card-body">
+      <h5 class="card-title">Create New Job Alert</h5>
+      <form method="POST" action="{{ url_for('job_alerts') }}">
+        <div class="row g-2">
+          <div class="col-md-4">
+            <input type="text" class="form-control" name="keyword" id="alert-keyword" placeholder="Keyword (e.g. Python, Data Analyst)" list="alert-keyword-list" autocomplete="off">
+            <datalist id="alert-keyword-list"></datalist>
+          </div>
+          <div class="col-md-4">
+            <input type="text" class="form-control" name="company" id="alert-company" placeholder="Company (optional)" list="alert-company-list" autocomplete="off">
+            <datalist id="alert-company-list"></datalist>
+          </div>
+          <div class="col-md-4">
+            <input type="text" class="form-control" name="location" id="alert-location" placeholder="Location (optional)" list="alert-location-list" autocomplete="off">
+            <datalist id="alert-location-list"></datalist>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Add Alert</button>
+      </form>
+    </div>
+  </div>
+  <h5>Your Job Alerts</h5>
+  {% if alerts %}
+  <ul class="list-group mb-4">
+    {% for alert in alerts %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <span>
+        <b>Keyword:</b> {{ alert.keyword or '-' }}
+        {% if alert.company %}<span class="ms-3"><b>Company:</b> {{ alert.company }}</span>{% endif %}
+        {% if alert.location %}<span class="ms-3"><b>Location:</b> {{ alert.location }}</span>{% endif %}
+      </span>
+      <form method="POST" action="{{ url_for('delete_job_alert', alert_id=alert.id) }}" style="display:inline;">
+        <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Delete</button>
+      </form>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <div class="alert alert-info">You have no job alerts set up.</div>
+  {% endif %}
+
+  {% if suggested_jobs_by_alert %}
+  <h5 class="mt-5 mb-3">Suggested Jobs for Your Alerts</h5>
+  <div class="row">
+    {% for item in suggested_jobs_by_alert.values() %}
+    {% set alert = item.alert %}
+    {% set jobs = item.jobs %}
+    <div class="col-md-6 mb-4">
+      <div class="card h-100">
+        <div class="card-header bg-light">
+          <b>Alert:</b>
+          <span class="badge bg-primary">{{ alert.keyword or '-' }}</span>
+          {% if alert.company %}<span class="badge bg-info text-dark ms-1">{{ alert.company }}</span>{% endif %}
+          {% if alert.location %}<span class="badge bg-secondary ms-1">{{ alert.location }}</span>{% endif %}
+        </div>
+        <div class="card-body">
+          {% if jobs %}
+          <ul class="list-group list-group-flush">
+            {% for job in jobs %}
+            <li class="list-group-item">
+              <div class="fw-bold text-info">{{ job.title }}</div>
+              <div><b>Company:</b> {{ job.company }} | <b>Location:</b> {{ job.location }}</div>
+              <div><b>Type:</b> {{ job.job_type or 'N/A' }} | <b>Salary:</b> {{ job.salary or 'N/A' }}</div>
+              <a href="{{ url_for('job_detail', job_id=job.id) }}" class="btn btn-outline-primary btn-sm mt-2"><i class="bi bi-eye"></i> View Details</a>
+            </li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          <div class="text-muted">No matching jobs found for this alert.</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+function setupAutocomplete(inputId, datalistId, endpoint) {
+  const input = document.getElementById(inputId);
+  const datalist = document.getElementById(datalistId);
+  let lastQuery = '';
+  input.addEventListener('input', function() {
+    const q = this.value.trim();
+    if (q.length < 1 || q === lastQuery) return;
+    lastQuery = q;
+    fetch(`${endpoint}?q=${encodeURIComponent(q)}`)
+      .then(res => res.json())
+      .then(data => {
+        datalist.innerHTML = '';
+        data.forEach(val => {
+          const option = document.createElement('option');
+          option.value = val;
+          datalist.appendChild(option);
+        });
+      });
+  });
+}
+setupAutocomplete('alert-keyword', 'alert-keyword-list', '/autocomplete_job_titles');
+setupAutocomplete('alert-company', 'alert-company-list', '/autocomplete_companies');
+setupAutocomplete('alert-location', 'alert-location-list', '/autocomplete_locations');
+</script>
+{% endblock %} 

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}Mentorship | CareerAI{% endblock %}
+{% block content %}
+<div class="space-y-6">
+    <!-- Header -->
+    <div class="text-center">
+        <h1 class="text-2xl sm:text-3xl font-bold text-primary-800">Mentorship & Community</h1>
+        <p class="text-primary-500 mt-2">Connect with experienced professionals in your field</p>
+    </div>
+
+    {% if mentors %}
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for mentor in mentors %}
+        <div class="bg-white rounded-2xl shadow-sm border border-primary-100 overflow-hidden hover:shadow-md transition-shadow">
+            {% if mentor.profile_pic %}
+            <img src="{{ url_for('uploaded_file', filename=mentor.profile_pic) }}" alt="{{ mentor.name }}"
+                class="w-full h-48 object-cover">
+            {% else %}
+            <div class="w-full h-48 bg-gradient-to-br from-accent-400 to-accent-600 flex items-center justify-center">
+                <span class="text-white text-5xl font-bold">{{ mentor.name[0]|upper }}</span>
+            </div>
+            {% endif %}
+
+            <div class="p-6">
+                <h3 class="text-lg font-semibold text-primary-800 mb-1">{{ mentor.name }}</h3>
+                <p class="text-accent-600 text-sm font-medium mb-3">{{ mentor.expertise }}</p>
+                <p class="text-primary-600 text-sm mb-4">{{ mentor.bio }}</p>
+
+                {% if mentor.contact %}
+                {% if '@' in mentor.contact %}
+                <a href="mailto:{{ mentor.contact }}"
+                    class="inline-flex items-center px-4 py-2 bg-accent-600 text-white text-sm font-medium rounded-lg hover:bg-accent-700 transition-colors">
+                    <i class="bi bi-envelope mr-2"></i> Contact
+                </a>
+                {% else %}
+                <a href="{{ mentor.contact }}" target="_blank"
+                    class="inline-flex items-center px-4 py-2 bg-accent-600 text-white text-sm font-medium rounded-lg hover:bg-accent-700 transition-colors">
+                    <i class="bi bi-link-45deg mr-2"></i> Connect
+                </a>
+                {% endif %}
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="bg-white rounded-2xl shadow-sm border border-primary-100 p-12 text-center">
+        <div class="w-16 h-16 mx-auto mb-4 bg-accent-100 rounded-2xl flex items-center justify-center">
+            <i class="bi bi-people text-accent-500 text-2xl"></i>
+        </div>
+        <h3 class="text-lg font-semibold text-primary-800 mb-2">No Mentors Available</h3>
+        <p class="text-primary-500">Check back soon for mentorship opportunities!</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

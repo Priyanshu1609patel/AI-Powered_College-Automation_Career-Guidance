@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block extra_css %}
+<style>
+    .admin-sidebar-nav .nav-link {
+        color: #495057;
+        padding: 0.6rem 1rem;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        margin-bottom: 2px;
+    }
+    .admin-sidebar-nav .nav-link:hover { background: #f0f2f5; }
+    .admin-sidebar-nav .nav-link.active {
+        background: rgba(67, 97, 238, 0.1);
+        color: var(--primary);
+        font-weight: 600;
+    }
+    .admin-sidebar-nav .nav-link i { margin-right: 8px; width: 20px; text-align: center; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-wrapper">
+    <div class="row g-4">
+        <!-- Admin Sidebar (desktop) -->
+        <div class="col-lg-3 d-none d-lg-block">
+            <div class="stat-card p-3">
+                <h6 class="fw-bold mb-3 text-muted small text-uppercase">Admin Panel</h6>
+                <nav class="admin-sidebar-nav d-flex flex-column">
+                    <a class="nav-link {% if request.endpoint == 'admin.dashboard' %}active{% endif %}"
+                       href="{{ url_for('admin.dashboard') }}">
+                        <i class="bi bi-speedometer2"></i> Dashboard
+                    </a>
+                    <a class="nav-link {% if request.endpoint == 'admin.subjects' %}active{% endif %}"
+                       href="{{ url_for('admin.subjects') }}">
+                        <i class="bi bi-book"></i> Subjects
+                    </a>
+                    <a class="nav-link {% if request.endpoint == 'admin.rules' %}active{% endif %}"
+                       href="{{ url_for('admin.rules') }}">
+                        <i class="bi bi-journal-text"></i> Academic Rules
+                    </a>
+                    <a class="nav-link {% if request.endpoint == 'admin.materials' %}active{% endif %}"
+                       href="{{ url_for('admin.materials') }}">
+                        <i class="bi bi-folder2-open"></i> Study Materials
+                    </a>
+                    <a class="nav-link {% if request.endpoint == 'admin.notices' %}active{% endif %}"
+                       href="{{ url_for('admin.notices') }}">
+                        <i class="bi bi-megaphone"></i> Notices
+                    </a>
+                    <a class="nav-link {% if request.endpoint == 'admin.unanswered' %}active{% endif %}"
+                       href="{{ url_for('admin.unanswered') }}">
+                        <i class="bi bi-question-circle"></i> Unanswered Queries
+                    </a>
+                    <a class="nav-link {% if request.endpoint == 'admin.analytics' %}active{% endif %}"
+                       href="{{ url_for('admin.analytics') }}">
+                        <i class="bi bi-bar-chart"></i> Analytics
+                    </a>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Mobile admin nav -->
+        <div class="col-12 d-lg-none mb-3">
+            <div class="d-flex flex-wrap gap-2">
+                <a href="{{ url_for('admin.dashboard') }}" class="btn btn-sm {% if request.endpoint == 'admin.dashboard' %}btn-primary{% else %}btn-outline-secondary{% endif %}"><i class="bi bi-speedometer2"></i> Dashboard</a>
+                <a href="{{ url_for('admin.subjects') }}" class="btn btn-sm {% if request.endpoint == 'admin.subjects' %}btn-primary{% else %}btn-outline-secondary{% endif %}"><i class="bi bi-book"></i> Subjects</a>
+                <a href="{{ url_for('admin.rules') }}" class="btn btn-sm {% if request.endpoint == 'admin.rules' %}btn-primary{% else %}btn-outline-secondary{% endif %}"><i class="bi bi-journal-text"></i> Rules</a>
+                <a href="{{ url_for('admin.materials') }}" class="btn btn-sm {% if request.endpoint == 'admin.materials' %}btn-primary{% else %}btn-outline-secondary{% endif %}"><i class="bi bi-folder2-open"></i> Materials</a>
+                <a href="{{ url_for('admin.notices') }}" class="btn btn-sm {% if request.endpoint == 'admin.notices' %}btn-primary{% else %}btn-outline-secondary{% endif %}"><i class="bi bi-megaphone"></i> Notices</a>
+                <a href="{{ url_for('admin.unanswered') }}" class="btn btn-sm {% if request.endpoint == 'admin.unanswered' %}btn-primary{% else %}btn-outline-secondary{% endif %}"><i class="bi bi-question-circle"></i> Unanswered</a>
+                <a href="{{ url_for('admin.analytics') }}" class="btn btn-sm {% if request.endpoint == 'admin.analytics' %}btn-primary{% else %}btn-outline-secondary{% endif %}"><i class="bi bi-bar-chart"></i> Analytics</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-lg-9">
+            {% block admin_content %}{% endblock %}
+        </div>
+    </div>
+</div>
+{% endblock %}

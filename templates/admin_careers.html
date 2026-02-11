@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% block title %}Career Management | Admin | CareerAI{% endblock %}
+{% block content %}
+<div class="space-y-6">
+    <!-- Header -->
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-2xl sm:text-3xl font-bold text-primary-800">Career Management</h1>
+            <p class="text-primary-500 mt-1">Add and manage career paths</p>
+        </div>
+        <a href="{{ url_for('admin_dashboard') }}" class="px-4 py-2 border border-primary-200 text-primary-700 rounded-lg hover:bg-primary-50 transition-colors text-sm font-medium">
+            <i class="bi bi-arrow-left mr-1"></i> Dashboard
+        </a>
+    </div>
+
+    <!-- Add New Career -->
+    <div class="bg-white rounded-2xl shadow-sm border border-primary-100 overflow-hidden">
+        <div class="px-6 py-4 bg-gradient-to-r from-emerald-50 to-emerald-100/50 border-b border-primary-100">
+            <h2 class="text-lg font-semibold text-primary-800">Add New Career</h2>
+        </div>
+        <div class="p-6">
+            <form method="POST" action="/admin_add_career" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <input type="text" name="title" required placeholder="Title"
+                    class="px-4 py-2 border border-primary-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500">
+                <input type="text" name="category" placeholder="Category"
+                    class="px-4 py-2 border border-primary-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500">
+                <input type="text" name="salary_range" placeholder="Salary Range"
+                    class="px-4 py-2 border border-primary-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500">
+                <input type="text" name="required_skills" placeholder="Required Skills"
+                    class="px-4 py-2 border border-primary-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500">
+                <input type="text" name="courses" placeholder="Courses" class="sm:col-span-2 lg:col-span-4 px-4 py-2 border border-primary-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500">
+                <textarea name="description" placeholder="Description" rows="2" class="sm:col-span-2 px-4 py-2 border border-primary-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500 resize-none"></textarea>
+                <textarea name="path" placeholder="Career Path" rows="2" class="sm:col-span-2 px-4 py-2 border border-primary-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500 resize-none"></textarea>
+                <div class="sm:col-span-2 lg:col-span-4 flex justify-end">
+                    <button type="submit" class="px-6 py-2 bg-emerald-600 text-white font-medium rounded-lg hover:bg-emerald-700 transition-colors">
+                        <i class="bi bi-plus-circle mr-1"></i> Add Career
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- All Careers -->
+    <div class="bg-white rounded-2xl shadow-sm border border-primary-100 overflow-hidden">
+        <div class="px-6 py-4 border-b border-primary-100">
+            <h2 class="text-lg font-semibold text-primary-800">All Careers</h2>
+        </div>
+        {% if careers %}
+        <div class="overflow-x-auto">
+            <table class="w-full">
+                <thead class="bg-primary-50 border-b border-primary-100">
+                    <tr>
+                        <th class="px-4 py-3 text-left text-xs font-semibold text-primary-600 uppercase">Title</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold text-primary-600 uppercase">Category</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold text-primary-600 uppercase">Salary</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold text-primary-600 uppercase">Skills</th>
+                        <th class="px-4 py-3 text-right text-xs font-semibold text-primary-600 uppercase">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-primary-100">
+                    {% for c in careers %}
+                    <tr class="hover:bg-primary-50/50">
+                        <form method="POST" action="/admin_edit_career/{{ c.id }}">
+                            <td class="px-4 py-3">
+                                <input type="text" name="title" value="{{ c.title }}" required
+                                    class="w-full px-2 py-1 border border-primary-200 rounded text-sm focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500">
+                            </td>
+                            <td class="px-4 py-3">
+                                <input type="text" name="category" value="{{ c.category }}"
+                                    class="w-full px-2 py-1 border border-primary-200 rounded text-sm focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500">
+                            </td>
+                            <td class="px-4 py-3">
+                                <input type="text" name="salary_range" value="{{ c.salary_range }}"
+                                    class="w-full px-2 py-1 border border-primary-200 rounded text-sm focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500">
+                            </td>
+                            <td class="px-4 py-3">
+                                <input type="text" name="required_skills" value="{{ c.required_skills }}"
+                                    class="w-full px-2 py-1 border border-primary-200 rounded text-sm focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500">
+                            </td>
+                            <td class="px-4 py-3">
+                                <div class="flex justify-end gap-2">
+                                    <button type="submit" class="px-3 py-1 bg-accent-100 text-accent-700 text-sm font-medium rounded hover:bg-accent-200 transition-colors">
+                                        Save
+                                    </button>
+                        </form>
+                        <form method="POST" action="/admin_delete_career/{{ c.id }}" class="inline">
+                            <button type="submit" onclick="return confirm('Delete this career?');"
+                                class="px-3 py-1 bg-rose-100 text-rose-700 text-sm font-medium rounded hover:bg-rose-200 transition-colors">
+                                Delete
+                            </button>
+                        </form>
+                                </div>
+                            </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="p-12 text-center">
+            <div class="w-16 h-16 mx-auto mb-4 bg-primary-100 rounded-2xl flex items-center justify-center">
+                <i class="bi bi-compass text-primary-400 text-2xl"></i>
+            </div>
+            <p class="text-primary-500">No careers found. Add your first career above.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

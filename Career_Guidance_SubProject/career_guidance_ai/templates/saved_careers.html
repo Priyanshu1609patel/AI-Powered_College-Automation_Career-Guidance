@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Saved Careers | Career Guidance AI{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <h2 class="mb-4 text-primary">Your Saved Careers</h2>
+        {% if careers %}
+    <div class="row g-4">
+                {% for career in careers %}
+      <div class="col-md-6">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+            <h4 class="card-title text-info">{{ career.title }}</h4>
+            <p class="card-text">{{ career.description }}</p>
+            <p><b>Required Skills:</b> {{ career.required_skills }}</p>
+            <p><b>Category:</b> {{ career.category }}</p>
+            <p><b>Career Path:</b> {{ career.path }}</p>
+            <form method="POST" action="/remove_saved_career/{{ career.saved_id }}" class="d-inline">
+              <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                                </form>
+            <form method="POST" action="/update_notes/{{ career.saved_id }}" class="mt-2">
+              <div class="input-group">
+                <input type="text" class="form-control" name="note" value="{{ career.notes or '' }}" placeholder="Add a note...">
+                <button class="btn btn-outline-secondary" type="submit">Save Note</button>
+                            </div>
+            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+    <div class="alert alert-info">You have not saved any careers yet.</div>
+        {% endif %}
+        </div>
+{% endblock %} 

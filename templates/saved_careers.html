@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% block title %}Saved Careers | CareerAI{% endblock %}
+{% block content %}
+<div class="space-y-6">
+    <!-- Header -->
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-2xl sm:text-3xl font-bold text-primary-800">Saved Careers</h1>
+            <p class="text-primary-500 mt-1">Your bookmarked career paths</p>
+        </div>
+        <a href="/recommendations" class="px-4 py-2 bg-accent-600 text-white rounded-lg hover:bg-accent-700 transition-colors text-sm font-medium">
+            <i class="bi bi-compass mr-1"></i> Explore More
+        </a>
+    </div>
+
+    {% if careers %}
+    <div class="grid md:grid-cols-2 gap-6">
+        {% for career in careers %}
+        <div class="bg-white rounded-2xl shadow-sm border border-primary-100 overflow-hidden">
+            <div class="p-6">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 bg-accent-100 rounded-xl flex items-center justify-center">
+                        <i class="bi bi-briefcase text-accent-600 text-xl"></i>
+                    </div>
+                    <span class="px-2 py-1 bg-primary-100 text-primary-600 text-xs font-medium rounded-lg">
+                        {{ career.category }}
+                    </span>
+                </div>
+
+                <h3 class="text-lg font-semibold text-primary-800 mb-2">{{ career.title }}</h3>
+                <p class="text-primary-600 text-sm mb-4">{{ career.description }}</p>
+
+                <div class="space-y-3 mb-4">
+                    <div>
+                        <p class="text-xs font-medium text-primary-500 uppercase tracking-wider mb-1">Required Skills</p>
+                        <p class="text-sm text-primary-700">{{ career.required_skills }}</p>
+                    </div>
+                    <div>
+                        <p class="text-xs font-medium text-primary-500 uppercase tracking-wider mb-1">Career Path</p>
+                        <p class="text-sm text-primary-700">{{ career.path }}</p>
+                    </div>
+                </div>
+
+                <!-- Notes -->
+                <form method="POST" action="/update_notes/{{ career.saved_id }}" class="mb-4">
+                    <div class="flex gap-2">
+                        <input type="text" name="note" value="{{ career.notes or '' }}" placeholder="Add a personal note..."
+                            class="flex-1 px-3 py-2 border border-primary-200 rounded-lg text-sm text-primary-700 placeholder-primary-400 focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500">
+                        <button type="submit" class="px-3 py-2 bg-primary-100 text-primary-700 rounded-lg hover:bg-primary-200 transition-colors text-sm font-medium">
+                            Save
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Actions -->
+                <div class="flex gap-2">
+                    <a href="/career_path/{{ career.career_id }}" class="flex-1 text-center py-2 border border-accent-600 text-accent-600 text-sm font-medium rounded-lg hover:bg-accent-50 transition-colors">
+                        View Path
+                    </a>
+                    <form method="POST" action="/remove_saved_career/{{ career.saved_id }}" class="flex-1">
+                        <button type="submit" class="w-full py-2 bg-rose-100 text-rose-700 text-sm font-medium rounded-lg hover:bg-rose-200 transition-colors">
+                            <i class="bi bi-trash mr-1"></i> Remove
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="bg-white rounded-2xl shadow-sm border border-primary-100 p-12 text-center">
+        <div class="w-16 h-16 mx-auto mb-4 bg-primary-100 rounded-2xl flex items-center justify-center">
+            <i class="bi bi-bookmark text-primary-400 text-2xl"></i>
+        </div>
+        <h3 class="text-lg font-semibold text-primary-800 mb-2">No Saved Careers</h3>
+        <p class="text-primary-500 mb-6">You haven't saved any careers yet. Explore recommendations to find your path.</p>
+        <a href="/recommendations" class="inline-flex items-center px-6 py-3 bg-accent-600 text-white font-medium rounded-xl hover:bg-accent-700 transition-colors">
+            <i class="bi bi-stars mr-2"></i> Get Recommendations
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

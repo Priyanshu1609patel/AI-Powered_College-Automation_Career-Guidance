@@ -1,0 +1,92 @@
+{% extends 'admin/base_admin.html' %}
+{% block title %}Notices - Admin{% endblock %}
+
+{% block admin_content %}
+<div class="admin-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+    <div>
+        <h3><i class="bi bi-megaphone me-2"></i>Notices</h3>
+        <small class="opacity-75">Post and manage announcements for students</small>
+    </div>
+    <button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#addNoticeModal">
+        <i class="bi bi-plus-lg me-1"></i> Post Notice
+    </button>
+</div>
+
+<!-- Notices List -->
+{% for notice in notices %}
+<div class="stat-card mb-3">
+    <div class="d-flex justify-content-between align-items-start">
+        <div class="flex-grow-1">
+            <div class="d-flex align-items-center gap-2 mb-2">
+                <span class="badge notice-badge-{{ notice.notice_type }}">{{ notice.notice_type|upper }}</span>
+                {% if notice.is_active %}
+                <span class="badge bg-success bg-opacity-10 text-success">Active</span>
+                {% else %}
+                <span class="badge bg-secondary">Hidden</span>
+                {% endif %}
+                <small class="text-muted">{{ notice.created_at.strftime('%d %b %Y, %I:%M %p') if notice.created_at else '' }}</small>
+            </div>
+            <h6 class="fw-bold mb-1">{{ notice.title }}</h6>
+            <p class="text-muted small mb-0">{{ notice.content[:200] }}{% if notice.content|length > 200 %}...{% endif %}</p>
+        </div>
+        <div class="d-flex gap-1 flex-shrink-0 ms-2">
+            <form method="POST" action="{{ url_for('admin.toggle_notice', notice_id=notice.id) }}">
+                <button class="btn btn-sm btn-outline-{{ 'warning' if notice.is_active else 'success' }}" title="{{ 'Hide' if notice.is_active else 'Show' }}">
+                    <i class="bi bi-{{ 'eye-slash' if notice.is_active else 'eye' }}"></i>
+                </button>
+            </form>
+            <form method="POST" action="{{ url_for('admin.delete_notice', notice_id=notice.id) }}" onsubmit="return confirm('Delete this notice?')">
+                <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+{% if not notices %}
+<div class="empty-state">
+    <i class="bi bi-megaphone d-block"></i>
+    <h5>No notices posted</h5>
+    <p>Post notices and announcements that students can see on their dashboard.</p>
+</div>
+{% endif %}
+
+<!-- Add Notice Modal -->
+<div class="modal fade" id="addNoticeModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form method="POST" action="{{ url_for('admin.add_notice') }}">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="bi bi-megaphone me-2"></i>Post Notice</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Title</label>
+                        <input type="text" name="title" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Type</label>
+                        <select name="notice_type" class="form-select">
+                            <option value="general">General</option>
+                            <option value="exam">Exam</option>
+                            <option value="event">Event</option>
+                            <option value="holiday">Holiday</option>
+                            <option value="result">Result</option>
+                            <option value="urgent">Urgent</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Content</label>
+                        <textarea name="content" class="form-control" rows="5" required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Post Notice</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

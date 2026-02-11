@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+{% block title %}Recommendations | CareerAI{% endblock %}
+{% block content %}
+<div class="space-y-6">
+    <!-- Header -->
+    <div class="text-center">
+        <h1 class="text-2xl sm:text-3xl font-bold text-primary-800">Your Career Recommendations</h1>
+        <p class="text-primary-500 mt-2">Personalized career paths based on your skills and interests</p>
+    </div>
+
+    {% if careers %}
+    <div class="grid lg:grid-cols-2 gap-6">
+        {% for career in careers %}
+        {% set acc_id = loop.index %}
+        <div class="bg-white rounded-2xl shadow-sm border border-primary-100 overflow-hidden">
+            <!-- Header -->
+            <div class="bg-gradient-to-r from-accent-50 to-accent-100/50 px-6 py-4 border-b border-primary-100">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg font-semibold text-primary-800 flex items-center">
+                        <i class="bi bi-briefcase text-accent-600 mr-2"></i>
+                        {{ career.title }}
+                    </h3>
+                    <span class="px-3 py-1 bg-emerald-100 text-emerald-700 text-sm font-semibold rounded-full">
+                        {{ career.match_score }}/5
+                    </span>
+                </div>
+            </div>
+
+            <div class="p-6 space-y-4">
+                <p class="text-primary-600">{{ career.description }}</p>
+
+                <!-- Required Skills -->
+                <div>
+                    <p class="text-sm font-medium text-primary-700 mb-2">Required Skills</p>
+                    <p class="text-sm text-primary-500">{{ career.required_skills }}</p>
+                </div>
+
+                <!-- Available Skills -->
+                <div>
+                    <p class="text-sm font-medium text-primary-700 mb-2">Your Matching Skills</p>
+                    <div class="flex flex-wrap gap-2">
+                        {% for skill in career.available_skills %}
+                        <span class="inline-flex items-center px-2.5 py-1 bg-emerald-100 text-emerald-700 text-xs font-medium rounded-lg">
+                            <i class="bi bi-check-circle mr-1"></i>{{ skill.title() }}
+                        </span>
+                        {% else %}
+                        <span class="text-sm text-primary-400">None detected</span>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Missing Skills -->
+                <div>
+                    <p class="text-sm font-medium text-primary-700 mb-2">Skills to Develop</p>
+                    <div class="flex flex-wrap gap-2">
+                        {% for skill in career.missing_skills %}
+                        <span class="inline-flex items-center px-2.5 py-1 bg-rose-100 text-rose-700 text-xs font-medium rounded-lg">
+                            <i class="bi bi-x-circle mr-1"></i>{{ skill.title() }}
+                        </span>
+                        {% else %}
+                        <span class="text-sm text-primary-400">None - you're all set!</span>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Course Links -->
+                {% if career.missing_skills %}
+                <div class="p-4 bg-amber-50 rounded-xl">
+                    <p class="text-sm font-medium text-amber-800 mb-3">
+                        <i class="bi bi-lightbulb mr-1"></i> Recommended Courses
+                    </p>
+                    <div class="space-y-2">
+                        {% for link in career.course_links %}
+                        <div class="flex flex-wrap items-center gap-2 text-sm">
+                            <span class="font-medium text-primary-700">{{ link.skill }}:</span>
+                            <a href="{{ link.coursera }}" target="_blank" class="text-accent-600 hover:text-accent-700">Coursera</a>
+                            <span class="text-primary-300">|</span>
+                            <a href="{{ link.udemy }}" target="_blank" class="text-accent-600 hover:text-accent-700">Udemy</a>
+                            <span class="text-primary-300">|</span>
+                            <a href="{{ link.linkedin }}" target="_blank" class="text-accent-600 hover:text-accent-700">LinkedIn</a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Match Explanation -->
+                {% if career.match_explanation %}
+                <div class="p-4 bg-primary-50 rounded-xl">
+                    <p class="text-sm font-medium text-primary-700 mb-2">Why This Match?</p>
+                    <ul class="space-y-1 text-sm text-primary-600">
+                        {% for exp in career.match_explanation %}
+                        <li class="flex items-start">
+                            <i class="bi bi-check2 text-emerald-600 mr-2 mt-0.5"></i>{{ exp }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                <!-- Project Ideas -->
+                {% if career.project_ideas %}
+                <div>
+                    <p class="text-sm font-medium text-primary-700 mb-3">Project Ideas</p>
+                    <div class="space-y-2">
+                        {% for idea in career.project_ideas %}
+                        <details class="group">
+                            <summary class="flex items-center justify-between p-3 bg-accent-50 rounded-lg cursor-pointer hover:bg-accent-100 transition-colors">
+                                <span class="text-sm font-medium text-primary-700">
+                                    <i class="bi bi-lightbulb text-amber-500 mr-2"></i>{{ idea.title }}
+                                </span>
+                                <i class="bi bi-chevron-down text-primary-400 group-open:rotate-180 transition-transform"></i>
+                            </summary>
+                            <div class="mt-2 p-4 bg-primary-50 rounded-lg">
+                                <ol class="list-decimal list-inside space-y-1 text-sm text-primary-600 mb-3">
+                                    {% for step in idea.steps %}
+                                    <li>{{ step }}</li>
+                                    {% endfor %}
+                                </ol>
+                                <form method="POST" action="/add_project_from_idea">
+                                    <input type="hidden" name="title" value="{{ idea.title }}">
+                                    <input type="hidden" name="description" value="{{ idea.steps|join(', ') }}">
+                                    <input type="hidden" name="skills" value="{{ career.required_skills }}">
+                                    <button type="submit" class="text-sm px-3 py-1.5 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors">
+                                        <i class="bi bi-plus-circle mr-1"></i> Add to My Projects
+                                    </button>
+                                </form>
+                            </div>
+                        </details>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Salary Insights -->
+                {% if career.avg_salary %}
+                <div class="p-3 bg-emerald-50 rounded-lg flex items-center justify-between">
+                    <span class="text-sm font-medium text-emerald-800">Average Salary</span>
+                    <span class="text-lg font-bold text-emerald-700">₹{{ career.avg_salary|int }}</span>
+                </div>
+                {% endif %}
+
+                <!-- Actions -->
+                <div class="flex flex-wrap gap-3 pt-4 border-t border-primary-100">
+                    <a href="/career_path/{{ career.id }}" class="flex-1 text-center py-2 border border-accent-600 text-accent-600 text-sm font-medium rounded-lg hover:bg-accent-50 transition-colors">
+                        View Career Path
+                    </a>
+                    <form method="POST" action="/save_career/{{ career.id }}" class="flex-1">
+                        <button type="submit" class="w-full py-2 bg-accent-600 text-white text-sm font-medium rounded-lg hover:bg-accent-700 transition-colors">
+                            <i class="bi bi-bookmark-plus mr-1"></i> Save Career
+                        </button>
+                    </form>
+                </div>
+
+                <a href="/interview_prep/{{ career.title|replace(' ', '-') }}" class="block text-center py-2 border border-primary-200 text-primary-700 text-sm font-medium rounded-lg hover:bg-primary-50 transition-colors">
+                    <i class="bi bi-question-circle mr-1"></i> Interview Preparation
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="bg-white rounded-2xl shadow-sm border border-primary-100 p-12 text-center">
+        <div class="w-16 h-16 mx-auto mb-4 bg-amber-100 rounded-2xl flex items-center justify-center">
+            <i class="bi bi-stars text-amber-500 text-2xl"></i>
+        </div>
+        <h3 class="text-lg font-semibold text-primary-800 mb-2">No Recommendations Yet</h3>
+        <p class="text-primary-500 mb-6">Upload your resume and complete the interest quiz to get personalized career recommendations.</p>
+        <div class="flex flex-col sm:flex-row justify-center gap-3">
+            <a href="/upload_resume" class="px-6 py-3 bg-accent-600 text-white font-medium rounded-xl hover:bg-accent-700 transition-colors">
+                <i class="bi bi-upload mr-2"></i> Upload Resume
+            </a>
+            <a href="/interest_quiz" class="px-6 py-3 border border-primary-200 text-primary-700 font-medium rounded-xl hover:bg-primary-50 transition-colors">
+                <i class="bi bi-question-circle mr-2"></i> Take Interest Quiz
+            </a>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

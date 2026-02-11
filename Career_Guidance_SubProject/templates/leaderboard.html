@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Leaderboard | Career Guidance AI{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <h2 class="mb-4 text-primary text-center">Leaderboard</h2>
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>Rank</th>
+          <th>Name</th>
+          <th>Points</th>
+          <th>Badges</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in users %}
+        <tr>
+          <td>{{ loop.index }}</td>
+          <td>{{ user.name }}</td>
+          <td><span class="fw-bold text-info">{{ user.points }}</span></td>
+          <td>
+            {% for icon in user.badges %}
+              <i class="bi {{ icon }} fs-4 me-1" title="Badge"></i>
+            {% endfor %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %} 

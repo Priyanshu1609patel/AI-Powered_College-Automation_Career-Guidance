@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% block title %}Job Management | Admin | CareerAI{% endblock %}
+{% block content %}
+<div class="space-y-6">
+    <!-- Header -->
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-2xl sm:text-3xl font-bold text-primary-800">Job Management</h1>
+            <p class="text-primary-500 mt-1">Add and manage job listings</p>
+        </div>
+        <a href="{{ url_for('admin_dashboard') }}" class="px-4 py-2 border border-primary-200 text-primary-700 rounded-lg hover:bg-primary-50 transition-colors text-sm font-medium">
+            <i class="bi bi-arrow-left mr-1"></i> Dashboard
+        </a>
+    </div>
+
+    <!-- Add New Job -->
+    <div class="bg-white rounded-2xl shadow-sm border border-primary-100 overflow-hidden">
+        <div class="px-6 py-4 bg-gradient-to-r from-accent-50 to-accent-100/50 border-b border-primary-100">
+            <h2 class="text-lg font-semibold text-primary-800">Add New Job</h2>
+        </div>
+        <div class="p-6">
+            <form method="POST" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <input type="text" name="title" required placeholder="Job Title"
+                    class="px-4 py-2 border border-primary-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500">
+                <input type="text" name="company" required placeholder="Company"
+                    class="px-4 py-2 border border-primary-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500">
+                <input type="text" name="location" required placeholder="Location"
+                    class="px-4 py-2 border border-primary-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500">
+                <input type="text" name="job_type" placeholder="Job Type (Full-time, etc.)"
+                    class="px-4 py-2 border border-primary-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500">
+                <input type="number" name="salary" placeholder="Salary"
+                    class="px-4 py-2 border border-primary-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500">
+                <input type="text" name="url" placeholder="Job URL"
+                    class="px-4 py-2 border border-primary-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500">
+                <select name="career_id" required class="sm:col-span-2 px-4 py-2 border border-primary-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500">
+                    <option value="">Select Career Category</option>
+                    {% for career in careers %}
+                    <option value="{{ career.id }}">{{ career.title }}</option>
+                    {% endfor %}
+                </select>
+                <textarea name="description" placeholder="Description" rows="2" class="sm:col-span-2 px-4 py-2 border border-primary-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500 resize-none"></textarea>
+                <textarea name="requirements" placeholder="Requirements" rows="2" class="sm:col-span-2 px-4 py-2 border border-primary-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500 resize-none"></textarea>
+                <div class="sm:col-span-2 lg:col-span-4 flex justify-end">
+                    <button type="submit" class="px-6 py-2 bg-accent-600 text-white font-medium rounded-lg hover:bg-accent-700 transition-colors">
+                        <i class="bi bi-plus-circle mr-1"></i> Add Job
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- All Jobs -->
+    <div class="bg-white rounded-2xl shadow-sm border border-primary-100 overflow-hidden">
+        <div class="px-6 py-4 border-b border-primary-100">
+            <h2 class="text-lg font-semibold text-primary-800">All Jobs ({{ jobs|length if jobs else 0 }})</h2>
+        </div>
+        {% if jobs %}
+        <div class="divide-y divide-primary-100">
+            {% for job in jobs %}
+            <div class="p-6 hover:bg-primary-50/50 transition-colors">
+                <form method="POST" action="/admin_edit_job/{{ job.id }}">
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+                        <input type="text" name="title" value="{{ job.title }}" required placeholder="Title"
+                            class="px-3 py-2 border border-primary-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500">
+                        <input type="text" name="company" value="{{ job.company }}" required placeholder="Company"
+                            class="px-3 py-2 border border-primary-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500">
+                        <input type="text" name="location" value="{{ job.location }}" required placeholder="Location"
+                            class="px-3 py-2 border border-primary-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500">
+                        <input type="text" name="job_type" value="{{ job.job_type }}" placeholder="Job Type"
+                            class="px-3 py-2 border border-primary-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500">
+                        <input type="number" name="salary" value="{{ job.salary }}" placeholder="Salary"
+                            class="px-3 py-2 border border-primary-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500">
+                        <input type="text" name="url" value="{{ job.url }}" placeholder="URL"
+                            class="px-3 py-2 border border-primary-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500">
+                        <textarea name="description" placeholder="Description" rows="1" class="px-3 py-2 border border-primary-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500 resize-none">{{ job.description }}</textarea>
+                        <textarea name="requirements" placeholder="Requirements" rows="1" class="px-3 py-2 border border-primary-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500 resize-none">{{ job.requirements }}</textarea>
+                    </div>
+                    <div class="flex justify-end gap-2">
+                        <button type="submit" class="px-4 py-1.5 bg-accent-100 text-accent-700 text-sm font-medium rounded-lg hover:bg-accent-200 transition-colors">
+                            Save Changes
+                        </button>
+                </form>
+                <form method="POST" action="/admin_delete_job/{{ job.id }}" class="inline">
+                    <button type="submit" onclick="return confirm('Delete this job?');"
+                        class="px-4 py-1.5 bg-rose-100 text-rose-700 text-sm font-medium rounded-lg hover:bg-rose-200 transition-colors">
+                        Delete
+                    </button>
+                </form>
+                    </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="p-12 text-center">
+            <div class="w-16 h-16 mx-auto mb-4 bg-primary-100 rounded-2xl flex items-center justify-center">
+                <i class="bi bi-briefcase text-primary-400 text-2xl"></i>
+            </div>
+            <p class="text-primary-500">No jobs found. Add your first job listing above.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

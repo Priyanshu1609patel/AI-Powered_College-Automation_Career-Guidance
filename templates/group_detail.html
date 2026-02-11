@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8">
+            <h2>{{ group.name }}</h2>
+            <p>{{ group.description }}</p>
+            {% if group.image %}
+            <img src="{{ url_for('uploaded_file', filename=group.image) }}" alt="Group Image" class="img-fluid mb-3" style="max-height:200px;object-fit:cover;">
+            {% endif %}
+            <h5>Members ({{ members|length }})</h5>
+            <ul class="list-group mb-3">
+                {% for member in members %}
+                <li class="list-group-item d-flex align-items-center">
+                    {% if member.profile_pic %}
+                    <img src="{{ url_for('uploaded_file', filename=member.profile_pic) }}" alt="Profile" class="rounded-circle me-2" width="32" height="32">
+                    {% else %}
+                    <span class="me-2"><i class="bi bi-person-circle" style="font-size: 1.5rem;"></i></span>
+                    {% endif %}
+                    {{ member.name }}
+                </li>
+                {% endfor %}
+            </ul>
+            {% if is_member %}
+            <form action="{{ url_for('leave_group', group_id=group.id) }}" method="post" style="display:inline;">
+                <button type="submit" class="btn btn-warning">Leave Group</button>
+            </form>
+            {% else %}
+            <form action="{{ url_for('join_group', group_id=group.id) }}" method="post">
+                <button type="submit" class="btn btn-success">Join Group</button>
+            </form>
+            {% endif %}
+            <a href="{{ url_for('peer_groups') }}" class="btn btn-secondary ms-2">Back to Groups</a>
+        </div>
+    </div>
+</div>
+{% endblock %} 

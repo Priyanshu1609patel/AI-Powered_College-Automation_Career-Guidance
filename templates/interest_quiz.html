@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block title %}Interest Quiz | CareerAI{% endblock %}
+{% block content %}
+<div class="max-w-3xl mx-auto space-y-6">
+    <!-- Header -->
+    <div class="text-center">
+        <div class="inline-flex items-center justify-center w-16 h-16 bg-accent-100 rounded-2xl mb-4">
+            <i class="bi bi-question-circle text-accent-600 text-3xl"></i>
+        </div>
+        <h1 class="text-2xl sm:text-3xl font-bold text-primary-800">Career Interest Quiz</h1>
+        <p class="text-primary-500 mt-2">Answer these questions to help us understand your career preferences</p>
+    </div>
+
+    <!-- Quiz Form -->
+    <div class="bg-white rounded-2xl shadow-sm border border-primary-100 overflow-hidden">
+        <form method="POST" class="divide-y divide-primary-100">
+            {% set questions = [
+                {'q': 'Which activity do you enjoy most?', 'a': [('Solving coding problems', 'Technical'), ('Designing graphics or layouts', 'Creative'), ('Leading a group project', 'Management'), ('Analyzing data sets', 'Data')]},
+                {'q': 'What would you prefer to do at work?', 'a': [('Build software or apps', 'Technical'), ('Create marketing content', 'Creative'), ('Organize team meetings', 'Management'), ('Prepare business reports', 'Business')]},
+                {'q': 'Which school subject did you like best?', 'a': [('Math/Computer Science', 'Technical'), ('Art/Literature', 'Creative'), ('Economics/Business', 'Business'), ('Science/Statistics', 'Data')]},
+                {'q': 'How do you solve problems?', 'a': [('Write code or scripts', 'Technical'), ('Sketch or brainstorm visually', 'Creative'), ('Delegate and coordinate', 'Management'), ('Research and analyze', 'Data')]},
+                {'q': 'What excites you most about a new project?', 'a': [('Learning new tech', 'Technical'), ('Expressing creativity', 'Creative'), ('Managing resources', 'Management'), ('Finding insights from data', 'Data')]},
+                {'q': 'Which tool would you rather master?', 'a': [('Python/Java', 'Technical'), ('Photoshop/Figma', 'Creative'), ('Trello/Slack', 'Management'), ('Excel/Tableau', 'Data')]},
+                {'q': 'What role do you take in a team?', 'a': [('Developer/Engineer', 'Technical'), ('Designer/Content Creator', 'Creative'), ('Team Lead/Manager', 'Management'), ('Analyst/Researcher', 'Data')]},
+                {'q': 'Which career sounds most appealing?', 'a': [('Software Developer', 'Technical'), ('UI/UX Designer', 'Creative'), ('Project Manager', 'Management'), ('Data Analyst', 'Data')]},
+                {'q': 'What do you value most in your work?', 'a': [('Solving technical challenges', 'Technical'), ('Expressing new ideas', 'Creative'), ('Helping teams succeed', 'Management'), ('Making data-driven decisions', 'Data')]},
+                {'q': 'Which industry would you like to explore?', 'a': [('IT/Software', 'Technical'), ('Media/Advertising', 'Creative'), ('Consulting/Business', 'Management'), ('Finance/Research', 'Data')]}
+            ] %}
+
+            {% for q in questions %}
+            {% set qnum = loop.index %}
+            <div class="p-6">
+                <div class="flex items-start space-x-4">
+                    <span class="flex-shrink-0 w-8 h-8 bg-accent-100 text-accent-700 rounded-lg flex items-center justify-center font-semibold text-sm">
+                        {{ qnum }}
+                    </span>
+                    <div class="flex-1">
+                        <h3 class="font-medium text-primary-800 mb-4">{{ q.q }}</h3>
+                        <div class="grid sm:grid-cols-2 gap-3">
+                            {% for opt, val in q.a %}
+                            <label class="relative flex items-center p-3 bg-primary-50 rounded-xl cursor-pointer hover:bg-accent-50 transition-colors border-2 border-transparent has-[:checked]:border-accent-500 has-[:checked]:bg-accent-50">
+                                <input type="radio" name="q{{ qnum }}" value="{{ val }}" required
+                                    class="sr-only"
+                                    {% if previous_answers and previous_answers['q' ~ qnum] == val %}checked{% endif %}>
+                                <span class="w-4 h-4 mr-3 rounded-full border-2 border-primary-300 flex items-center justify-center">
+                                    <span class="w-2 h-2 rounded-full bg-accent-600 opacity-0 peer-checked:opacity-100"></span>
+                                </span>
+                                <span class="text-sm text-primary-700">{{ opt }}</span>
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+            <!-- Submit -->
+            <div class="p-6 bg-primary-50">
+                <button type="submit" class="w-full py-3 px-4 bg-accent-600 hover:bg-accent-700 text-white font-medium rounded-xl transition-colors shadow-lg shadow-accent-500/30">
+                    <i class="bi bi-check-circle mr-2"></i>
+                    Submit Quiz
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    label:has(input:checked) {
+        border-color: #6366f1;
+        background-color: #eef2ff;
+    }
+    label:has(input:checked) span:first-of-type {
+        border-color: #6366f1;
+        background-color: #6366f1;
+    }
+    label:has(input:checked) span:first-of-type span {
+        opacity: 1;
+        background-color: white;
+    }
+</style>
+{% endblock %}

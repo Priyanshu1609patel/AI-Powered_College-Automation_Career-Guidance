@@ -1,0 +1,142 @@
+{% extends 'admin/base_admin.html' %}
+{% block title %}Academic Rules - Admin{% endblock %}
+
+{% block admin_content %}
+<div class="admin-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+    <div>
+        <h3><i class="bi bi-journal-text me-2"></i>Academic Rules</h3>
+        <small class="opacity-75">Manage rules, policies, and exam patterns for chatbot responses</small>
+    </div>
+    <button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#addRuleModal">
+        <i class="bi bi-plus-lg me-1"></i> Add Rule
+    </button>
+</div>
+
+<!-- Rules List -->
+{% for rule in rules %}
+<div class="stat-card mb-3">
+    <div class="d-flex justify-content-between align-items-start">
+        <div class="flex-grow-1">
+            <div class="d-flex align-items-center gap-2 mb-2">
+                <span class="badge bg-primary bg-opacity-10 text-primary">{{ rule.rule_category }}</span>
+                {% if not rule.is_active %}
+                <span class="badge bg-secondary">Inactive</span>
+                {% endif %}
+            </div>
+            <h6 class="fw-bold mb-1">{{ rule.rule_title }}</h6>
+            <p class="text-muted small mb-1" style="white-space: pre-wrap;">{{ rule.rule_content[:200] }}{% if rule.rule_content|length > 200 %}...{% endif %}</p>
+            {% if rule.keywords %}
+            <small class="text-muted"><strong>Keywords:</strong> {{ rule.keywords }}</small>
+            {% endif %}
+        </div>
+        <div class="d-flex gap-1 flex-shrink-0 ms-2">
+            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editRule{{ loop.index }}">
+                <i class="bi bi-pencil"></i>
+            </button>
+            <form method="POST" action="{{ url_for('admin.delete_rule', rule_id=rule.id) }}" onsubmit="return confirm('Delete this rule?')">
+                <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Rule Modal -->
+<div class="modal fade" id="editRule{{ loop.index }}" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form method="POST" action="{{ url_for('admin.edit_rule', rule_id=rule.id) }}">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Rule</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Category</label>
+                            <select name="rule_category" class="form-select">
+                                <option value="attendance" {% if rule.rule_category == 'attendance' %}selected{% endif %}>Attendance</option>
+                                <option value="examination" {% if rule.rule_category == 'examination' %}selected{% endif %}>Examination</option>
+                                <option value="grading" {% if rule.rule_category == 'grading' %}selected{% endif %}>Grading</option>
+                                <option value="policy" {% if rule.rule_category == 'policy' %}selected{% endif %}>Policy</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Title</label>
+                            <input type="text" name="rule_title" class="form-control" value="{{ rule.rule_title }}" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Content</label>
+                        <textarea name="rule_content" class="form-control" rows="5" required>{{ rule.rule_content }}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Keywords (comma-separated, for chatbot matching)</label>
+                        <input type="text" name="keywords" class="form-control" value="{{ rule.keywords or '' }}">
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" name="is_active" class="form-check-input" {% if rule.is_active %}checked{% endif %}>
+                        <label class="form-check-label">Active</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+{% if not rules %}
+<div class="empty-state">
+    <i class="bi bi-journal-x d-block"></i>
+    <h5>No rules yet</h5>
+    <p>Add academic rules, exam patterns, and policies for the chatbot.</p>
+</div>
+{% endif %}
+
+<!-- Add Rule Modal -->
+<div class="modal fade" id="addRuleModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form method="POST" action="{{ url_for('admin.add_rule') }}">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="bi bi-plus-circle me-2"></i>Add Rule</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Category</label>
+                            <select name="rule_category" class="form-select" required>
+                                <option value="">Select</option>
+                                <option value="attendance">Attendance</option>
+                                <option value="examination">Examination</option>
+                                <option value="grading">Grading</option>
+                                <option value="policy">Policy</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Title</label>
+                            <input type="text" name="rule_title" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Content</label>
+                        <textarea name="rule_content" class="form-control" rows="5" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Keywords (comma-separated)</label>
+                        <input type="text" name="keywords" class="form-control" placeholder="attendance,minimum,75%,eligible">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Rule</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Feedback | Career Guidance AI{% endblock %}
+{% block content %}
+<div class="row justify-content-center align-items-center" style="min-height: 70vh;">
+  <div class="col-md-6">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h3 class="mb-4 text-center text-primary">We Value Your Feedback</h3>
+        <form method="POST">
+          <div class="mb-3">
+            <label for="message" class="form-label">Your Feedback</label>
+            <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Submit Feedback</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %} 

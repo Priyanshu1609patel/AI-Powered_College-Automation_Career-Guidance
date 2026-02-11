@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %}Admin Dashboard | Career Guidance{% endblock %}
+{% block content %}
+<div class="page-wrapper">
+    <div class="gradient-banner">
+        <div class="d-flex align-items-center gap-3">
+            <i class="bi bi-shield-lock-fill" style="font-size:2.5rem; opacity:0.3;"></i>
+            <div>
+                <h4 class="fw-bold mb-1">Admin Dashboard</h4>
+                <p class="mb-0 opacity-75">Welcome, {{ admin.username }}! Manage the Career Guidance platform.</p>
+            </div>
+        </div>
+    </div>
+
+    <h5 class="section-title">Management</h5>
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-md-4 col-lg-3">
+            <a href="{{ url_for('admin_users') }}" class="quick-action">
+                <div class="qa-icon" style="background: var(--primary);"><i class="bi bi-people"></i></div>
+                <div class="qa-text"><h6>Users</h6><small>Manage accounts</small></div>
+            </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+            <a href="{{ url_for('admin_analytics') }}" class="quick-action">
+                <div class="qa-icon" style="background: var(--success);"><i class="bi bi-bar-chart-line"></i></div>
+                <div class="qa-text"><h6>Analytics</h6><small>View stats</small></div>
+            </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+            <a href="{{ url_for('admin_careers') }}" class="quick-action">
+                <div class="qa-icon" style="background: var(--secondary);"><i class="bi bi-briefcase"></i></div>
+                <div class="qa-text"><h6>Careers</h6><small>Career paths</small></div>
+            </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+            <a href="{{ url_for('admin_jobs') }}" class="quick-action">
+                <div class="qa-icon" style="background: var(--accent);"><i class="bi bi-briefcase-fill"></i></div>
+                <div class="qa-text"><h6>Jobs</h6><small>Job listings</small></div>
+            </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+            <a href="{{ url_for('manage_mentors') }}" class="quick-action">
+                <div class="qa-icon" style="background: #06d6a0;"><i class="bi bi-person-workspace"></i></div>
+                <div class="qa-text"><h6>Mentors</h6><small>Manage mentors</small></div>
+            </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+            <a href="{{ url_for('admin_feedback') }}" class="quick-action">
+                <div class="qa-icon" style="background: #ffd166;"><i class="bi bi-chat-dots"></i></div>
+                <div class="qa-text"><h6>Feedback</h6><small>Review feedback</small></div>
+            </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+            <a href="{{ url_for('admin_profile') }}" class="quick-action">
+                <div class="qa-icon" style="background: var(--dark);"><i class="bi bi-person-badge"></i></div>
+                <div class="qa-text"><h6>Profile</h6><small>Admin settings</small></div>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

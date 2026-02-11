@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+{% block title %}Track Progress | CareerAI{% endblock %}
+{% block content %}
+<div class="space-y-6">
+    <!-- Header -->
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-2xl sm:text-3xl font-bold text-primary-800">Progress Tracker</h1>
+            <p class="text-primary-500 mt-1">Track your career milestones</p>
+        </div>
+        <a href="{{ url_for('dashboard') }}" class="px-4 py-2 border border-primary-200 text-primary-700 rounded-lg hover:bg-primary-50 transition-colors text-sm font-medium">
+            <i class="bi bi-arrow-left mr-1"></i> Dashboard
+        </a>
+    </div>
+
+    {% if progress %}
+    {% set careers = {} %}
+    {% for item in progress %}
+        {% if item.title not in careers %}
+            {% set _ = careers.update({item.title: []}) %}
+        {% endif %}
+        {% set _ = careers[item.title].append(item) %}
+    {% endfor %}
+
+    {% for title, milestones in careers.items() %}
+    {% set total = milestones | length %}
+    {% set completed = milestones | selectattr("status", "equalto", "Completed") | list | length %}
+    {% set percent = (completed / total * 100) | round(1) if total > 0 else 0 %}
+
+    <div class="bg-white rounded-2xl shadow-sm border border-primary-100 overflow-hidden">
+        <!-- Career Header -->
+        <div class="px-6 py-4 bg-gradient-to-r from-accent-50 to-accent-100/50 border-b border-primary-100">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-accent-100 rounded-xl flex items-center justify-center">
+                        <i class="bi bi-briefcase text-accent-600"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-semibold text-primary-800">{{ title }}</h2>
+                        <p class="text-sm text-primary-500">{{ completed }} of {{ total }} completed</p>
+                    </div>
+                </div>
+                <form method="POST" action="{{ url_for('delete_career_progress') }}" onsubmit="return confirm('Are you sure you want to delete this career plan?');">
+                    <input type="hidden" name="career_id" value="{{ milestones[0].career_id }}">
+                    <button type="submit" class="px-3 py-1.5 bg-rose-100 text-rose-700 text-sm font-medium rounded-lg hover:bg-rose-200 transition-colors">
+                        <i class="bi bi-trash mr-1"></i> Delete
+                    </button>
+                </form>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="mt-4">
+                <div class="flex justify-between text-sm mb-1">
+                    <span class="text-primary-600">Progress</span>
+                    <span class="font-semibold text-emerald-600">{{ percent }}%</span>
+                </div>
+                <div class="h-2.5 bg-primary-200 rounded-full overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-full transition-all duration-500"
+                        style="width: {{ percent }}%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Milestones -->
+        <div class="divide-y divide-primary-100">
+            {% for item in milestones %}
+            <div class="p-4 sm:p-6">
+                <div class="flex items-start gap-4">
+                    <!-- Status Icon -->
+                    <div class="flex-shrink-0">
+                        {% if item.status == 'Completed' %}
+                        <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
+                            <i class="bi bi-check-lg text-emerald-600"></i>
+                        </div>
+                        {% elif item.status == 'In Progress' %}
+                        <div class="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center">
+                            <i class="bi bi-hourglass-split text-amber-600"></i>
+                        </div>
+                        {% else %}
+                        <div class="w-8 h-8 rounded-full bg-primary-100 flex items-center justify-center">
+                            <i class="bi bi-circle text-primary-400"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Content -->
+                    <div class="flex-1">
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3">
+                            <h3 class="font-medium {{ 'text-emerald-600 line-through' if item.status == 'Completed' else 'text-primary-800' }}">
+                                {{ item.milestone }}
+                            </h3>
+                            <form method="POST" action="/update_progress" class="flex items-center gap-2">
+                                <input type="hidden" name="progress_id" value="{{ item.id }}">
+                                <select name="status" class="px-3 py-1.5 border border-primary-200 rounded-lg text-sm text-primary-700 bg-white focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500">
+                                    <option value="Not Started" {% if item.status == 'Not Started' %}selected{% endif %}>Not Started</option>
+                                    <option value="In Progress" {% if item.status == 'In Progress' %}selected{% endif %}>In Progress</option>
+                                    <option value="Completed" {% if item.status == 'Completed' %}selected{% endif %}>Completed</option>
+                                </select>
+                                <button type="submit" class="px-3 py-1.5 bg-accent-600 text-white text-sm font-medium rounded-lg hover:bg-accent-700 transition-colors">
+                                    Update
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Notes -->
+                        <form method="POST" action="/update_progress" class="mb-3">
+                            <input type="hidden" name="progress_id" value="{{ item.id }}">
+                            <input type="hidden" name="status" value="{{ item.status }}">
+                            <div class="flex gap-2">
+                                <textarea name="note" rows="2" placeholder="Add notes..."
+                                    class="flex-1 px-3 py-2 border border-primary-200 rounded-lg text-sm text-primary-700 placeholder-primary-400 focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500 resize-none">{{ item.note or '' }}</textarea>
+                                <button type="submit" class="px-3 py-2 bg-primary-100 text-primary-700 rounded-lg hover:bg-primary-200 transition-colors text-sm font-medium">
+                                    Save
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- Course Links -->
+                        {% if item.course_links and item.course_links|length > 0 %}
+                        <div class="p-3 bg-amber-50 rounded-lg">
+                            <p class="text-sm font-medium text-amber-800 mb-2">
+                                <i class="bi bi-lightbulb mr-1"></i> Recommended Courses
+                            </p>
+                            <div class="space-y-1">
+                                {% for link in item.course_links %}
+                                <div class="flex flex-wrap items-center gap-2 text-sm">
+                                    <span class="font-medium text-primary-700">{{ link.skill }}:</span>
+                                    <a href="{{ link.coursera }}" target="_blank" class="text-accent-600 hover:text-accent-700">Coursera</a>
+                                    <span class="text-primary-300">|</span>
+                                    <a href="{{ link.udemy }}" target="_blank" class="text-accent-600 hover:text-accent-700">Udemy</a>
+                                    <span class="text-primary-300">|</span>
+                                    <a href="{{ link.linkedin }}" target="_blank" class="text-accent-600 hover:text-accent-700">LinkedIn</a>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+
+    {% else %}
+    <div class="bg-white rounded-2xl shadow-sm border border-primary-100 p-12 text-center">
+        <div class="w-16 h-16 mx-auto mb-4 bg-amber-100 rounded-2xl flex items-center justify-center">
+            <i class="bi bi-graph-up text-amber-500 text-2xl"></i>
+        </div>
+        <h3 class="text-lg font-semibold text-primary-800 mb-2">No Progress Yet</h3>
+        <p class="text-primary-500 mb-6">Start by selecting a career plan from recommendations.</p>
+        <a href="/recommendations" class="inline-flex items-center px-6 py-3 bg-accent-600 text-white font-medium rounded-xl hover:bg-accent-700 transition-colors">
+            <i class="bi bi-stars mr-2"></i> Get Recommendations
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

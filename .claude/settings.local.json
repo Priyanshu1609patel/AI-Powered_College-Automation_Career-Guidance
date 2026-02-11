@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pip install:*)",
+      "Bash(python:*)",
+      "Bash(nslookup:*)",
+      "Bash(ping:*)",
+      "Bash(findstr:*)",
+      "Bash(curl:*)",
+      "Bash(timeout:*)",
+      "Bash(del /s /q \"C:\\\\Users\\\\91910\\\\OneDrive\\\\Documents\\\\career_guidance_ai_old\\\\__pycache__\\\\*.pyc\")",
+      "Bash(del /s /q \"C:\\\\Users\\\\91910\\\\OneDrive\\\\Documents\\\\career_guidance_ai_old\\\\career_guidance_ai\\\\__pycache__\\\\*.pyc\")",
+      "Bash(del /s /q \"C:\\\\Users\\\\91910\\\\OneDrive\\\\Documents\\\\career_guidance_ai_old\\\\resume_parser\\\\__pycache__\\\\*.pyc\")",
+      "Bash(cmd /c \"rmdir /s /q C:\\\\Users\\\\91910\\\\OneDrive\\\\Documents\\\\career_guidance_ai_old\\\\career_guidance_ai\")",
+      "Bash(cmd:*)",
+      "Bash(powershell -Command:*)",
+      "Bash(xcopy:*)",
+      "Bash(ren \"C:\\\\Users\\\\91910\\\\OneDrive\\\\Documents\\\\career_guidance_ai\\\\career_old\" \"Career_Guidance_SubProject\")"
+    ]
+  }
+}

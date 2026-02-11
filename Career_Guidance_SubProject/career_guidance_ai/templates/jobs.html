@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% block title %}Job Board | Career Guidance AI{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <h2 class="mb-4 text-primary text-center">Job Board</h2>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <form method="GET" class="d-flex w-75">
+      <input type="text" name="search" id="job-search" class="form-control me-2" placeholder="Search jobs, companies, locations..." value="{{ search }}" list="job-title-list" autocomplete="off">
+      <datalist id="job-title-list"></datalist>
+      <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+    <div>
+      <a href="{{ url_for('my_jobs') }}" class="btn btn-outline-success ms-2"><i class="bi bi-bookmark-heart me-1"></i>My Saved Jobs</a>
+      <a href="{{ url_for('job_alerts') }}" class="btn btn-outline-info ms-2"><i class="bi bi-bell me-1"></i>Job Alerts</a>
+    </div>
+  </div>
+  <form method="GET" class="row g-2 mb-4 align-items-end">
+    <div class="col-md-2">
+      <input type="text" name="company" class="form-control" placeholder="Company" value="{{ request.args.get('company', '') }}" list="company-list">
+      <datalist id="company-list">
+        {% for c in company_options %}
+        <option value="{{ c }}">{{ c }}</option>
+        {% endfor %}
+      </datalist>
+    </div>
+    <div class="col-md-2">
+      <input type="text" name="location" class="form-control" placeholder="Location" value="{{ request.args.get('location', '') }}" list="location-list">
+      <datalist id="location-list">
+        {% for l in location_options %}
+        <option value="{{ l }}">{{ l }}</option>
+        {% endfor %}
+      </datalist>
+    </div>
+    <div class="col-md-2">
+      <select name="job_type" class="form-select">
+        <option value="">Job Type</option>
+        {% for jt in job_type_options %}
+        <option value="{{ jt }}" {% if request.args.get('job_type') == jt %}selected{% endif %}>{{ jt }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-2">
+      <input type="number" name="salary_min" class="form-control" placeholder="Min Salary" value="{{ request.args.get('salary_min', '') }}">
+    </div>
+    <div class="col-md-2">
+      <input type="number" name="salary_max" class="form-control" placeholder="Max Salary" value="{{ request.args.get('salary_max', '') }}">
+    </div>
+    <div class="col-md-2">
+      <select name="posted" class="form-select">
+        <option value="">Posted Any Time</option>
+        <option value="1">Last 24h</option>
+        <option value="7">Last 7d</option>
+        <option value="30">Last 30d</option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <select name="sort" class="form-select">
+        <option value="">Sort by</option>
+        <option value="newest" {% if request.args.get('sort') == 'newest' %}selected{% endif %}>Newest</option>
+        <option value="company" {% if request.args.get('sort') == 'company' %}selected{% endif %}>Company</option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <button type="submit" class="btn btn-outline-primary w-100">Apply Filters</button>
+    </div>
+  </form>
+  {% if jobs %}
+  <div class="row g-4">
+    {% for job in jobs %}
+    <div class="col-md-6 col-lg-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <h5 class="card-title text-info">{{ job.title }}</h5>
+          <div class="mb-2"><b>Company:</b> <span class="text-dark">{{ job.company }}</span></div>
+          <div class="mb-2"><b>Location:</b> <span class="text-dark">{{ job.location }}</span></div>
+          <div class="mb-2"><b>Job Type:</b> <span class="text-dark">{{ job.job_type or 'N/A' }}</span></div>
+          <div class="mb-2"><b>Salary:</b> <span class="text-dark">{{ job.salary or 'N/A' }}</span></div>
+          <div class="mb-2 text-muted" style="font-size:0.9em;">Posted: {{ job.posted_at.strftime('%Y-%m-%d') if job.posted_at else 'N/A' }}</div>
+          <p class="card-text">{{ job.description[:120] }}{% if job.description and job.description|length > 120 %}...{% endif %}</p>
+          {% if job.requirements %}
+          <div class="mb-2"><b>Requirements:</b> <span class="text-dark">{{ job.requirements }}</span></div>
+          {% endif %}
+          <a href="/job/{{ job.id }}" class="btn btn-outline-primary btn-sm mb-2 w-100"><i class="bi bi-eye me-1"></i> View Detail</a>
+          <a href="{{ job.url }}" target="_blank" class="btn btn-primary btn-sm mb-2 w-100" style="font-weight:bold;"><i class="bi bi-box-arrow-up-right me-1"></i>View Job</a>
+          {% if job.id in saved %}
+            <span class="badge bg-success mb-2"><i class="bi bi-bookmark-heart me-1"></i>Saved</span>
+            <form method="POST" action="/unsave_job/{{ job.id }}" class="d-inline">
+              <button type="submit" class="btn btn-warning btn-sm" data-bs-toggle="tooltip" title="Remove from Saved Jobs"><i class="bi bi-x-circle"></i> Unsave</button>
+            </form>
+          {% else %}
+            <form method="POST" action="/save_job/{{ job.id }}" class="d-inline">
+              <button type="submit" class="btn btn-success btn-sm" data-bs-toggle="tooltip" title="Save this Job"><i class="bi bi-bookmark-plus"></i> Save</button>
+            </form>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+    {% if recommended %}
+      <div class="alert alert-warning text-center">
+        No jobs found for your recommended careers.<br>
+        <form method="get">
+          <button type="submit" name="show_all" value="1" class="btn btn-outline-primary mt-2">Show All Jobs</button>
+        </form>
+        <div class="mt-2 text-muted" style="font-size:0.95em;">Try updating your resume or interest quiz for better matches.</div>
+      </div>
+    {% else %}
+      <div class="alert alert-info text-center">No jobs found.</div>
+    {% endif %}
+  {% endif %}
+  {% if recommended %}
+    <div class="text-center mt-4 text-muted"><i class="bi bi-funnel"></i> Jobs are filtered based on your recommended careers.</div>
+  {% endif %}
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+const searchInput = document.getElementById('job-search');
+const datalist = document.getElementById('job-title-list');
+let lastQuery = '';
+searchInput.addEventListener('input', function() {
+  const q = this.value.trim();
+  if (q.length < 1 || q === lastQuery) return;
+  lastQuery = q;
+  fetch(`/autocomplete_job_titles?q=${encodeURIComponent(q)}`)
+    .then(res => res.json())
+    .then(data => {
+      datalist.innerHTML = '';
+      data.forEach(title => {
+        const option = document.createElement('option');
+        option.value = title;
+        datalist.appendChild(option);
+      });
+    });
+});
+</script>
+{% endblock %} 

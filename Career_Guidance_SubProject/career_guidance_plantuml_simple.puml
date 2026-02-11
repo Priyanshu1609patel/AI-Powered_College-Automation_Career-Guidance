@@ -1,0 +1,164 @@
+@startuml Career Guidance AI - Simplified Class Diagram
+
+!theme plain
+skinparam classAttributeIconSize 0
+skinparam classFontSize 14
+skinparam classFontStyle bold
+skinparam classFontColor #000000
+skinparam classBackgroundColor #FFFFFF
+skinparam classBorderColor #000000
+skinparam classBorderThickness 2
+skinparam packageStyle rectangle
+skinparam packageBackgroundColor #F0F0F0
+skinparam packageBorderColor #000000
+
+package "Core Application" {
+    class FlaskApp {
+        -secret_key: str
+        -upload_folder: str
+        +get_db(): Connection
+        +add_notification()
+        +load_unread_notifications()
+    }
+    
+    class ResumeParser {
+        -nlp: spacy
+        +extract_text(file_path): str
+        +extract_resume_data(text): dict
+    }
+}
+
+package "Main Entities" {
+    class User {
+        +id: int
+        +name: str
+        +email: str
+        +password: str
+        +profile_pic: str
+        +points: int
+    }
+    
+    class Resume {
+        +id: int
+        +user_id: int
+        +title: str
+        +summary: text
+        +education: text
+        +experience: text
+        +skills: text
+        +created_at: timestamp
+    }
+    
+    class Career {
+        +id: int
+        +title: str
+        +description: text
+        +required_skills: text
+        +category: str
+        +salary_range: str
+    }
+    
+    class Job {
+        +id: int
+        +title: str
+        +company: str
+        +location: str
+        +salary: int
+        +description: text
+        +career_id: int
+    }
+}
+
+package "Supporting Entities" {
+    class Interest {
+        +id: int
+        +user_id: int
+        +interest_area: str
+        +resume_id: int
+    }
+    
+    class "Career Progress" {
+        +id: int
+        +user_id: int
+        +career_id: int
+        +milestone: str
+        +status: str
+    }
+    
+    class "Saved Career" {
+        +id: int
+        +user_id: int
+        +career_id: int
+        +title: str
+        +notes: text
+    }
+    
+    class Notification {
+        +id: int
+        +user_id: int
+        +message: text
+        +is_read: boolean
+    }
+}
+
+package "Services" {
+    class "Career Recommendation Engine" {
+        +analyze_resume(resume_data): dict
+        +match_skills(user_skills, required_skills): list
+        +calculate_match_score(): float
+    }
+    
+    class "Job Matching Service" {
+        +find_matching_jobs(user_profile): list
+        +send_job_alerts(user_id)
+    }
+}
+
+' Core Relationships
+User ||--o{ Resume : "has many"
+User ||--o{ Interest : "has many"
+User ||--o{ "Career Progress" : "tracks"
+User ||--o{ "Saved Career" : "saves"
+User ||--o{ Notification : "receives"
+
+Career ||--o{ Job : "has many"
+Career ||--o{ "Career Progress" : "tracked in"
+Career ||--o{ "Saved Career" : "saved as"
+
+Resume ||--o{ Interest : "analyzed in"
+Resume ||--o{ "Career Progress" : "used in"
+
+Job ||--o{ "Saved Career" : "saved as"
+
+' Application Relationships
+FlaskApp --> ResumeParser : "uses"
+FlaskApp --> "Career Recommendation Engine" : "uses"
+FlaskApp --> "Job Matching Service" : "uses"
+
+"Career Recommendation Engine" --> Resume : "analyzes"
+"Career Recommendation Engine" --> Career : "matches"
+"Job Matching Service" --> Job : "searches"
+"Job Matching Service" --> User : "matches for"
+
+note right of FlaskApp
+  Main Flask Application
+  - Handles all HTTP requests
+  - Manages user sessions
+  - Coordinates services
+end note
+
+note right of "Career Recommendation Engine"
+  AI-Powered Matching
+  - Analyzes user skills
+  - Matches with careers
+  - Provides recommendations
+end note
+
+note bottom of User
+  Core User Entity
+  - Stores user profile
+  - Links to all user data
+  - Authentication support
+end note
+
+@enduml

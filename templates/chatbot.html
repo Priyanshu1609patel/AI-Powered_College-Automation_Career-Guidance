@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block title %}AI Chatbot - College AI{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Override base content padding for full-height chat */
+    body { overflow: hidden; }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Mobile sidebar overlay -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<!-- Mobile sidebar toggle -->
+<button class="sidebar-toggle" id="sidebarToggle">
+    <i class="bi bi-chat-left-text"></i>
+</button>
+
+<div class="chat-container">
+    <!-- Sidebar -->
+    <div class="chat-sidebar" id="chatSidebar">
+        <div class="chat-sidebar-header">
+            <button class="btn btn-primary" id="newChatBtn">
+                <i class="bi bi-plus-lg me-1"></i> New Chat
+            </button>
+        </div>
+        <div class="chat-list" id="chatList">
+            {% for chat in chat_list %}
+            <div class="chat-list-item" data-chat-id="{{ chat.id }}">
+                <span class="chat-title">
+                    <i class="bi bi-chat-dots me-2"></i>{{ chat.title }}
+                </span>
+                <span class="chat-delete" data-chat-id="{{ chat.id }}">
+                    <i class="bi bi-trash"></i>
+                </span>
+            </div>
+            {% endfor %}
+            {% if not chat_list %}
+            <div class="text-center py-4 text-muted small">
+                <i class="bi bi-chat-square-text d-block mb-2" style="font-size: 1.5rem; opacity: 0.4;"></i>
+                No chats yet. Start a new conversation!
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Main Chat Area -->
+    <div class="chat-main">
+        <div class="chat-messages" id="chatMessages">
+            <!-- Messages populate here via JS -->
+        </div>
+
+        <!-- Typing Indicator -->
+        <div class="typing-indicator" id="typingIndicator">
+            <span></span><span></span><span></span>
+        </div>
+
+        <!-- Input Area -->
+        <div class="chat-input-area">
+            <div class="chat-input-group">
+                <textarea id="messageInput" rows="1"
+                          placeholder="Ask about attendance, subjects, CGPA, exams..."
+                          aria-label="Type your message"></textarea>
+                <button class="btn-send" id="sendBtn" aria-label="Send message">
+                    <i class="bi bi-send-fill"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+{% endblock %}

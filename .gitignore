@@ -1,0 +1,29 @@
+# Environment variables
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.so
+
+# Uploads
+uploads/
+
+# IDE
+.vscode/
+.idea/
+
+# Virtual environment
+venv/
+env/
+.venv/
+
+# Windows reserved filenames
+nul
+CON
+PRN
+AUX
+NUL

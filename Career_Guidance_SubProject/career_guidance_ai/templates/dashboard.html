@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard | Career Guidance AI{% endblock %}
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center mb-4">
+    <div class="col-md-8">
+      <div class="card shadow-lg border-0">
+        <div class="card-body d-flex align-items-center">
+          <div class="me-4 text-center">
+            {% if profile_pic %}
+              <img src="{{ url_for('uploaded_file', filename=profile_pic) }}" alt="Profile Picture" class="rounded-circle border border-3 border-primary shadow" width="90" height="90" style="object-fit:cover;">
+            {% else %}
+              <img src="https://ui-avatars.com/api/?name={{ name|urlencode }}&size=90" alt="Profile Picture" class="rounded-circle border border-3 border-primary shadow" width="90" height="90">
+            {% endif %}
+          </div>
+          <div>
+            <h3 class="mb-1 text-primary">Welcome, {{ name }}!</h3>
+            <p class="mb-2 text-muted">Here’s your personalized dashboard. Keep up the great work!</p>
+            <div class="d-flex flex-wrap gap-2">
+              <a href="/profile" class="btn btn-outline-primary btn-sm">View Profile</a>
+              <a href="/upload_resume" class="btn btn-outline-secondary btn-sm">Upload Resume</a>
+              <a href="/track_progress" class="btn btn-outline-success btn-sm">Track Progress</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center mb-4">
+    <div class="col-md-8">
+      <div class="card shadow-sm border-0 mb-3">
+        <div class="card-header bg-info bg-opacity-10 border-0">
+          <h5 class="mb-0 text-info"><i class="bi bi-clock-history me-2"></i>Recent Activity</h5>
+        </div>
+        <div class="card-body">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <b>Last Milestone Completed:</b>
+              {% if last_milestone %}
+                <span class="text-success">{{ last_milestone.milestone }} ({{ last_milestone.title }})</span>
+              {% else %}
+                <span class="text-muted">No milestones completed yet.</span>
+              {% endif %}
+            </li>
+            <li class="list-group-item">
+              <b>Last Resume Uploaded:</b>
+              {% if last_resume %}
+                <span class="text-success">Skills: {{ last_resume.skills }}</span>
+              {% else %}
+                <span class="text-muted">No resume uploaded yet.</span>
+              {% endif %}
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="card shadow-sm border-0">
+        <div class="card-header bg-success bg-opacity-10 border-0">
+          <h5 class="mb-0 text-success"><i class="bi bi-bar-chart-fill me-2"></i>Progress Summary</h5>
+        </div>
+        <div class="card-body">
+          {% if progress_summaries %}
+            {% for prog in progress_summaries %}
+              <div class="mb-3">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                  <span class="fw-bold">{{ prog.career_title }}</span>
+                  <span class="text-success">{{ prog.percent }}%</span>
+                </div>
+                <div class="progress" style="height: 1.2rem;">
+                  <div class="progress-bar bg-success" role="progressbar" style="width: {{ prog.percent }}%" aria-valuenow="{{ prog.percent }}" aria-valuemin="0" aria-valuemax="100">{{ prog.completed }}/{{ prog.total }}</div>
+                </div>
+              </div>
+            {% endfor %}
+          {% else %}
+            <div class="text-muted">No active career plans yet.</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %} 

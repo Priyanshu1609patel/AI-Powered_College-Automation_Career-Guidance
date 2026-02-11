@@ -1,0 +1,193 @@
+{% extends 'base.html' %}
+{% block title %}Job Board | CareerAI{% endblock %}
+{% block content %}
+<div class="space-y-6">
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+            <h1 class="text-2xl sm:text-3xl font-bold text-primary-800">Job Board</h1>
+            <p class="text-primary-500 mt-1">Find your next opportunity</p>
+        </div>
+        <div class="flex gap-3">
+            <a href="{{ url_for('my_jobs') }}" class="inline-flex items-center px-4 py-2 bg-accent-50 text-accent-700 rounded-lg hover:bg-accent-100 transition-colors text-sm font-medium">
+                <i class="bi bi-bookmark-heart mr-2"></i> Saved Jobs
+            </a>
+            <a href="{{ url_for('job_alerts') }}" class="inline-flex items-center px-4 py-2 bg-primary-50 text-primary-700 rounded-lg hover:bg-primary-100 transition-colors text-sm font-medium">
+                <i class="bi bi-bell mr-2"></i> Job Alerts
+            </a>
+        </div>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="bg-white rounded-2xl shadow-sm border border-primary-100 p-4 sm:p-6">
+        <form method="GET" class="flex flex-col sm:flex-row gap-3">
+            <div class="flex-1 relative">
+                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-primary-400">
+                    <i class="bi bi-search"></i>
+                </span>
+                <input type="text" name="search" id="job-search"
+                    class="w-full pl-11 pr-4 py-3 border border-primary-200 rounded-xl text-primary-800 placeholder-primary-400 focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500 transition-colors"
+                    placeholder="Search jobs, companies, locations..." value="{{ search }}" list="job-title-list" autocomplete="off">
+                <datalist id="job-title-list"></datalist>
+            </div>
+            <button type="submit" class="px-6 py-3 bg-accent-600 hover:bg-accent-700 text-white font-medium rounded-xl transition-colors">
+                Search
+            </button>
+        </form>
+    </div>
+
+    <!-- Filters -->
+    <div class="bg-white rounded-2xl shadow-sm border border-primary-100 p-4 sm:p-6">
+        <form method="GET" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3">
+            <input type="text" name="company" placeholder="Company" value="{{ request.args.get('company', '') }}" list="company-list"
+                class="px-4 py-2.5 border border-primary-200 rounded-lg text-primary-700 text-sm focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500">
+            <datalist id="company-list">
+                {% for c in company_options %}<option value="{{ c }}">{% endfor %}
+            </datalist>
+
+            <input type="text" name="location" placeholder="Location" value="{{ request.args.get('location', '') }}" list="location-list"
+                class="px-4 py-2.5 border border-primary-200 rounded-lg text-primary-700 text-sm focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500">
+            <datalist id="location-list">
+                {% for l in location_options %}<option value="{{ l }}">{% endfor %}
+            </datalist>
+
+            <select name="job_type" class="px-4 py-2.5 border border-primary-200 rounded-lg text-primary-700 text-sm focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500 bg-white">
+                <option value="">Job Type</option>
+                {% for jt in job_type_options %}
+                <option value="{{ jt }}" {% if request.args.get('job_type') == jt %}selected{% endif %}>{{ jt }}</option>
+                {% endfor %}
+            </select>
+
+            <input type="number" name="salary_min" placeholder="Min Salary" value="{{ request.args.get('salary_min', '') }}"
+                class="px-4 py-2.5 border border-primary-200 rounded-lg text-primary-700 text-sm focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500">
+
+            <input type="number" name="salary_max" placeholder="Max Salary" value="{{ request.args.get('salary_max', '') }}"
+                class="px-4 py-2.5 border border-primary-200 rounded-lg text-primary-700 text-sm focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500">
+
+            <select name="sort" class="px-4 py-2.5 border border-primary-200 rounded-lg text-primary-700 text-sm focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500 bg-white">
+                <option value="">Sort by</option>
+                <option value="newest" {% if request.args.get('sort') == 'newest' %}selected{% endif %}>Newest</option>
+                <option value="company" {% if request.args.get('sort') == 'company' %}selected{% endif %}>Company</option>
+            </select>
+
+            <button type="submit" class="px-4 py-2.5 border border-accent-600 text-accent-600 font-medium rounded-lg hover:bg-accent-50 transition-colors text-sm">
+                Apply Filters
+            </button>
+        </form>
+    </div>
+
+    <!-- Jobs Grid -->
+    {% if jobs %}
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for job in jobs %}
+        <div class="bg-white rounded-2xl shadow-sm border border-primary-100 overflow-hidden hover:shadow-md transition-shadow">
+            <div class="p-6">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 bg-accent-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <i class="bi bi-building text-accent-600 text-xl"></i>
+                    </div>
+                    {% if job.id in saved %}
+                    <span class="px-2 py-1 bg-emerald-100 text-emerald-700 text-xs font-medium rounded-lg">
+                        <i class="bi bi-bookmark-check mr-1"></i> Saved
+                    </span>
+                    {% endif %}
+                </div>
+
+                <h3 class="text-lg font-semibold text-primary-800 mb-2">{{ job.title }}</h3>
+                <p class="text-accent-600 font-medium mb-3">{{ job.company }}</p>
+
+                <div class="space-y-2 text-sm text-primary-600 mb-4">
+                    <div class="flex items-center">
+                        <i class="bi bi-geo-alt mr-2 text-primary-400"></i>
+                        {{ job.location }}
+                    </div>
+                    <div class="flex items-center">
+                        <i class="bi bi-briefcase mr-2 text-primary-400"></i>
+                        {{ job.job_type or 'Not specified' }}
+                    </div>
+                    <div class="flex items-center">
+                        <i class="bi bi-currency-rupee mr-2 text-primary-400"></i>
+                        {{ job.salary or 'Not disclosed' }}
+                    </div>
+                </div>
+
+                <p class="text-sm text-primary-500 mb-4 line-clamp-2">
+                    {{ job.description[:100] }}{% if job.description and job.description|length > 100 %}...{% endif %}
+                </p>
+
+                <div class="text-xs text-primary-400 mb-4">
+                    <i class="bi bi-clock mr-1"></i>
+                    Posted: {{ job.posted_at if job.posted_at and job.posted_at != 'None' else 'N/A' }}
+                </div>
+
+                <div class="flex gap-2">
+                    <a href="/job/{{ job.id }}" class="flex-1 text-center py-2 border border-primary-200 text-primary-700 text-sm font-medium rounded-lg hover:bg-primary-50 transition-colors">
+                        View Details
+                    </a>
+                    {% if job.id in saved %}
+                    <form method="POST" action="/unsave_job/{{ job.id }}" class="flex-1">
+                        <button type="submit" class="w-full py-2 bg-amber-50 text-amber-700 text-sm font-medium rounded-lg hover:bg-amber-100 transition-colors">
+                            <i class="bi bi-bookmark-x mr-1"></i> Unsave
+                        </button>
+                    </form>
+                    {% else %}
+                    <form method="POST" action="/save_job/{{ job.id }}" class="flex-1">
+                        <button type="submit" class="w-full py-2 bg-accent-600 text-white text-sm font-medium rounded-lg hover:bg-accent-700 transition-colors">
+                            <i class="bi bi-bookmark-plus mr-1"></i> Save
+                        </button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="bg-white rounded-2xl shadow-sm border border-primary-100 p-12 text-center">
+        <div class="w-16 h-16 mx-auto mb-4 bg-primary-100 rounded-2xl flex items-center justify-center">
+            <i class="bi bi-briefcase text-primary-400 text-2xl"></i>
+        </div>
+        {% if recommended %}
+        <h3 class="text-lg font-semibold text-primary-800 mb-2">No matching jobs found</h3>
+        <p class="text-primary-500 mb-4">No jobs found for your recommended careers.</p>
+        <form method="get">
+            <button type="submit" name="show_all" value="1" class="px-6 py-3 bg-accent-600 text-white font-medium rounded-xl hover:bg-accent-700 transition-colors">
+                Show All Jobs
+            </button>
+        </form>
+        {% else %}
+        <h3 class="text-lg font-semibold text-primary-800 mb-2">No jobs found</h3>
+        <p class="text-primary-500">Try adjusting your search or filters.</p>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    {% if recommended %}
+    <div class="text-center text-sm text-primary-500">
+        <i class="bi bi-funnel mr-1"></i> Showing jobs matching your recommended careers
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+const searchInput = document.getElementById('job-search');
+const datalist = document.getElementById('job-title-list');
+let lastQuery = '';
+searchInput.addEventListener('input', function() {
+    const q = this.value.trim();
+    if (q.length < 1 || q === lastQuery) return;
+    lastQuery = q;
+    fetch(`/autocomplete_job_titles?q=${encodeURIComponent(q)}`)
+        .then(res => res.json())
+        .then(data => {
+            datalist.innerHTML = '';
+            data.forEach(title => {
+                const option = document.createElement('option');
+                option.value = title;
+                datalist.appendChild(option);
+            });
+        });
+});
+</script>
+{% endblock %}

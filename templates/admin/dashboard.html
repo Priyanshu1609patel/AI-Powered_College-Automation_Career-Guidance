@@ -1,0 +1,97 @@
+{% extends 'admin/base_admin.html' %}
+{% block title %}Admin Dashboard - College AI{% endblock %}
+
+{% block admin_content %}
+<div class="admin-header">
+    <h3><i class="bi bi-speedometer2 me-2"></i>Admin Dashboard</h3>
+    <small class="opacity-75">System overview and recent activity</small>
+</div>
+
+<!-- Stats Cards -->
+<div class="row g-3 mb-4">
+    <div class="col-6 col-md-4">
+        <div class="stat-card">
+            <div class="stat-icon" style="background: var(--primary);"><i class="bi bi-people"></i></div>
+            <div class="stat-value">{{ stats.total_users }}</div>
+            <div class="stat-label">Students</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-4">
+        <div class="stat-card">
+            <div class="stat-icon" style="background: var(--success);"><i class="bi bi-book"></i></div>
+            <div class="stat-value">{{ stats.total_subjects }}</div>
+            <div class="stat-label">Subjects</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-4">
+        <div class="stat-card">
+            <div class="stat-icon" style="background: var(--secondary);"><i class="bi bi-chat-dots"></i></div>
+            <div class="stat-value">{{ stats.total_queries }}</div>
+            <div class="stat-label">Total Queries</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-4">
+        <div class="stat-card">
+            <div class="stat-icon" style="background: var(--danger);"><i class="bi bi-question-circle"></i></div>
+            <div class="stat-value">{{ stats.unanswered_count }}</div>
+            <div class="stat-label">Unanswered</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-4">
+        <div class="stat-card">
+            <div class="stat-icon" style="background: var(--warning);"><i class="bi bi-megaphone"></i></div>
+            <div class="stat-value">{{ stats.total_notices }}</div>
+            <div class="stat-label">Active Notices</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-4">
+        <div class="stat-card">
+            <div class="stat-icon" style="background: #17a2b8;"><i class="bi bi-folder2-open"></i></div>
+            <div class="stat-value">{{ stats.total_materials }}</div>
+            <div class="stat-label">Materials</div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Queries -->
+<h5 class="section-title"><i class="bi bi-clock-history me-1"></i> Recent Chatbot Queries</h5>
+<div class="table-card">
+    <div class="table-responsive">
+        <table class="table table-hover mb-0">
+            <thead>
+                <tr>
+                    <th>Query</th>
+                    <th>Intent</th>
+                    <th>Confidence</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for q in recent_queries %}
+                <tr>
+                    <td style="max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                        {{ q.query_text }}
+                    </td>
+                    <td>
+                        <span class="badge bg-primary bg-opacity-10 text-primary">{{ q.detected_intent or 'unknown' }}</span>
+                    </td>
+                    <td>
+                        {% if q.confidence and q.confidence > 0.7 %}
+                        <span class="text-success fw-bold">{{ (q.confidence * 100)|round|int }}%</span>
+                        {% elif q.confidence and q.confidence > 0.4 %}
+                        <span class="text-warning fw-bold">{{ (q.confidence * 100)|round|int }}%</span>
+                        {% else %}
+                        <span class="text-danger fw-bold">{{ ((q.confidence or 0) * 100)|round|int }}%</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-muted small">{{ q.created_at.strftime('%d %b %H:%M') if q.created_at else '' }}</td>
+                </tr>
+                {% endfor %}
+                {% if not recent_queries %}
+                <tr><td colspan="4" class="text-center text-muted py-3">No queries yet.</td></tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

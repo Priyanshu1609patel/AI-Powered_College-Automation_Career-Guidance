@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}User Management | Admin | Career Guidance AI{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <h2 class="mb-4 text-primary text-center">User Management</h2>
+  {% if users %}
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in users %}
+        <tr>
+          <td>{{ user.id }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>
+            <form method="POST" action="/admin_delete_user/{{ user.id }}" style="display:inline;">
+              <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete this user?');">Delete</button>
+            </form>
+            <form method="POST" action="/admin_reset_password/{{ user.id }}" class="d-inline ms-2">
+              <input type="password" name="new_password" class="form-control form-control-sm d-inline-block" style="width:120px;" placeholder="New Password" required>
+              <button type="submit" class="btn btn-secondary btn-sm">Reset Password</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="alert alert-info text-center">No users found.</div>
+  {% endif %}
+</div>
+{% endblock %} 

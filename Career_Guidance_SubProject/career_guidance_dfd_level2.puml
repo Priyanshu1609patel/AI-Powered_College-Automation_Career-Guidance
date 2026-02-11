@@ -1,0 +1,116 @@
+@startuml
+title DFD Level 2 - Career Guidance AI System
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+' --- Styles ---
+skinparam rectangle {
+  BackgroundColor #90EE90
+  FontColor black
+  BorderColor #228B22
+  BorderThickness 2
+}
+skinparam circle {
+  BackgroundColor #00FF00
+  FontColor black
+  BorderColor #006400
+  BorderThickness 2
+  FontSize 12
+}
+skinparam database {
+  BackgroundColor #F5FFFA
+  FontColor black
+  BorderColor #006400
+  BorderThickness 2
+}
+
+' --- Entities ---
+rectangle "Job Seeker" as JobSeeker
+rectangle "Admin" as Admin
+
+' --- Databases ---
+database "Resume DB" as ResumeDB
+database "Quiz DB" as QuizDB
+database "Career/Job DB" as CareerDB
+database "Recommendation Log DB" as RecoLogDB
+
+' --- Resume Analysis Processes ---
+circle "Upload\nManager" as UploadMgr
+circle "Resume\nParser" as Parser
+circle "Skill\nExtractor" as SkillExtract
+circle "NLP\nAnalyzer" as NLP
+circle "Result\nGenerator" as ResResult
+
+' --- Quiz Processing Processes ---
+circle "Quiz\nLoader" as QuizLoader
+circle "Response\nValidator" as QuizValidator
+circle "Score\nCalculator" as ScoreCalc
+circle "Quiz Report\nGenerator" as QuizReport
+
+' --- Career Recommendation Engine ---
+circle "Profile\nMatcher" as Matcher
+circle "Career\nScorer" as Scorer
+circle "Gap\nAnalyzer" as GapAnalyzer
+circle "Course\nRecommender" as CourseReco
+circle "Recommendation\nGenerator" as FinalReco
+
+' --- Layout helpers ---
+UploadMgr -[hidden]-> Parser
+Parser -[hidden]-> SkillExtract
+SkillExtract -[hidden]-> NLP
+NLP -[hidden]-> ResResult
+
+QuizLoader -[hidden]-> QuizValidator
+QuizValidator -[hidden]-> ScoreCalc
+ScoreCalc -[hidden]-> QuizReport
+
+Matcher -[hidden]-> Scorer
+Scorer -[hidden]-> GapAnalyzer
+GapAnalyzer -[hidden]-> CourseReco
+CourseReco -[hidden]-> FinalReco
+
+' --- Flows: Resume Analysis ---
+JobSeeker -down-> UploadMgr : Upload Resume
+UploadMgr -down-> Parser : Valid Resume File
+Parser -down-> SkillExtract : Extracted Data
+SkillExtract -down-> NLP : Skills/Experience
+NLP -down-> ResResult : Analysis Scores
+ResResult -up-> JobSeeker : Resume Analysis Report
+
+Parser -right-> ResumeDB : Store Parsed Resume
+NLP -right-> ResumeDB : Store NLP Analysis
+ResResult -right-> ResumeDB : Store Final Report
+
+' --- Flows: Quiz Processing ---
+JobSeeker -down-> QuizLoader : Request Quiz
+QuizLoader -down-> QuizValidator : Questions
+QuizValidator -down-> ScoreCalc : Valid Responses
+ScoreCalc -down-> QuizReport : Calculated Scores
+QuizReport -up-> JobSeeker : Quiz Result
+
+QuizLoader -right-> QuizDB : Fetch Questions
+QuizValidator -right-> QuizDB : Store Responses
+ScoreCalc -right-> QuizDB : Store Scores
+QuizReport -right-> QuizDB : Store Report
+
+' --- Flows: Career Recommendation Engine ---
+JobSeeker -down-> Matcher : Request Guidance
+Matcher -down-> Scorer : Resume + Quiz Profile
+Scorer -down-> GapAnalyzer : Ranked Careers
+GapAnalyzer -down-> CourseReco : Missing Skills
+CourseReco -down-> FinalReco : Suggested Courses
+FinalReco -up-> JobSeeker : Career Guidance Report
+
+Matcher -right-> CareerDB : Fetch Career Data
+Scorer -right-> CareerDB : Salary/Trends Info
+GapAnalyzer -right-> CareerDB : Skill Data
+CourseReco -right-> CareerDB : Course Links
+FinalReco -right-> RecoLogDB : Store Recommendations
+
+' --- Admin Interaction ---
+Admin -down-> CareerDB : Manage Career Data
+Admin -down-> QuizDB : Manage Quiz Data
+Admin -down-> ResumeDB : Maintain Records
+Admin -down-> RecoLogDB : Analytics/Reports
+
+@enduml

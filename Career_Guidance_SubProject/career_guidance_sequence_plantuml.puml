@@ -1,0 +1,196 @@
+@startuml Career Guidance AI - Sequence Diagram
+
+!theme plain
+skinparam sequenceFontSize 11
+skinparam sequenceFontStyle bold
+skinparam sequenceFontColor #000000
+skinparam sequenceActorBackgroundColor #FFFFFF
+skinparam sequenceActorBorderColor #000000
+skinparam sequenceActorBorderThickness 2
+skinparam sequenceParticipantBackgroundColor #E8F5E8
+skinparam sequenceParticipantBorderColor #000000
+skinparam sequenceParticipantBorderThickness 2
+skinparam sequenceArrowColor #000000
+skinparam sequenceArrowThickness 2
+skinparam sequenceMessageAlignment left
+skinparam sequenceGroupBackgroundColor #F0F0F0
+skinparam sequenceGroupBorderColor #000000
+
+title Career Guidance AI - Resume Analysis & Career Recommendation Process
+
+actor "Job Seeker" as User
+participant "Career Guidance AI" as AI
+participant "Resume Parser" as Parser
+participant "Career Engine" as Engine
+participant "Job Matcher" as Matcher
+participant "Database" as DB
+
+== User Registration & Profile Setup ==
+User -> AI : Access website
+User -> AI : Register account
+AI -> DB : Store user profile
+DB --> AI : Profile created
+AI --> User : Registration successful
+
+User -> AI : Login to system
+AI -> DB : Validate credentials
+DB --> AI : Authentication successful
+AI --> User : Login successful
+
+== Resume Upload & Analysis ==
+User -> AI : Upload resume
+AI -> Parser : Process resume file
+activate Parser
+Parser -> Parser : Extract text from PDF/DOCX
+Parser -> Parser : Analyze content with NLP
+Parser -> Parser : Identify skills and experience
+Parser --> AI : Resume data extracted
+deactivate Parser
+
+AI -> DB : Store resume data
+DB --> AI : Resume saved
+AI -> AI : Generate resume analysis
+AI --> User : Resume analysis complete
+
+== Interest Assessment ==
+User -> AI : Take interest quiz
+AI -> AI : Process quiz responses
+AI -> DB : Store interest data
+DB --> AI : Interest data saved
+AI --> User : Quiz completed
+
+== Career Recommendation Process ==
+User -> AI : Request career recommendations
+AI -> Engine : Analyze user profile
+activate Engine
+Engine -> DB : Get user skills and interests
+DB --> Engine : User data retrieved
+Engine -> Engine : Match skills with career requirements
+Engine -> Engine : Calculate compatibility scores
+Engine -> DB : Get available careers
+DB --> Engine : Career data retrieved
+Engine -> Engine : Generate personalized recommendations
+Engine --> AI : Recommendations ready
+deactivate Engine
+
+AI -> DB : Store recommendation results
+DB --> AI : Recommendations saved
+AI --> User : Career recommendations displayed
+
+== Job Search & Application ==
+User -> AI : Search for jobs
+AI -> Matcher : Find matching jobs
+activate Matcher
+Matcher -> DB : Query job database
+DB --> Matcher : Job listings retrieved
+Matcher -> Matcher : Match jobs with user profile
+Matcher --> AI : Matching jobs found
+deactivate Matcher
+
+AI --> User : Job search results displayed
+
+User -> AI : Apply for selected job
+AI -> DB : Store job application
+DB --> AI : Application saved
+AI -> AI : Send application confirmation
+AI --> User : Application submitted successfully
+
+== Progress Tracking ==
+User -> AI : View career progress
+AI -> DB : Get user progress data
+DB --> AI : Progress data retrieved
+AI -> AI : Generate progress report
+AI --> User : Progress dashboard displayed
+
+== Learning & Development ==
+User -> AI : Access learning resources
+AI -> DB : Get recommended courses
+DB --> AI : Course data retrieved
+AI --> User : Learning resources displayed
+
+User -> AI : Connect with mentors
+AI -> DB : Find available mentors
+DB --> AI : Mentor data retrieved
+AI --> User : Mentor connections available
+
+== Notification System ==
+AI -> AI : Check for new opportunities
+AI -> DB : Query user preferences
+DB --> AI : User preferences retrieved
+AI -> AI : Generate personalized notifications
+AI -> User : Send notification
+User -> AI : View notification
+AI -> DB : Mark notification as read
+DB --> AI : Notification status updated
+
+== Admin Management ==
+actor "System Administrator" as Admin
+Admin -> AI : Access admin panel
+AI -> DB : Get system analytics
+DB --> AI : Analytics data retrieved
+AI --> Admin : Admin dashboard displayed
+
+Admin -> AI : Manage user accounts
+AI -> DB : Update user data
+DB --> AI : User data updated
+AI --> Admin : User management completed
+
+Admin -> AI : Manage career database
+AI -> DB : Update career information
+DB --> AI : Career data updated
+AI --> Admin : Career management completed
+
+note right of User
+  Job Seeker Journey:
+  - Register and login
+  - Upload and analyze resume
+  - Take interest assessment
+  - Receive career recommendations
+  - Search and apply for jobs
+  - Track progress and learn
+end note
+
+note right of AI
+  AI System Functions:
+  - User authentication
+  - Resume processing
+  - Career matching
+  - Job recommendations
+  - Progress tracking
+  - Notification management
+end note
+
+note right of Parser
+  Resume Parser:
+  - PDF/DOCX text extraction
+  - NLP-based content analysis
+  - Skills identification
+  - Experience parsing
+end note
+
+note right of Engine
+  Career Engine:
+  - Profile analysis
+  - Skill matching
+  - Compatibility scoring
+  - Recommendation generation
+end note
+
+note right of Matcher
+  Job Matcher:
+  - Job database queries
+  - Profile-job matching
+  - Relevance scoring
+  - Results filtering
+end note
+
+note right of DB
+  Database Operations:
+  - User data storage
+  - Resume data management
+  - Career information
+  - Job listings
+  - Application tracking
+end note
+
+@enduml

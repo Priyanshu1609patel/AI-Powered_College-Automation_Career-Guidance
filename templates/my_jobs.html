@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %}My Saved Jobs | Career Guidance AI{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <h2 class="mb-4 text-success text-center">My Saved Jobs</h2>
+  <a href="{{ url_for('jobs') }}" class="btn btn-secondary mb-3"><i class="bi bi-arrow-left"></i> Back to Job Board</a>
+  {% if jobs %}
+  <div class="row g-4">
+    {% for job in jobs %}
+    <div class="col-md-6 col-lg-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <h5 class="card-title text-info">{{ job.title }}</h5>
+          <div class="mb-2"><b>Company:</b> <span class="text-dark">{{ job.company }}</span></div>
+          <div class="mb-2"><b>Location:</b> <span class="text-dark">{{ job.location }}</span></div>
+          <div class="mb-2"><b>Job Type:</b> <span class="text-dark">{{ job.job_type or 'N/A' }}</span></div>
+          <div class="mb-2"><b>Salary:</b> <span class="text-dark">{{ job.salary or 'N/A' }}</span></div>
+          <div class="mb-2 text-muted" style="font-size:0.9em;">Posted: {{ job.posted_at.strftime('%Y-%m-%d') if job.posted_at else 'N/A' }}</div>
+          <p class="card-text">{{ job.description[:120] }}{% if job.description and job.description|length > 120 %}...{% endif %}</p>
+          {% if job.requirements %}
+          <div class="mb-2"><b>Requirements:</b> <span class="text-dark">{{ job.requirements }}</span></div>
+          {% endif %}
+          <a href="{{ url_for('job_detail', job_id=job.id) }}" class="btn btn-outline-primary btn-sm mb-2 w-100"><i class="bi bi-eye"></i> View Details</a>
+          <form method="POST" action="/unsave_job/{{ job.id }}" class="d-inline">
+            <button type="submit" class="btn btn-warning btn-sm" data-bs-toggle="tooltip" title="Remove from Saved Jobs"><i class="bi bi-x-circle"></i> Unsave</button>
+          </form>
+          <form method="POST" action="/apply_job/{{ job.id }}" class="mt-2">
+            <div class="input-group input-group-sm mb-1">
+              <select class="form-select" name="status">
+                <option value="Applied" {% if job.status == 'Applied' %}selected{% endif %}>Applied</option>
+                <option value="Interview" {% if job.status == 'Interview' %}selected{% endif %}>Interview</option>
+                <option value="Offer" {% if job.status == 'Offer' %}selected{% endif %}>Offer</option>
+                <option value="Rejected" {% if job.status == 'Rejected' %}selected{% endif %}>Rejected</option>
+                <option value="Saved" {% if job.status == 'Saved' or not job.status %}selected{% endif %}>Saved</option>
+              </select>
+              <input type="text" class="form-control" name="notes" placeholder="Notes" value="{{ job.notes or '' }}">
+              <button class="btn btn-outline-success" type="submit" data-bs-toggle="tooltip" title="Update Status"><i class="bi bi-check2"></i></button>
+            </div>
+            {% if job.status %}<span class="badge bg-info">Status: {{ job.status }}</span>{% endif %}
+            {% if job.applied_at %}<span class="badge bg-secondary ms-1">Applied: {{ job.applied_at.strftime('%Y-%m-%d') }}</span>{% endif %}
+          </form>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="alert alert-info text-center">You have not saved any jobs yet.</div>
+  {% endif %}
+</div>
+{% endblock %} 

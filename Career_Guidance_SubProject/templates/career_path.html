@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Career Path | Career Guidance AI{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h2 class="card-title text-info">{{ career.title }}</h2>
+      <p class="mb-2">{{ career.description }}</p>
+      <p><b>Required Skills:</b> {{ career.required_skills }}</p>
+      <p><b>Category:</b> {{ career.category }}</p>
+      <p><b>Salary Range:</b> {{ career.salary_range }}</p>
+      <p><b>Recommended Courses:</b> {{ career.courses }}</p>
+      <p><b>Career Path:</b> {{ career.path }}</p>
+      <form method="GET" action="/start_plan/{{ career.id }}">
+        <button type="submit" class="btn btn-primary mt-2">Start This Career Plan</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %} 

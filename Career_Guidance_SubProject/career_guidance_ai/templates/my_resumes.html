@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-4">
+  <h2 class="mb-4">My Built Resumes</h2>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+  {% if resumes %}
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Created At</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for resume in resumes %}
+      <tr>
+        <td>{{ resume.title }}</td>
+        <td>{{ resume.created_at.strftime('%Y-%m-%d %H:%M') if resume.created_at else '' }}</td>
+        <td class="d-flex gap-2">
+          <a href="{{ url_for('edit_resume_builder', resume_id=resume.id) }}" class="btn btn-sm btn-primary">Edit</a>
+          <form method="post" action="{{ url_for('delete_resume_builder', resume_id=resume.id) }}" onsubmit="return confirm('Delete this resume?');">
+            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+          </form>
+          <a href="{{ url_for('download_resume_builder', resume_id=resume.id) }}" class="btn btn-sm btn-success">Download PDF</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+    <div class="alert alert-info">No built resumes yet. <a href="{{ url_for('resume_builder') }}">Create one now</a>.</div>
+  {% endif %}
+  <a href="{{ url_for('resume_builder') }}" class="btn btn-primary mt-3">Create New Resume</a>
+</div>
+{% endblock %} 

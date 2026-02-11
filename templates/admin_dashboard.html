@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+{% block title %}Admin Dashboard | CareerAI{% endblock %}
+{% block content %}
+<div class="space-y-6">
+    <!-- Welcome Header -->
+    <div class="bg-gradient-to-r from-primary-800 to-primary-900 rounded-2xl p-8 text-white">
+        <div class="flex items-center justify-between">
+            <div>
+                <h1 class="text-2xl sm:text-3xl font-bold mb-2">Welcome, {{ admin.username }}!</h1>
+                <p class="text-primary-300">Manage your platform from this dashboard</p>
+            </div>
+            <div class="hidden sm:block w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center">
+                <i class="bi bi-shield-check text-3xl"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-white rounded-xl shadow-sm border border-primary-100 p-5">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm text-primary-500">Total Users</p>
+                    <p class="text-2xl font-bold text-primary-800 mt-1">--</p>
+                </div>
+                <div class="w-12 h-12 bg-accent-100 rounded-xl flex items-center justify-center">
+                    <i class="bi bi-people text-accent-600 text-xl"></i>
+                </div>
+            </div>
+        </div>
+        <div class="bg-white rounded-xl shadow-sm border border-primary-100 p-5">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm text-primary-500">Total Jobs</p>
+                    <p class="text-2xl font-bold text-primary-800 mt-1">--</p>
+                </div>
+                <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center">
+                    <i class="bi bi-briefcase text-emerald-600 text-xl"></i>
+                </div>
+            </div>
+        </div>
+        <div class="bg-white rounded-xl shadow-sm border border-primary-100 p-5">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm text-primary-500">Careers</p>
+                    <p class="text-2xl font-bold text-primary-800 mt-1">--</p>
+                </div>
+                <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center">
+                    <i class="bi bi-compass text-amber-600 text-xl"></i>
+                </div>
+            </div>
+        </div>
+        <div class="bg-white rounded-xl shadow-sm border border-primary-100 p-5">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm text-primary-500">Feedback</p>
+                    <p class="text-2xl font-bold text-primary-800 mt-1">--</p>
+                </div>
+                <div class="w-12 h-12 bg-rose-100 rounded-xl flex items-center justify-center">
+                    <i class="bi bi-chat-dots text-rose-600 text-xl"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="bg-white rounded-2xl shadow-sm border border-primary-100 p-6">
+        <h2 class="text-lg font-semibold text-primary-800 mb-6">Quick Actions</h2>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <a href="{{ url_for('admin_users') }}" class="flex items-center p-4 bg-accent-50 rounded-xl hover:bg-accent-100 transition-colors group">
+                <div class="w-12 h-12 bg-accent-100 rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform">
+                    <i class="bi bi-people text-accent-600 text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-primary-800">User Management</h3>
+                    <p class="text-sm text-primary-500">Manage registered users</p>
+                </div>
+            </a>
+
+            <a href="{{ url_for('admin_careers') }}" class="flex items-center p-4 bg-emerald-50 rounded-xl hover:bg-emerald-100 transition-colors group">
+                <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform">
+                    <i class="bi bi-compass text-emerald-600 text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-primary-800">Career Management</h3>
+                    <p class="text-sm text-primary-500">Add and edit careers</p>
+                </div>
+            </a>
+
+            <a href="{{ url_for('admin_jobs') }}" class="flex items-center p-4 bg-amber-50 rounded-xl hover:bg-amber-100 transition-colors group">
+                <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform">
+                    <i class="bi bi-briefcase text-amber-600 text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-primary-800">Job Management</h3>
+                    <p class="text-sm text-primary-500">Manage job listings</p>
+                </div>
+            </a>
+
+            <a href="{{ url_for('manage_mentors') }}" class="flex items-center p-4 bg-violet-50 rounded-xl hover:bg-violet-100 transition-colors group">
+                <div class="w-12 h-12 bg-violet-100 rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform">
+                    <i class="bi bi-person-badge text-violet-600 text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-primary-800">Manage Mentors</h3>
+                    <p class="text-sm text-primary-500">Add and edit mentors</p>
+                </div>
+            </a>
+
+            <a href="{{ url_for('admin_analytics') }}" class="flex items-center p-4 bg-cyan-50 rounded-xl hover:bg-cyan-100 transition-colors group">
+                <div class="w-12 h-12 bg-cyan-100 rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform">
+                    <i class="bi bi-bar-chart text-cyan-600 text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-primary-800">Analytics</h3>
+                    <p class="text-sm text-primary-500">View platform stats</p>
+                </div>
+            </a>
+
+            <a href="{{ url_for('admin_feedback') }}" class="flex items-center p-4 bg-rose-50 rounded-xl hover:bg-rose-100 transition-colors group">
+                <div class="w-12 h-12 bg-rose-100 rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform">
+                    <i class="bi bi-chat-dots text-rose-600 text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-primary-800">Feedback Review</h3>
+                    <p class="text-sm text-primary-500">View user feedback</p>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- Profile Link -->
+    <div class="bg-white rounded-2xl shadow-sm border border-primary-100 p-6">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center">
+                <div class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center mr-4">
+                    <i class="bi bi-person-gear text-primary-600 text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-primary-800">Admin Profile</h3>
+                    <p class="text-sm text-primary-500">View and edit your admin profile</p>
+                </div>
+            </div>
+            <a href="{{ url_for('admin_profile') }}" class="px-4 py-2 bg-primary-100 text-primary-700 font-medium rounded-lg hover:bg-primary-200 transition-colors">
+                View Profile
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard - College AI{% endblock %}
+
+{% block content %}
+<div class="page-wrapper">
+    <!-- Welcome Banner -->
+    <div class="p-4 mb-4 rounded-4 text-white" style="background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);">
+        <div class="row align-items-center">
+            <div class="col">
+                <h4 class="fw-bold mb-1">Welcome, {{ session.get('user_name', 'Student') }}!</h4>
+                <p class="mb-0 opacity-75">
+                    {% if session.get('semester') %}Semester {{ session.get('semester') }} | {% endif %}
+                    {{ session.get('branch', 'CSE') }} | College AI Assistant
+                </p>
+            </div>
+            <div class="col-auto d-none d-sm-block">
+                <i class="bi bi-mortarboard" style="font-size: 3rem; opacity: 0.3;"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <h5 class="section-title">Quick Actions</h5>
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-md-3">
+            <a href="{{ url_for('main.chatbot_page') }}" class="quick-action">
+                <div class="qa-icon" style="background: var(--primary);">
+                    <i class="bi bi-robot"></i>
+                </div>
+                <div class="qa-text">
+                    <h6>AI Chatbot</h6>
+                    <small>Ask anything</small>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-md-3">
+            <a href="/career/dashboard" target="_blank" class="quick-action">
+                <div class="qa-icon" style="background: var(--secondary);">
+                    <i class="bi bi-compass"></i>
+                </div>
+                <div class="qa-text">
+                    <h6>Career Guide</h6>
+                    <small>Plan your future</small>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-md-3">
+            <a href="{{ url_for('main.chatbot_page') }}" class="quick-action" onclick="localStorage.setItem('autoMsg','My attendance is ')">
+                <div class="qa-icon" style="background: var(--success);">
+                    <i class="bi bi-calculator"></i>
+                </div>
+                <div class="qa-text">
+                    <h6>Attendance</h6>
+                    <small>Check eligibility</small>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-md-3">
+            <a href="{{ url_for('main.chatbot_page') }}" class="quick-action" onclick="localStorage.setItem('autoMsg','How to calculate CGPA?')">
+                <div class="qa-icon" style="background: var(--accent);">
+                    <i class="bi bi-graph-up"></i>
+                </div>
+                <div class="qa-text">
+                    <h6>CGPA Calc</h6>
+                    <small>Grade calculator</small>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Left Column -->
+        <div class="col-lg-8">
+            <!-- Semester Subjects -->
+            {% if subjects %}
+            <div class="mb-4">
+                <h5 class="section-title">
+                    <i class="bi bi-book me-1"></i>
+                    Your Semester {{ session.get('semester') }} Subjects
+                </h5>
+                <div class="table-card">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Subject</th>
+                                    <th class="text-center">Credits</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for s in subjects %}
+                                <tr>
+                                    <td><span class="badge bg-primary bg-opacity-10 text-primary">{{ s.subject_code }}</span></td>
+                                    <td>{{ s.subject_name }}</td>
+                                    <td class="text-center">{{ s.credits }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Recent Chats -->
+            <div class="mb-4">
+                <h5 class="section-title">
+                    <i class="bi bi-chat-dots me-1"></i> Recent Conversations
+                </h5>
+                {% if recent_chats %}
+                <div class="list-group">
+                    {% for chat in recent_chats %}
+                    <a href="{{ url_for('main.chatbot_page') }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3"
+                       onclick="localStorage.setItem('loadChat','{{ chat.id }}')">
+                        <div>
+                            <i class="bi bi-chat-text me-2 text-primary"></i>
+                            <span class="fw-medium">{{ chat.title }}</span>
+                        </div>
+                        <small class="text-muted">{{ chat.created_at.strftime('%d %b') if chat.created_at else '' }}</small>
+                    </a>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="empty-state">
+                    <i class="bi bi-chat-square-text d-block"></i>
+                    <h5>No conversations yet</h5>
+                    <p>Start chatting with the AI Assistant to get help with academics!</p>
+                    <a href="{{ url_for('main.chatbot_page') }}" class="btn btn-primary btn-sm">Start a Chat</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="col-lg-4">
+            <!-- Notices -->
+            <div class="mb-4">
+                <h5 class="section-title">
+                    <i class="bi bi-megaphone me-1"></i> Notices
+                </h5>
+                {% if notices %}
+                {% for notice in notices %}
+                <div class="stat-card mb-3">
+                    <span class="badge notice-badge-{{ notice.notice_type }} mb-2">{{ notice.notice_type|upper }}</span>
+                    <h6 class="fw-bold mb-1" style="font-size: 0.9rem;">{{ notice.title }}</h6>
+                    <small class="text-muted">{{ notice.created_at.strftime('%d %b %Y') if notice.created_at else '' }}</small>
+                </div>
+                {% endfor %}
+                {% else %}
+                <div class="stat-card text-center py-4">
+                    <i class="bi bi-bell-slash d-block mb-2" style="font-size: 1.5rem; opacity: 0.4;"></i>
+                    <small class="text-muted">No active notices</small>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Chatbot Tips -->
+            <div class="stat-card">
+                <h6 class="fw-bold mb-3"><i class="bi bi-lightbulb me-1 text-warning"></i> Try Asking...</h6>
+                <div class="d-flex flex-column gap-2">
+                    <small class="text-muted">"What subjects are in semester 5?"</small>
+                    <small class="text-muted">"My attendance is 42/60"</small>
+                    <small class="text-muted">"Give me notes for DBMS"</small>
+                    <small class="text-muted">"What is the exam pattern?"</small>
+                    <small class="text-muted">"Convert 8.5 CGPA to percentage"</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
