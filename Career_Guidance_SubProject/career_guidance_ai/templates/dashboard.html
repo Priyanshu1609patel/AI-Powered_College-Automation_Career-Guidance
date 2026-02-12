@@ -28,7 +28,7 @@
     <h5 class="section-title">Quick Actions</h5>
     <div class="row g-3 mb-4">
         <div class="col-6 col-md-3">
-            <a href="/recommendations" class="quick-action">
+            <a href="{{ url_for('recommendations') }}" class="quick-action">
                 <div class="qa-icon" style="background: var(--primary);">
                     <i class="bi bi-stars"></i>
                 </div>
@@ -39,7 +39,7 @@
             </a>
         </div>
         <div class="col-6 col-md-3">
-            <a href="/upload_resume" class="quick-action">
+            <a href="{{ url_for('upload_resume') }}" class="quick-action">
                 <div class="qa-icon" style="background: var(--secondary);">
                     <i class="bi bi-upload"></i>
                 </div>
@@ -50,7 +50,7 @@
             </a>
         </div>
         <div class="col-6 col-md-3">
-            <a href="/jobs" class="quick-action">
+            <a href="{{ url_for('jobs') }}" class="quick-action">
                 <div class="qa-icon" style="background: var(--success);">
                     <i class="bi bi-briefcase"></i>
                 </div>
@@ -61,7 +61,7 @@
             </a>
         </div>
         <div class="col-6 col-md-3">
-            <a href="/interest_quiz" class="quick-action">
+            <a href="{{ url_for('interest_quiz') }}" class="quick-action">
                 <div class="qa-icon" style="background: var(--accent);">
                     <i class="bi bi-question-circle"></i>
                 </div>
@@ -130,7 +130,7 @@
                     <div class="empty-state py-3">
                         <i class="bi bi-graph-up-arrow d-block" style="font-size: 2rem;"></i>
                         <p class="mb-2">No active career plans yet</p>
-                        <a href="/recommendations" class="btn btn-sm" style="background: var(--primary); color: #fff; border-radius: 8px;">Get Recommendations</a>
+                        <a href="{{ url_for('recommendations') }}" class="btn btn-sm" style="background: var(--primary); color: #fff; border-radius: 8px;">Get Recommendations</a>
                     </div>
                     {% endif %}
                 </div>
@@ -143,7 +143,7 @@
             <div class="mb-4">
                 <h5 class="section-title"><i class="bi bi-lightning me-1"></i> Explore</h5>
                 <div class="d-flex flex-column gap-2">
-                    <a href="/track_progress" class="quick-action">
+                    <a href="{{ url_for('track_progress') }}" class="quick-action">
                         <div class="qa-icon" style="background: var(--warning); width:36px; height:36px; font-size:1rem;">
                             <i class="bi bi-graph-up-arrow"></i>
                         </div>
@@ -152,7 +152,7 @@
                             <small>View milestones</small>
                         </div>
                     </a>
-                    <a href="/saved_careers" class="quick-action">
+                    <a href="{{ url_for('saved_careers') }}" class="quick-action">
                         <div class="qa-icon" style="background: var(--danger); width:36px; height:36px; font-size:1rem;">
                             <i class="bi bi-bookmark-heart"></i>
                         </div>
@@ -186,9 +186,9 @@
             <div class="stat-card">
                 <h6 class="fw-bold mb-3"><i class="bi bi-person-circle me-1" style="color: var(--primary);"></i> Profile</h6>
                 <div class="d-flex flex-column gap-2">
-                    <a href="/profile" class="btn btn-sm btn-career-outline w-100">View Profile</a>
-                    <a href="/upload_resume" class="btn btn-sm btn-career-outline w-100">Upload Resume</a>
-                    <a href="/track_progress" class="btn btn-sm btn-career-outline w-100">Track Progress</a>
+                    <a href="{{ url_for('profile') }}" class="btn btn-sm btn-career-outline w-100">View Profile</a>
+                    <a href="{{ url_for('upload_resume') }}" class="btn btn-sm btn-career-outline w-100">Upload Resume</a>
+                    <a href="{{ url_for('track_progress') }}" class="btn btn-sm btn-career-outline w-100">Track Progress</a>
                 </div>
             </div>
         </div>
