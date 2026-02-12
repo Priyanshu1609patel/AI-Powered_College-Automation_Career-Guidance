@@ -1,58 +1,65 @@
 {% extends 'base.html' %}
-{% block title %}Career Management | Admin | Career Guidance AI{% endblock %}
+{% block title %}Career Management - Admin{% endblock %}
 {% block content %}
-<div class="container py-4">
-  <h2 class="mb-4 text-primary text-center">Career Management</h2>
-  <div class="card mb-4">
-    <div class="card-body">
-      <h5 class="card-title">Add New Career</h5>
-      <form method="POST" action="/admin_add_career" class="row g-2">
-        <div class="col-md-3"><input type="text" name="title" class="form-control" placeholder="Title" required></div>
-        <div class="col-md-3"><input type="text" name="category" class="form-control" placeholder="Category"></div>
-        <div class="col-md-3"><input type="text" name="salary_range" class="form-control" placeholder="Salary Range"></div>
-        <div class="col-md-3"><input type="text" name="required_skills" class="form-control" placeholder="Required Skills (comma separated)"></div>
-        <div class="col-12"><input type="text" name="courses" class="form-control" placeholder="Courses (comma separated)"></div>
-        <div class="col-12"><textarea name="description" class="form-control" placeholder="Description" rows="2"></textarea></div>
-        <div class="col-12"><textarea name="path" class="form-control" placeholder="Career Path" rows="2"></textarea></div>
-        <div class="col-12 text-end"><button type="submit" class="btn btn-success">Add Career</button></div>
-      </form>
+<div class="page-wrapper">
+    <div class="admin-header">
+        <h3><i class="bi bi-briefcase me-2"></i>Career Management</h3>
+        <p class="mb-0 opacity-75">Add and manage career paths</p>
     </div>
-  </div>
-  <h5 class="mb-3">All Careers</h5>
-  {% if careers %}
-  <div class="table-responsive">
-    <table class="table table-bordered table-hover align-middle">
-      <thead class="table-light">
-        <tr>
-          <th>Title</th>
-          <th>Category</th>
-          <th>Salary</th>
-          <th>Required Skills</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for c in careers %}
-        <tr>
-          <form method="POST" action="/admin_edit_career/{{ c.id }}">
-            <td><input type="text" name="title" class="form-control form-control-sm" value="{{ c.title }}" required></td>
-            <td><input type="text" name="category" class="form-control form-control-sm" value="{{ c.category }}"></td>
-            <td><input type="text" name="salary_range" class="form-control form-control-sm" value="{{ c.salary_range }}"></td>
-            <td><input type="text" name="required_skills" class="form-control form-control-sm" value="{{ c.required_skills }}"></td>
-            <td>
-              <button type="submit" class="btn btn-primary btn-sm">Save</button>
-          </form>
-          <form method="POST" action="/admin_delete_career/{{ c.id }}" style="display:inline;">
-            <button type="submit" class="btn btn-danger btn-sm ms-2" onclick="return confirm('Delete this career?');">Delete</button>
-          </form>
-            </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
-  {% else %}
-  <div class="alert alert-info text-center">No careers found.</div>
-  {% endif %}
+
+    <!-- Add Career Form -->
+    <div class="stat-card mb-4">
+        <h6 class="fw-bold mb-3" style="color: var(--dark);"><i class="bi bi-plus-circle me-1" style="color: var(--primary);"></i>Add New Career</h6>
+        <form method="POST" action="/admin_add_career" class="row g-2">
+            <div class="col-md-3"><input type="text" name="title" class="form-control form-control-sm" placeholder="Title" required></div>
+            <div class="col-md-3"><input type="text" name="category" class="form-control form-control-sm" placeholder="Category"></div>
+            <div class="col-md-3"><input type="text" name="salary_range" class="form-control form-control-sm" placeholder="Salary Range"></div>
+            <div class="col-md-3"><input type="text" name="required_skills" class="form-control form-control-sm" placeholder="Required Skills (comma separated)"></div>
+            <div class="col-12"><input type="text" name="courses" class="form-control form-control-sm" placeholder="Courses (comma separated)"></div>
+            <div class="col-12"><textarea name="description" class="form-control form-control-sm" placeholder="Description" rows="2"></textarea></div>
+            <div class="col-12"><textarea name="path" class="form-control form-control-sm" placeholder="Career Path" rows="2"></textarea></div>
+            <div class="col-12 text-end">
+                <button type="submit" class="btn btn-career btn-sm"><i class="bi bi-plus-circle me-1"></i>Add Career</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Careers Table -->
+    <h5 class="section-title">All Careers</h5>
+    {% if careers %}
+    <div class="table-card">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead><tr><th>Title</th><th>Category</th><th>Salary</th><th>Required Skills</th><th>Actions</th></tr></thead>
+                <tbody>
+                    {% for c in careers %}
+                    <tr>
+                        <form method="POST" action="/admin_edit_career/{{ c.id }}">
+                        <td><input type="text" name="title" class="form-control form-control-sm" value="{{ c.title }}" required></td>
+                        <td><input type="text" name="category" class="form-control form-control-sm" value="{{ c.category }}"></td>
+                        <td><input type="text" name="salary_range" class="form-control form-control-sm" value="{{ c.salary_range }}"></td>
+                        <td><input type="text" name="required_skills" class="form-control form-control-sm" value="{{ c.required_skills }}"></td>
+                        <td>
+                            <div class="d-flex gap-1">
+                                <button type="submit" class="btn btn-career btn-sm" style="font-size: 0.78rem;">Save</button>
+                        </form>
+                        <form method="POST" action="/admin_delete_career/{{ c.id }}">
+                                <button type="submit" class="btn btn-sm" style="background: var(--danger); color: #fff; border-radius: 10px; font-weight: 600; font-size: 0.78rem;" onclick="return confirm('Delete this career?');">Delete</button>
+                        </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <i class="bi bi-briefcase d-block"></i>
+        <h5>No careers found</h5>
+        <p>Add your first career path above</p>
+    </div>
+    {% endif %}
 </div>
-{% endblock %} 
+{% endblock %}

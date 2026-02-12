@@ -1,21 +1,86 @@
 {% extends 'base.html' %}
-{% block title %}Admin Dashboard | Career Guidance AI{% endblock %}
+{% block title %}Admin Dashboard - Career Guidance AI{% endblock %}
 {% block content %}
-<div class="container py-5">
-  <h1 class="mb-4 text-primary text-center display-5">Admin Dashboard</h1>
-  <div class="card shadow-lg mx-auto" style="max-width: 600px;">
-    <div class="card-body text-center">
-      <h4 class="mb-3">Welcome, {{ admin.username }}!</h4>
-      <div class="mb-4 d-grid gap-3">
-        <a href="{{ url_for('manage_mentors') }}" class="btn btn-info btn-lg"><i class="bi bi-kanban me-2"></i>Manage Mentors</a>
-        <a href="{{ url_for('admin_users') }}" class="btn btn-primary btn-lg"><i class="bi bi-people me-2"></i>User Management</a>
-        <a href="{{ url_for('admin_analytics') }}" class="btn btn-success btn-lg"><i class="bi bi-bar-chart-line me-2"></i>Analytics</a>
-        <a href="{{ url_for('admin_feedback') }}" class="btn btn-warning btn-lg"><i class="bi bi-chat-dots me-2"></i>Feedback Review</a>
-        <a href="{{ url_for('admin_careers') }}" class="btn btn-secondary btn-lg"><i class="bi bi-briefcase me-2"></i>Career Management</a>
-        <a href="{{ url_for('admin_profile') }}" class="btn btn-outline-dark btn-lg"><i class="bi bi-person me-2"></i>View Profile</a>
-        <a href="{{ url_for('admin_jobs') }}" class="btn btn-dark btn-lg"><i class="bi bi-briefcase-fill me-2"></i>Job Management</a>
-      </div>
+<div class="page-wrapper">
+    <!-- Admin Header -->
+    <div class="admin-header mb-4">
+        <div class="row align-items-center">
+            <div class="col">
+                <h3><i class="bi bi-speedometer2 me-2"></i>Admin Dashboard</h3>
+                <p class="mb-0 opacity-75">Welcome back, {{ admin.username }}!</p>
+            </div>
+            <div class="col-auto d-none d-sm-block">
+                <i class="bi bi-shield-lock" style="font-size: 3rem; opacity: 0.3;"></i>
+            </div>
+        </div>
     </div>
-  </div>
+
+    <!-- Quick Actions Grid -->
+    <h5 class="section-title">Management Tools</h5>
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-md-4 col-lg-3">
+            <a href="{{ url_for('admin_careers') }}" class="career-feature-card">
+                <div class="cf-icon" style="background: var(--primary);">
+                    <i class="bi bi-briefcase"></i>
+                </div>
+                <h5 style="font-size: 1rem;">Career Management</h5>
+                <p>Add & manage career paths</p>
+            </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+            <a href="{{ url_for('admin_jobs') }}" class="career-feature-card">
+                <div class="cf-icon" style="background: var(--secondary);">
+                    <i class="bi bi-briefcase-fill"></i>
+                </div>
+                <h5 style="font-size: 1rem;">Job Management</h5>
+                <p>Manage job postings</p>
+            </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+            <a href="{{ url_for('admin_users') }}" class="career-feature-card">
+                <div class="cf-icon" style="background: var(--success);">
+                    <i class="bi bi-people"></i>
+                </div>
+                <h5 style="font-size: 1rem;">User Management</h5>
+                <p>Manage registered users</p>
+            </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+            <a href="{{ url_for('admin_analytics') }}" class="career-feature-card">
+                <div class="cf-icon" style="background: var(--warning);">
+                    <i class="bi bi-bar-chart-line"></i>
+                </div>
+                <h5 style="font-size: 1rem;">Analytics</h5>
+                <p>Platform statistics</p>
+            </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+            <a href="{{ url_for('admin_feedback') }}" class="career-feature-card">
+                <div class="cf-icon" style="background: var(--danger);">
+                    <i class="bi bi-chat-dots"></i>
+                </div>
+                <h5 style="font-size: 1rem;">Feedback Review</h5>
+                <p>Review user feedback</p>
+            </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+            <a href="{{ url_for('manage_mentors') }}" class="career-feature-card">
+                <div class="cf-icon" style="background: var(--accent);">
+                    <i class="bi bi-kanban"></i>
+                </div>
+                <h5 style="font-size: 1rem;">Manage Mentors</h5>
+                <p>Add & edit mentors</p>
+            </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+            <a href="{{ url_for('admin_profile') }}" class="career-feature-card">
+                <div class="cf-icon" style="background: var(--dark);">
+                    <i class="bi bi-person"></i>
+                </div>
+                <h5 style="font-size: 1rem;">View Profile</h5>
+                <p>Admin profile settings</p>
+            </a>
+        </div>
+    </div>
 </div>
-{% endblock %} 
+{% endblock %}

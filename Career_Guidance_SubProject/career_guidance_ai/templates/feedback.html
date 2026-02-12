@@ -1,20 +1,28 @@
 {% extends 'base.html' %}
-{% block title %}Feedback | Career Guidance AI{% endblock %}
+{% block title %}Feedback - Career Guidance AI{% endblock %}
 {% block content %}
-<div class="row justify-content-center align-items-center" style="min-height: 70vh;">
-  <div class="col-md-6">
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <h3 class="mb-4 text-center text-primary">We Value Your Feedback</h3>
-        <form method="POST">
-          <div class="mb-3">
-            <label for="message" class="form-label">Your Feedback</label>
-            <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
-          </div>
-          <button type="submit" class="btn btn-primary w-100">Submit Feedback</button>
-        </form>
-      </div>
+<div class="page-wrapper">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="stat-card">
+                <div class="text-center mb-4">
+                    <div class="stat-icon mx-auto mb-3" style="background: var(--primary); width: 56px; height: 56px; font-size: 1.5rem;">
+                        <i class="bi bi-chat-dots"></i>
+                    </div>
+                    <h3 class="fw-bold" style="color: var(--dark);">We Value Your Feedback</h3>
+                    <p style="color: var(--gray);">Help us improve your experience</p>
+                </div>
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="message" class="form-label fw-bold">Your Feedback</label>
+                        <textarea class="form-control" id="message" name="message" rows="4" required placeholder="Share your thoughts, suggestions, or issues..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-career w-100">
+                        <i class="bi bi-send me-2"></i>Submit Feedback
+                    </button>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
-{% endblock %} 
+{% endblock %}

@@ -1,37 +1,41 @@
 {% extends 'base.html' %}
-{% block title %}Feedback Review | Admin | Career Guidance AI{% endblock %}
+{% block title %}Feedback Review - Admin{% endblock %}
 {% block content %}
-<div class="container py-4">
-  <h2 class="mb-4 text-primary text-center">Feedback Review</h2>
-  {% if feedbacks %}
-  <div class="table-responsive">
-    <table class="table table-bordered table-hover align-middle">
-      <thead class="table-light">
-        <tr>
-          <th>User</th>
-          <th>Message</th>
-          <th>Date</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for fb in feedbacks %}
-        <tr>
-          <td>{{ fb.name }}</td>
-          <td>{{ fb.message }}</td>
-          <td>{{ fb.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
-          <td>
-            <form method="POST" action="/admin_delete_feedback/{{ fb.id }}" style="display:inline;">
-              <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete this feedback?');">Delete</button>
-            </form>
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
-  {% else %}
-  <div class="alert alert-info text-center">No feedback found.</div>
-  {% endif %}
+<div class="page-wrapper">
+    <div class="admin-header">
+        <h3><i class="bi bi-chat-dots me-2"></i>Feedback Review</h3>
+        <p class="mb-0 opacity-75">Review and manage user feedback</p>
+    </div>
+
+    {% if feedbacks %}
+    <div class="table-card">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead><tr><th>User</th><th>Message</th><th>Date</th><th>Actions</th></tr></thead>
+                <tbody>
+                    {% for fb in feedbacks %}
+                    <tr>
+                        <td class="fw-medium">{{ fb.name }}</td>
+                        <td style="color: var(--gray);">{{ fb.message }}</td>
+                        <td><small class="text-muted">{{ fb.created_at.strftime('%Y-%m-%d %H:%M') }}</small></td>
+                        <td>
+                            <form method="POST" action="/admin_delete_feedback/{{ fb.id }}">
+                                <button type="submit" class="btn btn-sm" style="background: var(--danger); color: #fff; border-radius: 8px; font-size: 0.8rem;" onclick="return confirm('Delete this feedback?');">
+                                    <i class="bi bi-trash me-1"></i>Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <i class="bi bi-chat-dots d-block"></i>
+        <h5>No feedback found</h5>
+    </div>
+    {% endif %}
 </div>
-{% endblock %} 
+{% endblock %}

@@ -1,37 +1,46 @@
 {% extends 'base.html' %}
+{% block title %}{{ group.name }} - Career Guidance AI{% endblock %}
 {% block content %}
-<div class="container mt-4">
-    <div class="row">
-        <div class="col-md-8">
-            <h2>{{ group.name }}</h2>
-            <p>{{ group.description }}</p>
-            {% if group.image %}
-            <img src="{{ url_for('uploaded_file', filename=group.image) }}" alt="Group Image" class="img-fluid mb-3" style="max-height:200px;object-fit:cover;">
-            {% endif %}
-            <h5>Members ({{ members|length }})</h5>
-            <ul class="list-group mb-3">
-                {% for member in members %}
-                <li class="list-group-item d-flex align-items-center">
-                    {% if member.profile_pic %}
-                    <img src="{{ url_for('uploaded_file', filename=member.profile_pic) }}" alt="Profile" class="rounded-circle me-2" width="32" height="32">
+<div class="page-wrapper">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="stat-card">
+                {% if group.image %}
+                <img src="{{ url_for('uploaded_file', filename=group.image) }}" alt="Group" class="rounded-3 w-100 mb-3" style="max-height: 200px; object-fit: cover;">
+                {% endif %}
+                <h3 class="fw-bold mb-2" style="color: var(--dark);">{{ group.name }}</h3>
+                <p style="color: var(--gray);">{{ group.description }}</p>
+
+                <h6 class="fw-bold mb-2" style="color: var(--dark);"><i class="bi bi-people me-1" style="color: var(--primary);"></i>Members ({{ members|length }})</h6>
+                <div class="d-flex flex-column gap-2 mb-3">
+                    {% for member in members %}
+                    <div class="d-flex align-items-center p-2 rounded-3" style="background: rgba(67,97,238,0.04);">
+                        {% if member.profile_pic %}
+                        <img src="{{ url_for('uploaded_file', filename=member.profile_pic) }}" alt="Profile" class="rounded-circle me-2" width="32" height="32" style="object-fit: cover;">
+                        {% else %}
+                        <div class="rounded-circle me-2 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; background: var(--primary); color: #fff; font-size: 0.8rem;">
+                            <i class="bi bi-person"></i>
+                        </div>
+                        {% endif %}
+                        <span class="fw-medium">{{ member.name }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="d-flex gap-2">
+                    {% if is_member %}
+                    <form action="{{ url_for('leave_group', group_id=group.id) }}" method="post">
+                        <button type="submit" class="btn btn-sm" style="background: var(--warning); color: var(--dark); border-radius: 10px; font-weight: 600;">Leave Group</button>
+                    </form>
                     {% else %}
-                    <span class="me-2"><i class="bi bi-person-circle" style="font-size: 1.5rem;"></i></span>
+                    <form action="{{ url_for('join_group', group_id=group.id) }}" method="post">
+                        <button type="submit" class="btn btn-career btn-sm">Join Group</button>
+                    </form>
                     {% endif %}
-                    {{ member.name }}
-                </li>
-                {% endfor %}
-            </ul>
-            {% if is_member %}
-            <form action="{{ url_for('leave_group', group_id=group.id) }}" method="post" style="display:inline;">
-                <button type="submit" class="btn btn-warning">Leave Group</button>
-            </form>
-            {% else %}
-            <form action="{{ url_for('join_group', group_id=group.id) }}" method="post">
-                <button type="submit" class="btn btn-success">Join Group</button>
-            </form>
-            {% endif %}
-            <a href="{{ url_for('peer_groups') }}" class="btn btn-secondary ms-2">Back to Groups</a>
+                    <a href="{{ url_for('peer_groups') }}" class="btn btn-career-outline btn-sm">Back to Groups</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-{% endblock %} 
+{% endblock %}

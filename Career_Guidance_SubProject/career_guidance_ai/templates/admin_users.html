@@ -1,41 +1,47 @@
 {% extends 'base.html' %}
-{% block title %}User Management | Admin | Career Guidance AI{% endblock %}
+{% block title %}User Management - Admin{% endblock %}
 {% block content %}
-<div class="container py-4">
-  <h2 class="mb-4 text-primary text-center">User Management</h2>
-  {% if users %}
-  <div class="table-responsive">
-    <table class="table table-bordered table-hover align-middle">
-      <thead class="table-light">
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for user in users %}
-        <tr>
-          <td>{{ user.id }}</td>
-          <td>{{ user.name }}</td>
-          <td>{{ user.email }}</td>
-          <td>
-            <form method="POST" action="/admin_delete_user/{{ user.id }}" style="display:inline;">
-              <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete this user?');">Delete</button>
-            </form>
-            <form method="POST" action="/admin_reset_password/{{ user.id }}" class="d-inline ms-2">
-              <input type="password" name="new_password" class="form-control form-control-sm d-inline-block" style="width:120px;" placeholder="New Password" required>
-              <button type="submit" class="btn btn-secondary btn-sm">Reset Password</button>
-            </form>
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
-  {% else %}
-  <div class="alert alert-info text-center">No users found.</div>
-  {% endif %}
+<div class="page-wrapper">
+    <div class="admin-header">
+        <h3><i class="bi bi-people me-2"></i>User Management</h3>
+        <p class="mb-0 opacity-75">Manage registered users</p>
+    </div>
+
+    {% if users %}
+    <div class="table-card">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Actions</th></tr></thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td><span class="badge bg-primary-soft" style="color: var(--primary);">#{{ user.id }}</span></td>
+                        <td class="fw-medium">{{ user.name }}</td>
+                        <td style="color: var(--gray);">{{ user.email }}</td>
+                        <td>
+                            <div class="d-flex align-items-center gap-2 flex-wrap">
+                                <form method="POST" action="/admin_delete_user/{{ user.id }}">
+                                    <button type="submit" class="btn btn-sm" style="background: var(--danger); color: #fff; border-radius: 8px; font-size: 0.8rem;" onclick="return confirm('Delete this user?');">
+                                        <i class="bi bi-trash me-1"></i>Delete
+                                    </button>
+                                </form>
+                                <form method="POST" action="/admin_reset_password/{{ user.id }}" class="d-flex align-items-center gap-1">
+                                    <input type="password" name="new_password" class="form-control form-control-sm" style="width: 120px;" placeholder="New Password" required>
+                                    <button type="submit" class="btn btn-career btn-sm" style="font-size: 0.8rem;">Reset</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <i class="bi bi-people d-block"></i>
+        <h5>No users found</h5>
+    </div>
+    {% endif %}
 </div>
-{% endblock %} 
+{% endblock %}

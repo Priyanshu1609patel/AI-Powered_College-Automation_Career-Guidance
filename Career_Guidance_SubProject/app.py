@@ -1,6 +1,4 @@
-import psycopg2
-import psycopg2.extras
-from flask import Flask, render_template, request, redirect, session, send_file, flash, url_for, g, send_from_directory, abort, jsonify
+from flask import Flask, render_template, request, redirect, session, send_file, flash, url_for, g, send_from_directory, abort, jsonify, Blueprint
 import os
 from config import *
 from werkzeug.utils import secure_filename
@@ -22,12 +20,16 @@ from collections import defaultdict
 import secrets
 from datetime import datetime, timedelta
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='career_guidance_ai/templates')
 app.secret_key = SECRET_KEY
+app.config['APPLICATION_ROOT'] = '/Career_Guidance_SubProject'
 UPLOAD_FOLDER = 'uploads'
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+import psycopg2
+import psycopg2.extras
 
 ALLOWED_IMAGE_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 def allowed_image(filename):
@@ -82,20 +84,51 @@ def get_course_links_for_skills(skills):
 def index():
     return render_template('index.html')
 
-@app.route('/register')
+@app.route('/register', methods=['GET', 'POST'])
 def register():
-    """Redirect to main app registration."""
-    return redirect('/register')
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+        password = request.form['password']
+        hashed = generate_password_hash(password)
+        conn = get_db()
+        try:
+            with conn.cursor() as cursor:
+                cursor.execute('INSERT INTO users (name, email, password, plain_password) VALUES (%s, %s, %s, %s)', (name, email, hashed, password))
+            conn.commit()
+            flash('Registration successful! Please login.', 'success')
+            return redirect(url_for('login'))
+        except:
+            flash('Email already exists.', 'danger')
+        finally:
+            conn.close()
+    return render_template('register.html')
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    """Redirect to main app login."""
-    return redirect('/login')
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        conn = get_db()
+        try:
+            with conn.cursor() as cursor:
+                cursor.execute('SELECT * FROM users WHERE email = %s', (email,))
+                user = cursor.fetchone()
+        finally:
+            conn.close()
+        if user and check_password_hash(user['password'], password):
+            session['user_id'] = user['id']
+            session['user_name'] = user['name']
+            flash('Login successful!', 'success')
+            return redirect(url_for('dashboard'))
+        flash('Invalid credentials.', 'danger')
+    return render_template('login.html')
 
 @app.route('/logout')
 def logout():
-    """Redirect to main app logout."""
-    return redirect('/logout')
+    session.clear()
+    flash('Logged out successfully.', 'info')
+    return redirect(url_for('index'))
 
 @app.route('/dashboard')
 def dashboard():
@@ -1039,10 +1072,44 @@ def mentors():
         conn.close()
     return render_template('mentors.html', mentors=mentors)
 
-@app.route('/admin_login')
+@app.route('/admin_login', methods=['GET', 'POST'])
 def admin_login():
-    """Redirect to main app login page."""
-    return redirect('/login')
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        conn = get_db()
+        try:
+            with conn.cursor() as cursor:
+                cursor.execute('SELECT * FROM admin WHERE username = %s', (username,))
+                admin = cursor.fetchone()
+        finally:
+            conn.close()
+        if admin and check_password_hash(admin['password'], password):
+            session['admin_loggedin'] = True
+            session['admin_username'] = admin['username']
+            flash('Admin login successful!', 'success')
+            return redirect(url_for('admin_dashboard'))
+        flash('Invalid admin credentials.', 'danger')
+    return render_template('admin_login.html')
+
+@app.route('/admin_register', methods=['GET', 'POST'])
+def admin_register():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        hashed = generate_password_hash(password)
+        conn = get_db()
+        try:
+            with conn.cursor() as cursor:
+                cursor.execute('INSERT INTO admin (username, password, plain_password) VALUES (%s, %s, %s)', (username, hashed, password))
+            conn.commit()
+            flash('Admin registration successful! Please login.', 'success')
+            return redirect(url_for('admin_login'))
+        except:
+            flash('Username already exists.', 'danger')
+        finally:
+            conn.close()
+    return render_template('admin_register.html')
 
 @app.route('/admin_logout')
 def admin_logout():

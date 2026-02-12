@@ -1,86 +1,65 @@
 {% extends 'base.html' %}
+{% block title %}Manage Mentors - Admin{% endblock %}
 {% block content %}
-<div class="container py-4">
-  <h2 class="mb-4">Manage Mentors</h2>
-  {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-      {% for category, message in messages %}
-        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-          {{ message }}
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-      {% endfor %}
-    {% endif %}
-  {% endwith %}
-  <div class="card mb-4">
-    <div class="card-header">Add New Mentor</div>
-    <div class="card-body">
-      <form method="post" action="{{ url_for('admin_add_mentor') }}" enctype="multipart/form-data">
-        <div class="row g-3">
-          <div class="col-md-4">
-            <input type="text" name="name" class="form-control" placeholder="Name" required>
-          </div>
-          <div class="col-md-4">
-            <input type="text" name="expertise" class="form-control" placeholder="Expertise" required>
-          </div>
-          <div class="col-md-4">
-            <input type="text" name="contact" class="form-control" placeholder="Contact (Email or URL)" required>
-          </div>
-        </div>
-        <div class="row g-3 mt-2">
-          <div class="col-md-8">
-            <textarea name="bio" class="form-control" placeholder="Bio" rows="2" required></textarea>
-          </div>
-          <div class="col-md-4">
-            <input type="file" name="profile_pic" class="form-control">
-          </div>
-        </div>
-        <div class="mt-3">
-          <button type="submit" class="btn btn-success">Add Mentor</button>
-        </div>
-      </form>
+<div class="page-wrapper">
+    <div class="admin-header">
+        <h3><i class="bi bi-kanban me-2"></i>Manage Mentors</h3>
+        <p class="mb-0 opacity-75">Add and manage mentors</p>
     </div>
-  </div>
-  <div class="card">
-    <div class="card-header">Mentor List</div>
-    <div class="card-body p-0">
-      <table class="table table-striped mb-0">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Expertise</th>
-            <th>Contact</th>
-            <th>Bio</th>
-            <th>Profile Pic</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for mentor in mentors %}
-          <tr>
-            <form method="post" action="{{ url_for('admin_edit_mentor', mentor_id=mentor.id) }}" enctype="multipart/form-data">
-              <td><input type="text" name="name" value="{{ mentor.name }}" class="form-control form-control-sm" required></td>
-              <td><input type="text" name="expertise" value="{{ mentor.expertise }}" class="form-control form-control-sm" required></td>
-              <td><input type="text" name="contact" value="{{ mentor.contact }}" class="form-control form-control-sm" required></td>
-              <td><textarea name="bio" class="form-control form-control-sm" rows="1" required>{{ mentor.bio }}</textarea></td>
-              <td>
-                {% if mentor.profile_pic %}
-                  <img src="{{ url_for('uploaded_file', filename=mentor.profile_pic) }}" alt="Profile" width="40" height="40" class="rounded-circle mb-1">
-                {% endif %}
-                <input type="file" name="profile_pic" class="form-control form-control-sm">
-              </td>
-              <td class="d-flex gap-1">
-                <button type="submit" class="btn btn-primary btn-sm">Save</button>
-            </form>
-            <form method="post" action="{{ url_for('admin_delete_mentor', mentor_id=mentor.id) }}" onsubmit="return confirm('Delete this mentor?');">
-                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-            </form>
-              </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+
+    <!-- Add Mentor -->
+    <div class="stat-card mb-4">
+        <h6 class="fw-bold mb-3" style="color: var(--dark);"><i class="bi bi-plus-circle me-1" style="color: var(--primary);"></i>Add New Mentor</h6>
+        <form method="post" action="{{ url_for('admin_add_mentor') }}" enctype="multipart/form-data">
+            <div class="row g-2">
+                <div class="col-md-4"><input type="text" name="name" class="form-control form-control-sm" placeholder="Name" required></div>
+                <div class="col-md-4"><input type="text" name="expertise" class="form-control form-control-sm" placeholder="Expertise" required></div>
+                <div class="col-md-4"><input type="text" name="contact" class="form-control form-control-sm" placeholder="Contact (Email or URL)" required></div>
+            </div>
+            <div class="row g-2 mt-1">
+                <div class="col-md-8"><textarea name="bio" class="form-control form-control-sm" placeholder="Bio" rows="2" required></textarea></div>
+                <div class="col-md-4"><input type="file" name="profile_pic" class="form-control form-control-sm"></div>
+            </div>
+            <div class="mt-2">
+                <button type="submit" class="btn btn-career btn-sm"><i class="bi bi-plus-circle me-1"></i>Add Mentor</button>
+            </div>
+        </form>
     </div>
-  </div>
+
+    <!-- Mentor Table -->
+    <h5 class="section-title">Mentor List</h5>
+    <div class="table-card">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0" style="font-size: 0.85rem;">
+                <thead><tr><th>Name</th><th>Expertise</th><th>Contact</th><th>Bio</th><th>Photo</th><th>Actions</th></tr></thead>
+                <tbody>
+                    {% for mentor in mentors %}
+                    <tr>
+                        <form method="post" action="{{ url_for('admin_edit_mentor', mentor_id=mentor.id) }}" enctype="multipart/form-data">
+                        <td><input type="text" name="name" value="{{ mentor.name }}" class="form-control form-control-sm" required></td>
+                        <td><input type="text" name="expertise" value="{{ mentor.expertise }}" class="form-control form-control-sm" required></td>
+                        <td><input type="text" name="contact" value="{{ mentor.contact }}" class="form-control form-control-sm" required></td>
+                        <td><textarea name="bio" class="form-control form-control-sm" rows="1" required>{{ mentor.bio }}</textarea></td>
+                        <td>
+                            {% if mentor.profile_pic %}
+                            <img src="{{ url_for('uploaded_file', filename=mentor.profile_pic) }}" alt="Profile" width="36" height="36" class="rounded-circle mb-1" style="object-fit: cover;">
+                            {% endif %}
+                            <input type="file" name="profile_pic" class="form-control form-control-sm">
+                        </td>
+                        <td>
+                            <div class="d-flex gap-1">
+                                <button type="submit" class="btn btn-career btn-sm" style="font-size: 0.78rem;">Save</button>
+                        </form>
+                        <form method="post" action="{{ url_for('admin_delete_mentor', mentor_id=mentor.id) }}" onsubmit="return confirm('Delete this mentor?');">
+                                <button type="submit" class="btn btn-sm" style="background: var(--danger); color: #fff; border-radius: 10px; font-weight: 600; font-size: 0.78rem;">Delete</button>
+                        </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
-{% endblock %} 
+{% endblock %}

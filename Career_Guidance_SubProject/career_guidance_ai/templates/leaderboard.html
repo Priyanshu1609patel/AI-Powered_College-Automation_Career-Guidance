@@ -1,33 +1,44 @@
 {% extends 'base.html' %}
-{% block title %}Leaderboard | Career Guidance AI{% endblock %}
+{% block title %}Leaderboard - Career Guidance AI{% endblock %}
 {% block content %}
-<div class="container py-4">
-  <h2 class="mb-4 text-primary text-center">Leaderboard</h2>
-  <div class="table-responsive">
-    <table class="table table-bordered table-hover align-middle">
-      <thead class="table-light">
-        <tr>
-          <th>Rank</th>
-          <th>Name</th>
-          <th>Points</th>
-          <th>Badges</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for user in users %}
-        <tr>
-          <td>{{ loop.index }}</td>
-          <td>{{ user.name }}</td>
-          <td><span class="fw-bold text-info">{{ user.points }}</span></td>
-          <td>
-            {% for icon in user.badges %}
-              <i class="bi {{ icon }} fs-4 me-1" title="Badge"></i>
-            {% endfor %}
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
+<div class="page-wrapper">
+    <div class="p-4 mb-4 rounded-4 text-white" style="background: linear-gradient(135deg, var(--warning) 0%, var(--accent) 100%);">
+        <h4 class="fw-bold mb-1"><i class="bi bi-trophy me-2"></i>Leaderboard</h4>
+        <p class="mb-0 opacity-75">Top performers in the community</p>
+    </div>
+
+    <div class="table-card">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr><th>Rank</th><th>Name</th><th>Points</th><th>Badges</th></tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>
+                            {% if loop.index == 1 %}
+                            <span style="color: #FFD700; font-size: 1.2rem;"><i class="bi bi-trophy-fill"></i></span>
+                            {% elif loop.index == 2 %}
+                            <span style="color: #C0C0C0; font-size: 1.2rem;"><i class="bi bi-trophy-fill"></i></span>
+                            {% elif loop.index == 3 %}
+                            <span style="color: #CD7F32; font-size: 1.2rem;"><i class="bi bi-trophy-fill"></i></span>
+                            {% else %}
+                            <span class="fw-bold" style="color: var(--gray);">{{ loop.index }}</span>
+                            {% endif %}
+                        </td>
+                        <td class="fw-medium">{{ user.name }}</td>
+                        <td><span class="badge" style="background: var(--primary); color: #fff;">{{ user.points }}</span></td>
+                        <td>
+                            {% for icon in user.badges %}
+                            <i class="bi {{ icon }} me-1" style="font-size: 1.2rem; color: var(--warning);"></i>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
-{% endblock %} 
+{% endblock %}

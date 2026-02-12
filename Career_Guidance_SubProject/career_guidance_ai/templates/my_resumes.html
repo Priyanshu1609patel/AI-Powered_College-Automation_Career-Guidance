@@ -1,45 +1,46 @@
 {% extends 'base.html' %}
+{% block title %}My Resumes - Career Guidance AI{% endblock %}
 {% block content %}
-<div class="container py-4">
-  <h2 class="mb-4">My Built Resumes</h2>
-  {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-      {% for category, message in messages %}
-        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-          {{ message }}
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+<div class="page-wrapper">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="section-title mb-0"><i class="bi bi-file-earmark-person me-2"></i>My Built Resumes</h4>
+        <a href="{{ url_for('resume_builder') }}" class="btn btn-career btn-sm"><i class="bi bi-plus-circle me-1"></i>Create New</a>
+    </div>
+
+    {% if resumes %}
+    <div class="table-card">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr><th>Title</th><th>Created At</th><th>Actions</th></tr>
+                </thead>
+                <tbody>
+                    {% for resume in resumes %}
+                    <tr>
+                        <td class="fw-medium">{{ resume.title }}</td>
+                        <td><small class="text-muted">{{ resume.created_at.strftime('%Y-%m-%d %H:%M') if resume.created_at else '' }}</small></td>
+                        <td>
+                            <div class="d-flex gap-2">
+                                <a href="{{ url_for('edit_resume_builder', resume_id=resume.id) }}" class="btn btn-career btn-sm" style="font-size: 0.8rem;">Edit</a>
+                                <form method="post" action="{{ url_for('delete_resume_builder', resume_id=resume.id) }}" onsubmit="return confirm('Delete this resume?');">
+                                    <button type="submit" class="btn btn-sm" style="background: var(--danger); color: #fff; border-radius: 10px; font-weight: 600; font-size: 0.8rem;">Delete</button>
+                                </form>
+                                <a href="{{ url_for('download_resume_builder', resume_id=resume.id) }}" class="btn btn-sm" style="background: var(--success); color: #fff; border-radius: 10px; font-weight: 600; font-size: 0.8rem;">Download</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
-      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <i class="bi bi-file-earmark-text d-block"></i>
+        <h5>No built resumes yet</h5>
+        <p>Create a professional resume with our builder</p>
+        <a href="{{ url_for('resume_builder') }}" class="btn btn-career btn-sm">Create Resume</a>
+    </div>
     {% endif %}
-  {% endwith %}
-  {% if resumes %}
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Created At</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for resume in resumes %}
-      <tr>
-        <td>{{ resume.title }}</td>
-        <td>{{ resume.created_at.strftime('%Y-%m-%d %H:%M') if resume.created_at else '' }}</td>
-        <td class="d-flex gap-2">
-          <a href="{{ url_for('edit_resume_builder', resume_id=resume.id) }}" class="btn btn-sm btn-primary">Edit</a>
-          <form method="post" action="{{ url_for('delete_resume_builder', resume_id=resume.id) }}" onsubmit="return confirm('Delete this resume?');">
-            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-          </form>
-          <a href="{{ url_for('download_resume_builder', resume_id=resume.id) }}" class="btn btn-sm btn-success">Download PDF</a>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  {% else %}
-    <div class="alert alert-info">No built resumes yet. <a href="{{ url_for('resume_builder') }}">Create one now</a>.</div>
-  {% endif %}
-  <a href="{{ url_for('resume_builder') }}" class="btn btn-primary mt-3">Create New Resume</a>
 </div>
-{% endblock %} 
+{% endblock %}

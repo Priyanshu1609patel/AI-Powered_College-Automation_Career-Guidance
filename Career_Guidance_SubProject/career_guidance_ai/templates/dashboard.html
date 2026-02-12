@@ -1,81 +1,197 @@
 {% extends 'base.html' %}
-{% block title %}Dashboard | Career Guidance AI{% endblock %}
+{% block title %}Dashboard - Career Guidance AI{% endblock %}
 {% block content %}
-<div class="container py-5">
-  <div class="row justify-content-center mb-4">
-    <div class="col-md-8">
-      <div class="card shadow-lg border-0">
-        <div class="card-body d-flex align-items-center">
-          <div class="me-4 text-center">
-            {% if profile_pic %}
-              <img src="{{ url_for('uploaded_file', filename=profile_pic) }}" alt="Profile Picture" class="rounded-circle border border-3 border-primary shadow" width="90" height="90" style="object-fit:cover;">
-            {% else %}
-              <img src="https://ui-avatars.com/api/?name={{ name|urlencode }}&size=90" alt="Profile Picture" class="rounded-circle border border-3 border-primary shadow" width="90" height="90">
-            {% endif %}
-          </div>
-          <div>
-            <h3 class="mb-1 text-primary">Welcome, {{ name }}!</h3>
-            <p class="mb-2 text-muted">Here’s your personalized dashboard. Keep up the great work!</p>
-            <div class="d-flex flex-wrap gap-2">
-              <a href="/profile" class="btn btn-outline-primary btn-sm">View Profile</a>
-              <a href="/upload_resume" class="btn btn-outline-secondary btn-sm">Upload Resume</a>
-              <a href="/track_progress" class="btn btn-outline-success btn-sm">Track Progress</a>
+<div class="page-wrapper">
+    <!-- Welcome Banner -->
+    <div class="p-4 mb-4 rounded-4 text-white" style="background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);">
+        <div class="row align-items-center">
+            <div class="col">
+                <div class="d-flex align-items-center mb-2">
+                    {% if profile_pic %}
+                    <img src="{{ url_for('uploaded_file', filename=profile_pic) }}" alt="Profile" class="rounded-circle border border-2 border-white me-3" width="60" height="60" style="object-fit:cover;">
+                    {% else %}
+                    <img src="https://ui-avatars.com/api/?name={{ name|urlencode }}&size=60&background=ffffff&color=4361ee" alt="Profile" class="rounded-circle me-3" width="60" height="60">
+                    {% endif %}
+                    <div>
+                        <h4 class="fw-bold mb-0">Welcome, {{ name }}!</h4>
+                        <p class="mb-0 opacity-75">Your personalized career dashboard</p>
+                    </div>
+                </div>
             </div>
-          </div>
+            <div class="col-auto d-none d-sm-block">
+                <i class="bi bi-compass" style="font-size: 3rem; opacity: 0.3;"></i>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-  <div class="row justify-content-center mb-4">
-    <div class="col-md-8">
-      <div class="card shadow-sm border-0 mb-3">
-        <div class="card-header bg-info bg-opacity-10 border-0">
-          <h5 class="mb-0 text-info"><i class="bi bi-clock-history me-2"></i>Recent Activity</h5>
-        </div>
-        <div class="card-body">
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-              <b>Last Milestone Completed:</b>
-              {% if last_milestone %}
-                <span class="text-success">{{ last_milestone.milestone }} ({{ last_milestone.title }})</span>
-              {% else %}
-                <span class="text-muted">No milestones completed yet.</span>
-              {% endif %}
-            </li>
-            <li class="list-group-item">
-              <b>Last Resume Uploaded:</b>
-              {% if last_resume %}
-                <span class="text-success">Skills: {{ last_resume.skills }}</span>
-              {% else %}
-                <span class="text-muted">No resume uploaded yet.</span>
-              {% endif %}
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="card shadow-sm border-0">
-        <div class="card-header bg-success bg-opacity-10 border-0">
-          <h5 class="mb-0 text-success"><i class="bi bi-bar-chart-fill me-2"></i>Progress Summary</h5>
-        </div>
-        <div class="card-body">
-          {% if progress_summaries %}
-            {% for prog in progress_summaries %}
-              <div class="mb-3">
-                <div class="d-flex justify-content-between align-items-center mb-1">
-                  <span class="fw-bold">{{ prog.career_title }}</span>
-                  <span class="text-success">{{ prog.percent }}%</span>
+
+    <!-- Quick Actions -->
+    <h5 class="section-title">Quick Actions</h5>
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-md-3">
+            <a href="/recommendations" class="quick-action">
+                <div class="qa-icon" style="background: var(--primary);">
+                    <i class="bi bi-stars"></i>
                 </div>
-                <div class="progress" style="height: 1.2rem;">
-                  <div class="progress-bar bg-success" role="progressbar" style="width: {{ prog.percent }}%" aria-valuenow="{{ prog.percent }}" aria-valuemin="0" aria-valuemax="100">{{ prog.completed }}/{{ prog.total }}</div>
+                <div class="qa-text">
+                    <h6>Recommendations</h6>
+                    <small>AI-matched careers</small>
                 </div>
-              </div>
-            {% endfor %}
-          {% else %}
-            <div class="text-muted">No active career plans yet.</div>
-          {% endif %}
+            </a>
         </div>
-      </div>
+        <div class="col-6 col-md-3">
+            <a href="/upload_resume" class="quick-action">
+                <div class="qa-icon" style="background: var(--secondary);">
+                    <i class="bi bi-upload"></i>
+                </div>
+                <div class="qa-text">
+                    <h6>Upload Resume</h6>
+                    <small>Get analyzed</small>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-md-3">
+            <a href="/jobs" class="quick-action">
+                <div class="qa-icon" style="background: var(--success);">
+                    <i class="bi bi-briefcase"></i>
+                </div>
+                <div class="qa-text">
+                    <h6>Job Board</h6>
+                    <small>Find opportunities</small>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-md-3">
+            <a href="/interest_quiz" class="quick-action">
+                <div class="qa-icon" style="background: var(--accent);">
+                    <i class="bi bi-question-circle"></i>
+                </div>
+                <div class="qa-text">
+                    <h6>Interest Quiz</h6>
+                    <small>Discover your path</small>
+                </div>
+            </a>
+        </div>
     </div>
-  </div>
+
+    <div class="row g-4">
+        <!-- Left Column -->
+        <div class="col-lg-8">
+            <!-- Recent Activity -->
+            <div class="mb-4">
+                <h5 class="section-title"><i class="bi bi-clock-history me-1"></i> Recent Activity</h5>
+                <div class="stat-card">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="stat-icon me-3" style="background: var(--success); width:40px; height:40px; font-size:1rem;">
+                            <i class="bi bi-trophy"></i>
+                        </div>
+                        <div>
+                            <small class="text-muted d-block">Last Milestone Completed</small>
+                            {% if last_milestone %}
+                            <span class="fw-bold" style="color: var(--success);">{{ last_milestone.milestone }} ({{ last_milestone.title }})</span>
+                            {% else %}
+                            <span class="text-muted">No milestones completed yet</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="stat-icon me-3" style="background: var(--primary); width:40px; height:40px; font-size:1rem;">
+                            <i class="bi bi-file-earmark-text"></i>
+                        </div>
+                        <div>
+                            <small class="text-muted d-block">Last Resume Uploaded</small>
+                            {% if last_resume %}
+                            <span class="fw-bold" style="color: var(--primary);">Skills: {{ last_resume.skills }}</span>
+                            {% else %}
+                            <span class="text-muted">No resume uploaded yet</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress Summary -->
+            <div class="mb-4">
+                <h5 class="section-title"><i class="bi bi-bar-chart-fill me-1"></i> Progress Summary</h5>
+                <div class="stat-card">
+                    {% if progress_summaries %}
+                    {% for prog in progress_summaries %}
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="fw-bold">{{ prog.career_title }}</span>
+                            <span class="badge" style="background: var(--success);">{{ prog.percent }}%</span>
+                        </div>
+                        <div class="progress" style="height: 8px; border-radius: 4px;">
+                            <div class="progress-bar" role="progressbar" style="width: {{ prog.percent }}%; background: linear-gradient(90deg, var(--primary), var(--success)); border-radius: 4px;" aria-valuenow="{{ prog.percent }}" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <small class="text-muted">{{ prog.completed }}/{{ prog.total }} milestones</small>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <div class="empty-state py-3">
+                        <i class="bi bi-graph-up-arrow d-block" style="font-size: 2rem;"></i>
+                        <p class="mb-2">No active career plans yet</p>
+                        <a href="/recommendations" class="btn btn-sm" style="background: var(--primary); color: #fff; border-radius: 8px;">Get Recommendations</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="col-lg-4">
+            <!-- Quick Links -->
+            <div class="mb-4">
+                <h5 class="section-title"><i class="bi bi-lightning me-1"></i> Explore</h5>
+                <div class="d-flex flex-column gap-2">
+                    <a href="/track_progress" class="quick-action">
+                        <div class="qa-icon" style="background: var(--warning); width:36px; height:36px; font-size:1rem;">
+                            <i class="bi bi-graph-up-arrow"></i>
+                        </div>
+                        <div class="qa-text">
+                            <h6>Track Progress</h6>
+                            <small>View milestones</small>
+                        </div>
+                    </a>
+                    <a href="/saved_careers" class="quick-action">
+                        <div class="qa-icon" style="background: var(--danger); width:36px; height:36px; font-size:1rem;">
+                            <i class="bi bi-bookmark-heart"></i>
+                        </div>
+                        <div class="qa-text">
+                            <h6>Saved Careers</h6>
+                            <small>Your bookmarks</small>
+                        </div>
+                    </a>
+                    <a href="{{ url_for('mentors') }}" class="quick-action">
+                        <div class="qa-icon" style="background: var(--secondary); width:36px; height:36px; font-size:1rem;">
+                            <i class="bi bi-people"></i>
+                        </div>
+                        <div class="qa-text">
+                            <h6>Mentorship</h6>
+                            <small>Connect with experts</small>
+                        </div>
+                    </a>
+                    <a href="{{ url_for('projects') }}" class="quick-action">
+                        <div class="qa-icon" style="background: var(--dark); width:36px; height:36px; font-size:1rem;">
+                            <i class="bi bi-kanban"></i>
+                        </div>
+                        <div class="qa-text">
+                            <h6>My Projects</h6>
+                            <small>Build portfolio</small>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Profile Quick View -->
+            <div class="stat-card">
+                <h6 class="fw-bold mb-3"><i class="bi bi-person-circle me-1" style="color: var(--primary);"></i> Profile</h6>
+                <div class="d-flex flex-column gap-2">
+                    <a href="/profile" class="btn btn-sm btn-career-outline w-100">View Profile</a>
+                    <a href="/upload_resume" class="btn btn-sm btn-career-outline w-100">Upload Resume</a>
+                    <a href="/track_progress" class="btn btn-sm btn-career-outline w-100">Track Progress</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-{% endblock %} 
+{% endblock %}

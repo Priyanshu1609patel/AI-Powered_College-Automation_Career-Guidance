@@ -1,26 +1,31 @@
 {% extends 'base.html' %}
+{% block title %}Peer Groups - Career Guidance AI{% endblock %}
 {% block content %}
-<div class="container mt-4">
-    <h2>Peer Groups</h2>
-    <a href="{{ url_for('create_group') }}" class="btn btn-primary mb-3">Create New Group</a>
-    <div class="row">
+<div class="page-wrapper">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="section-title mb-0"><i class="bi bi-people me-2"></i>Peer Groups</h4>
+        <a href="{{ url_for('create_group') }}" class="btn btn-career btn-sm"><i class="bi bi-plus-circle me-1"></i>Create Group</a>
+    </div>
+
+    {% if groups %}
+    <div class="row g-3">
         {% for group in groups %}
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
+        <div class="col-md-6 col-lg-4">
+            <div class="stat-card">
                 {% if group.image %}
-                <img src="{{ url_for('uploaded_file', filename=group.image) }}" class="card-img-top" alt="Group Image" style="max-height:180px;object-fit:cover;">
+                <img src="{{ url_for('uploaded_file', filename=group.image) }}" alt="Group" class="rounded-3 w-100 mb-3" style="max-height: 160px; object-fit: cover;">
                 {% endif %}
-                <div class="card-body">
-                    <h5 class="card-title">{{ group.name }}</h5>
-                    <p class="card-text">{{ group.description }}</p>
-                    <a href="{{ url_for('group_detail', group_id=group.id) }}" class="btn btn-outline-info btn-sm">View</a>
+                <h5 class="fw-bold mb-2" style="color: var(--dark);">{{ group.name }}</h5>
+                <p style="color: var(--gray); font-size: 0.88rem;">{{ group.description }}</p>
+                <div class="d-flex gap-2">
+                    <a href="{{ url_for('group_detail', group_id=group.id) }}" class="btn btn-career-outline btn-sm">View</a>
                     {% if group.id in user_groups %}
-                    <form action="{{ url_for('leave_group', group_id=group.id) }}" method="post" style="display:inline;">
-                        <button type="submit" class="btn btn-warning btn-sm">Leave</button>
+                    <form action="{{ url_for('leave_group', group_id=group.id) }}" method="post">
+                        <button type="submit" class="btn btn-sm" style="background: var(--warning); color: var(--dark); border-radius: 10px; font-weight: 600;">Leave</button>
                     </form>
                     {% else %}
-                    <form action="{{ url_for('join_group', group_id=group.id) }}" method="post" style="display:inline;">
-                        <button type="submit" class="btn btn-success btn-sm">Join</button>
+                    <form action="{{ url_for('join_group', group_id=group.id) }}" method="post">
+                        <button type="submit" class="btn btn-sm" style="background: var(--success); color: #fff; border-radius: 10px; font-weight: 600;">Join</button>
                     </form>
                     {% endif %}
                 </div>
@@ -28,5 +33,12 @@
         </div>
         {% endfor %}
     </div>
+    {% else %}
+    <div class="empty-state">
+        <i class="bi bi-people d-block"></i>
+        <h5>No groups yet</h5>
+        <p>Create a group to connect with peers</p>
+    </div>
+    {% endif %}
 </div>
-{% endblock %} 
+{% endblock %}

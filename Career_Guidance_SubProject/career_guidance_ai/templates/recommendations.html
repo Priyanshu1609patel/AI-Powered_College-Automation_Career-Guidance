@@ -1,115 +1,134 @@
 {% extends 'base.html' %}
-{% block title %}Recommendations | Career Guidance AI{% endblock %}
+{% block title %}Recommendations - Career Guidance AI{% endblock %}
 {% block content %}
-<div class="container py-4">
-  <h2 class="mb-4 text-primary text-center">Your Career Recommendations</h2>
-  {% if careers %}
-    <div class="row g-4 justify-content-center">
-      {% for career in careers %}
-      {% set acc_id = loop.index %}
-      <div class="col-lg-6 col-md-8 mb-4"> <!-- Added mb-4 for more space between cards -->
-        <div class="card shadow-lg h-100 border-0">
-          <div class="card-header bg-info bg-opacity-10 border-0">
-            <h4 class="card-title text-info mb-0"><i class="bi bi-briefcase-fill me-2"></i>{{ career.title }}</h4>
-          </div>
-          <div class="card-body">
-            <p class="card-text mb-3">{{ career.description }}</p>
-            <div class="mb-3"><b>Required Skills:</b> <span class="text-dark">{{ career.required_skills }}</span></div>
-            <div class="mb-3"><b>Match Score:</b> <span class="badge bg-success fs-6">{{ career.match_score }}/5</span></div>
-            <div class="mb-3"><b>Available Skills:</b>
-              {% for skill in career.available_skills %}
-                <span class="badge bg-success me-1"><i class="bi bi-check-circle me-1"></i>{{ skill.title() }}</span>
-              {% else %}
-                <span class="text-muted">None</span>
-              {% endfor %}
-            </div>
-            <div class="mb-3"><b>Missing Skills:</b>
-              {% for skill in career.missing_skills %}
-                <span class="badge bg-danger me-1"><i class="bi bi-x-circle me-1"></i>{{ skill.title() }}</span>
-              {% else %}
-                <span class="text-muted">None</span>
-              {% endfor %}
-            </div>
-            {% if career.missing_skills %}
-              <div class="mb-4 p-2 bg-warning bg-opacity-10 rounded">
-                <b>Courses for Missing Skills:</b>
-                <ul class="mb-0">
-                  {% for link in career.course_links %}
-                  <li class="mb-1">
-                    <span class="fw-semibold">{{ link.skill }}:</span>
-                    <a href="{{ link.google }}" target="_blank" title="Google"><i class="bi bi-google"></i> Google</a> |
-                    <a href="{{ link.coursera }}" target="_blank" title="Coursera"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/coursera.svg" alt="Coursera" width="16" style="vertical-align:middle;"> Coursera</a> |
-                    <a href="{{ link.udemy }}" target="_blank" title="Udemy"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/udemy.svg" alt="Udemy" width="16" style="vertical-align:middle;"> Udemy</a> |
-                    <a href="{{ link.edx }}" target="_blank" title="edX"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/edx.svg" alt="edX" width="16" style="vertical-align:middle;"> edX</a> |
-                    <a href="{{ link.linkedin }}" target="_blank" title="LinkedIn Learning"><i class="bi bi-linkedin"></i> LinkedIn</a> |
-                    <a href="{{ link.khan }}" target="_blank" title="Khan Academy"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/khanacademy.svg" alt="Khan Academy" width="16" style="vertical-align:middle;"> Khan Academy</a>
-                  </li>
-                  {% endfor %}
-                </ul>
-              </div>
-            {% endif %}
-            {% if career.match_explanation %}
-              <div class="mb-4 p-2 bg-light border rounded">
-                <b>Match Explanation:</b>
-                <ul class="mb-0">
-                  {% for exp in career.match_explanation %}
-                  <li>{{ exp }}</li>
-                  {% endfor %}
-                </ul>
-              </div>
-            {% endif %}
-            {% if career.project_ideas %}
-              <div class="mb-4">
-                <b>Project Ideas:</b>
-                <div class="accordion" id="accordion{{ acc_id }}">
-                  {% for idea in career.project_ideas %}
-                  <div class="accordion-item mb-2">
-                    <h2 class="accordion-header" id="heading{{ acc_id }}-{{ loop.index }}">
-                      <button class="accordion-button collapsed bg-primary bg-opacity-10" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ acc_id }}-{{ loop.index }}" aria-expanded="false" aria-controls="collapse{{ acc_id }}-{{ loop.index }}">
-                        <i class="bi bi-lightbulb me-2 text-warning"></i>{{ idea.title }}
-                      </button>
-                    </h2>
-                    <div id="collapse{{ acc_id }}-{{ loop.index }}" class="accordion-collapse collapse" aria-labelledby="heading{{ acc_id }}-{{ loop.index }}" data-bs-parent="#accordion{{ acc_id }}">
-                      <div class="accordion-body">
-                        <ol class="mb-0">
-                          {% for step in idea.steps %}
-                          <li>{{ step }}</li>
-                          {% endfor %}
-                        </ol>
-                        <form method="POST" action="/add_project_from_idea" class="mt-3">
-                          <input type="hidden" name="title" value="{{ idea.title }}">
-                          <input type="hidden" name="description" value="{{ idea.steps|join(', ') }}">
-                          <input type="hidden" name="skills" value="{{ career.required_skills }}">
-                          <button type="submit" class="btn btn-outline-success btn-sm"><i class="bi bi-plus-circle me-1"></i>Add to My Projects</button>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                  {% endfor %}
-                </div>
-              </div>
-            {% endif %}
-            <div class="d-flex justify-content-between align-items-center mt-3">
-              <a href="/career_path/{{ career.id }}" class="btn btn-outline-primary btn-sm">View Career Path</a>
-              <form method="POST" action="/save_career/{{ career.id }}" class="d-inline ms-2">
-                <button type="submit" class="btn btn-success btn-sm">Save</button>
-              </form>
-            </div>
-            <div class="mt-3">
-              <a href="/interview_prep/{{ career.title|replace(' ', '-') }}" class="btn btn-outline-info btn-sm"><i class="bi bi-question-circle me-1"></i> Interview Prep</a>
-            </div>
-            {% if career.avg_salary %}
-            <div class="mt-2 p-2 bg-light border rounded">
-              <b>Salary Insights:</b> <span class="text-success">Avg. Salary: ₹{{ career.avg_salary|int|default('N/A') }}</span>
-            </div>
-            {% endif %}
-          </div>
-        </div>
-      </div>
-      {% endfor %}
+<div class="page-wrapper">
+    <div class="p-4 mb-4 rounded-4 text-white" style="background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);">
+        <h4 class="fw-bold mb-1"><i class="bi bi-stars me-2"></i>Your Career Recommendations</h4>
+        <p class="mb-0 opacity-75">AI-powered career matches based on your profile</p>
     </div>
-  {% else %}
-    <div class="alert alert-warning">No recommendations available. Please upload your resume and complete the interest quiz.</div>
-  {% endif %}
+
+    {% if careers %}
+    <div class="row g-4">
+        {% for career in careers %}
+        {% set acc_id = loop.index %}
+        <div class="col-lg-6">
+            <div class="stat-card">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="stat-icon me-3" style="background: var(--primary);">
+                        <i class="bi bi-briefcase-fill"></i>
+                    </div>
+                    <div>
+                        <h5 class="fw-bold mb-0" style="color: var(--dark);">{{ career.title }}</h5>
+                        <span class="badge" style="background: var(--success); color: #fff;">Match: {{ career.match_score }}/5</span>
+                    </div>
+                </div>
+
+                <p style="color: var(--gray); font-size: 0.9rem;">{{ career.description }}</p>
+
+                <div class="mb-2">
+                    <small class="text-muted d-block mb-1">Required Skills</small>
+                    <span class="fw-medium">{{ career.required_skills }}</span>
+                </div>
+
+                <div class="mb-2">
+                    <small class="text-muted d-block mb-1">Available Skills</small>
+                    {% for skill in career.available_skills %}
+                    <span class="badge me-1" style="background: rgba(6,214,160,0.15); color: var(--success);"><i class="bi bi-check-circle me-1"></i>{{ skill.title() }}</span>
+                    {% else %}<span class="text-muted">None</span>{% endfor %}
+                </div>
+
+                <div class="mb-3">
+                    <small class="text-muted d-block mb-1">Missing Skills</small>
+                    {% for skill in career.missing_skills %}
+                    <span class="badge me-1" style="background: rgba(239,71,111,0.15); color: var(--danger);"><i class="bi bi-x-circle me-1"></i>{{ skill.title() }}</span>
+                    {% else %}<span class="text-muted">None</span>{% endfor %}
+                </div>
+
+                {% if career.missing_skills %}
+                <div class="p-3 rounded-3 mb-3" style="background: rgba(255,209,102,0.08);">
+                    <small class="fw-bold d-block mb-2"><i class="bi bi-book me-1" style="color: var(--warning);"></i>Courses for Missing Skills</small>
+                    <ul class="list-unstyled mb-0" style="font-size: 0.85rem;">
+                        {% for link in career.course_links %}
+                        <li class="mb-1">
+                            <span class="fw-semibold">{{ link.skill }}:</span>
+                            <a href="{{ link.google }}" target="_blank" class="me-1"><i class="bi bi-google"></i></a>
+                            <a href="{{ link.coursera }}" target="_blank" class="me-1">Coursera</a>
+                            <a href="{{ link.udemy }}" target="_blank" class="me-1">Udemy</a>
+                            <a href="{{ link.edx }}" target="_blank" class="me-1">edX</a>
+                            <a href="{{ link.linkedin }}" target="_blank" class="me-1"><i class="bi bi-linkedin"></i></a>
+                            <a href="{{ link.khan }}" target="_blank">Khan</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                {% if career.match_explanation %}
+                <div class="p-3 rounded-3 mb-3" style="background: rgba(67,97,238,0.05);">
+                    <small class="fw-bold d-block mb-1"><i class="bi bi-info-circle me-1" style="color: var(--primary);"></i>Match Explanation</small>
+                    <ul class="mb-0" style="font-size: 0.85rem;">
+                        {% for exp in career.match_explanation %}<li>{{ exp }}</li>{% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                {% if career.project_ideas %}
+                <div class="mb-3">
+                    <small class="fw-bold d-block mb-2"><i class="bi bi-lightbulb me-1" style="color: var(--warning);"></i>Project Ideas</small>
+                    <div class="accordion" id="accordion{{ acc_id }}">
+                        {% for idea in career.project_ideas %}
+                        <div class="accordion-item border-0 mb-1">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed py-2 px-3 rounded-3" style="font-size: 0.88rem; background: rgba(67,97,238,0.05);" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ acc_id }}-{{ loop.index }}">
+                                    <i class="bi bi-lightbulb me-2" style="color: var(--warning);"></i>{{ idea.title }}
+                                </button>
+                            </h2>
+                            <div id="collapse{{ acc_id }}-{{ loop.index }}" class="accordion-collapse collapse" data-bs-parent="#accordion{{ acc_id }}">
+                                <div class="accordion-body py-2 px-3">
+                                    <ol class="mb-2" style="font-size: 0.85rem;">
+                                        {% for step in idea.steps %}<li>{{ step }}</li>{% endfor %}
+                                    </ol>
+                                    <form method="POST" action="/add_project_from_idea">
+                                        <input type="hidden" name="title" value="{{ idea.title }}">
+                                        <input type="hidden" name="description" value="{{ idea.steps|join(', ') }}">
+                                        <input type="hidden" name="skills" value="{{ career.required_skills }}">
+                                        <button type="submit" class="btn btn-sm" style="background: var(--success); color: #fff; border-radius: 8px; font-size: 0.8rem;"><i class="bi bi-plus-circle me-1"></i>Add to Projects</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="d-flex flex-wrap gap-2">
+                    <a href="/career_path/{{ career.id }}" class="btn btn-career-outline btn-sm"><i class="bi bi-compass me-1"></i>View Path</a>
+                    <form method="POST" action="/save_career/{{ career.id }}" class="d-inline">
+                        <button type="submit" class="btn btn-sm" style="background: var(--success); color: #fff; border-radius: 10px; font-weight: 600;"><i class="bi bi-bookmark-plus me-1"></i>Save</button>
+                    </form>
+                    <a href="/interview_prep/{{ career.title|replace(' ', '-') }}" class="btn btn-career-outline btn-sm"><i class="bi bi-question-circle me-1"></i>Interview Prep</a>
+                </div>
+
+                {% if career.avg_salary %}
+                <div class="p-2 rounded-3 mt-2" style="background: rgba(6,214,160,0.08); font-size: 0.85rem;">
+                    <i class="bi bi-currency-rupee" style="color: var(--success);"></i><strong>Avg. Salary:</strong> <span style="color: var(--success);">&#8377;{{ career.avg_salary|int|default('N/A') }}</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <i class="bi bi-stars d-block"></i>
+        <h5>No recommendations yet</h5>
+        <p>Upload your resume and complete the interest quiz to get personalized career recommendations</p>
+        <div class="d-flex gap-2 justify-content-center">
+            <a href="/upload_resume" class="btn btn-career btn-sm">Upload Resume</a>
+            <a href="/interest_quiz" class="btn btn-career-outline btn-sm">Take Quiz</a>
+        </div>
+    </div>
+    {% endif %}
 </div>
-{% endblock %} 
+{% endblock %}

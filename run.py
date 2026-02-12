@@ -52,9 +52,10 @@ career_app.secret_key = main_app.secret_key          # share the same session
 career_app.config['SESSION_COOKIE_NAME'] = 'main_session'
 career_app.config['SESSION_COOKIE_PATH'] = '/'       # read cookie set at root
 career_app.config['UPLOAD_FOLDER'] = os.path.join(OLD_APP_DIR, 'uploads')
+career_app.config['APPLICATION_ROOT'] = '/Career_Guidance_SubProject'
 
 # ── Combine with DispatcherMiddleware ───────────────────────
-application = DispatcherMiddleware(main_app, {'/career': career_app})
+application = DispatcherMiddleware(main_app, {'/Career_Guidance_SubProject': career_app})
 
 if __name__ == '__main__':
     run_simple(

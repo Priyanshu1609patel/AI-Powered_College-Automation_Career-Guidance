@@ -1,35 +1,47 @@
 {% extends 'base.html' %}
-{% block title %}Saved Careers | Career Guidance AI{% endblock %}
+{% block title %}Saved Careers - Career Guidance AI{% endblock %}
 {% block content %}
-<div class="container py-4">
-  <h2 class="mb-4 text-primary">Your Saved Careers</h2>
-        {% if careers %}
-    <div class="row g-4">
-                {% for career in careers %}
-      <div class="col-md-6">
-                    <div class="card shadow-sm h-100">
-                        <div class="card-body">
-            <h4 class="card-title text-info">{{ career.title }}</h4>
-            <p class="card-text">{{ career.description }}</p>
-            <p><b>Required Skills:</b> {{ career.required_skills }}</p>
-            <p><b>Category:</b> {{ career.category }}</p>
-            <p><b>Career Path:</b> {{ career.path }}</p>
-            <form method="POST" action="/remove_saved_career/{{ career.saved_id }}" class="d-inline">
-              <button type="submit" class="btn btn-danger btn-sm">Remove</button>
-                                </form>
-            <form method="POST" action="/update_notes/{{ career.saved_id }}" class="mt-2">
-              <div class="input-group">
-                <input type="text" class="form-control" name="note" value="{{ career.notes or '' }}" placeholder="Add a note...">
-                <button class="btn btn-outline-secondary" type="submit">Save Note</button>
-                            </div>
-            </form>
-                        </div>
+<div class="page-wrapper">
+    <h4 class="section-title"><i class="bi bi-bookmark-heart me-2"></i>Your Saved Careers</h4>
+    {% if careers %}
+    <div class="row g-3">
+        {% for career in careers %}
+        <div class="col-md-6">
+            <div class="stat-card">
+                <div class="d-flex align-items-center mb-2">
+                    <div class="stat-icon me-3" style="background: var(--primary); width:40px; height:40px; font-size:1rem;">
+                        <i class="bi bi-briefcase-fill"></i>
                     </div>
+                    <h5 class="fw-bold mb-0" style="color: var(--dark);">{{ career.title }}</h5>
                 </div>
-                {% endfor %}
+                <p style="color: var(--gray); font-size: 0.9rem;">{{ career.description }}</p>
+                <div class="mb-2"><small class="text-muted">Required Skills:</small> <span class="fw-medium">{{ career.required_skills }}</span></div>
+                <div class="mb-2"><small class="text-muted">Category:</small> <span class="badge bg-primary-soft" style="color: var(--primary);">{{ career.category }}</span></div>
+                <div class="mb-3"><small class="text-muted">Career Path:</small> <span class="fw-medium">{{ career.path }}</span></div>
+                <div class="d-flex gap-2 mb-2">
+                    <form method="POST" action="/remove_saved_career/{{ career.saved_id }}">
+                        <button type="submit" class="btn btn-sm" style="background: var(--danger); color: #fff; border-radius: 8px;">
+                            <i class="bi bi-trash me-1"></i>Remove
+                        </button>
+                    </form>
+                </div>
+                <form method="POST" action="/update_notes/{{ career.saved_id }}">
+                    <div class="input-group input-group-sm">
+                        <input type="text" class="form-control" name="note" value="{{ career.notes or '' }}" placeholder="Add a note...">
+                        <button class="btn btn-career-outline btn-sm" type="submit">Save Note</button>
+                    </div>
+                </form>
             </div>
-        {% else %}
-    <div class="alert alert-info">You have not saved any careers yet.</div>
-        {% endif %}
         </div>
-{% endblock %} 
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <i class="bi bi-bookmark d-block"></i>
+        <h5>No saved careers yet</h5>
+        <p>Save careers from recommendations to track them here</p>
+        <a href="/recommendations" class="btn btn-career btn-sm">Get Recommendations</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

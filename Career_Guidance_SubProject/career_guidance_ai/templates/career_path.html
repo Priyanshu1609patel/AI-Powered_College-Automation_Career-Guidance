@@ -1,20 +1,54 @@
 {% extends 'base.html' %}
-{% block title %}Career Path | Career Guidance AI{% endblock %}
+{% block title %}Career Path - Career Guidance AI{% endblock %}
 {% block content %}
-<div class="container py-4">
-  <div class="card shadow-sm">
-    <div class="card-body">
-      <h2 class="card-title text-info">{{ career.title }}</h2>
-      <p class="mb-2">{{ career.description }}</p>
-      <p><b>Required Skills:</b> {{ career.required_skills }}</p>
-      <p><b>Category:</b> {{ career.category }}</p>
-      <p><b>Salary Range:</b> {{ career.salary_range }}</p>
-      <p><b>Recommended Courses:</b> {{ career.courses }}</p>
-      <p><b>Career Path:</b> {{ career.path }}</p>
-      <form method="GET" action="/start_plan/{{ career.id }}">
-        <button type="submit" class="btn btn-primary mt-2">Start This Career Plan</button>
-      </form>
+<div class="page-wrapper">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="stat-card">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="stat-icon me-3" style="background: var(--primary);">
+                        <i class="bi bi-compass"></i>
+                    </div>
+                    <h3 class="fw-bold mb-0" style="color: var(--dark);">{{ career.title }}</h3>
+                </div>
+                <p class="mb-3" style="color: var(--gray);">{{ career.description }}</p>
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <div class="p-3 rounded-3" style="background: rgba(67,97,238,0.08);">
+                            <small class="text-muted d-block mb-1">Required Skills</small>
+                            <span class="fw-bold" style="color: var(--primary);">{{ career.required_skills }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="p-3 rounded-3" style="background: rgba(114,9,183,0.08);">
+                            <small class="text-muted d-block mb-1">Category</small>
+                            <span class="fw-bold" style="color: var(--secondary);">{{ career.category }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="p-3 rounded-3" style="background: rgba(6,214,160,0.08);">
+                            <small class="text-muted d-block mb-1">Salary Range</small>
+                            <span class="fw-bold" style="color: var(--success);">{{ career.salary_range }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="p-3 rounded-3" style="background: rgba(255,209,102,0.08);">
+                            <small class="text-muted d-block mb-1">Recommended Courses</small>
+                            <span class="fw-bold" style="color: #d68910;">{{ career.courses }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-3 rounded-3 mb-3" style="background: #f8f9fa;">
+                    <small class="text-muted d-block mb-1">Career Path</small>
+                    <span class="fw-medium">{{ career.path }}</span>
+                </div>
+                <form method="GET" action="/start_plan/{{ career.id }}">
+                    <button type="submit" class="btn btn-career btn-lg w-100">
+                        <i class="bi bi-rocket-takeoff me-2"></i>Start This Career Plan
+                    </button>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
-{% endblock %} 
+{% endblock %}

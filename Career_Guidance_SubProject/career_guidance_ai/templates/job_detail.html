@@ -1,66 +1,96 @@
 {% extends 'base.html' %}
-{% block title %}Job Details | Career Guidance AI{% endblock %}
+{% block title %}{{ job.title }} - Career Guidance AI{% endblock %}
 {% block content %}
-<div class="container py-4">
-  <div class="row justify-content-center">
-    <div class="col-md-8">
-      <div class="card shadow">
-        <div class="card-body">
-          <h2 class="card-title text-primary">{{ job.title }}</h2>
-          <div class="mb-2"><b>Company:</b> <span class="text-dark">{{ job.company }}</span></div>
-          <div class="mb-2"><b>Location:</b> <span class="text-dark">{{ job.location }}</span></div>
-          <div class="mb-2"><b>Job Type:</b> <span class="text-dark">{{ job.job_type or 'N/A' }}</span></div>
-          <div class="mb-2"><b>Salary:</b> <span class="text-dark">{{ job.salary or 'N/A' }}</span></div>
-          <div class="mb-2 text-muted">Posted: {{ job.posted_at.strftime('%Y-%m-%d') if job.posted_at else 'N/A' }}</div>
-          <hr>
-          <h5>Description</h5>
-          <p>{{ job.description }}</p>
-          {% if job.requirements %}
-          <h5>Requirements</h5>
-          <p>{{ job.requirements }}</p>
-          {% endif %}
-          <div class="mb-3">
-          </div>
-          <a href="{{ job.url }}" target="_blank" class="btn btn-primary mb-3 w-100"><i class="bi bi-box-arrow-up-right me-1"></i>Apply / View Original Posting</a>
-          <div class="mb-3">
-            <a href="/interview_prep/job/{{ job.id }}" class="btn btn-outline-info btn-sm"><i class="bi bi-question-circle me-1"></i> Interview Prep</a>
-          </div>
-          {% if avg_salary %}
-          <div class="mb-3 p-2 bg-light border rounded">
-            <b>Salary Insights:</b> <span class="text-success">Avg. Salary: ₹{{ avg_salary|int|default('N/A') }}</span>
-          </div>
-          {% endif %}
-          <div class="mb-3">
-            {% if is_saved %}
-              <form method="POST" action="/unsave_job/{{ job.id }}" class="d-inline">
-                <button type="submit" class="btn btn-warning btn-sm" data-bs-toggle="tooltip" title="Remove from Saved Jobs"><i class="bi bi-x-circle"></i> Unsave</button>
-              </form>
-            {% else %}
-              <form method="POST" action="/save_job/{{ job.id }}" class="d-inline">
-                <button type="submit" class="btn btn-success btn-sm" data-bs-toggle="tooltip" title="Save this Job"><i class="bi bi-bookmark-plus"></i> Save</button>
-              </form>
-            {% endif %}
-          </div>
-          <form method="POST" action="/apply_job/{{ job.id }}" class="mb-3">
-            <div class="input-group input-group-sm mb-1">
-              <select class="form-select" name="status">
-                <option value="Applied" {% if job.status == 'Applied' %}selected{% endif %}>Applied</option>
-                <option value="Interview" {% if job.status == 'Interview' %}selected{% endif %}>Interview</option>
-                <option value="Offer" {% if job.status == 'Offer' %}selected{% endif %}>Offer</option>
-                <option value="Rejected" {% if job.status == 'Rejected' %}selected{% endif %}>Rejected</option>
-                <option value="Saved" {% if job.status == 'Saved' or not job.status %}selected{% endif %}>Saved</option>
-              </select>
-              <input type="text" class="form-control" name="notes" placeholder="Notes" value="{{ job.notes or '' }}">
-              <button class="btn btn-outline-success" type="submit" data-bs-toggle="tooltip" title="Update Status"><i class="bi bi-check2"></i></button>
+<div class="page-wrapper">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="stat-card">
+                <div class="d-flex align-items-start mb-3">
+                    <div class="stat-icon me-3" style="background: var(--primary);">
+                        <i class="bi bi-briefcase-fill"></i>
+                    </div>
+                    <div>
+                        <h3 class="fw-bold mb-1" style="color: var(--dark);">{{ job.title }}</h3>
+                        <div class="d-flex flex-wrap gap-2">
+                            <span class="badge bg-primary-soft" style="color: var(--primary);"><i class="bi bi-building me-1"></i>{{ job.company }}</span>
+                            <span class="badge bg-success-soft" style="color: var(--success);"><i class="bi bi-geo-alt me-1"></i>{{ job.location }}</span>
+                            <span class="badge bg-warning-soft" style="color: #d68910;"><i class="bi bi-clock me-1"></i>{{ job.job_type or 'N/A' }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-sm-6">
+                        <div class="p-3 rounded-3" style="background: rgba(6,214,160,0.08);">
+                            <small class="text-muted d-block">Salary</small>
+                            <span class="fw-bold" style="color: var(--success);">{{ job.salary or 'N/A' }}</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="p-3 rounded-3" style="background: rgba(67,97,238,0.08);">
+                            <small class="text-muted d-block">Posted</small>
+                            <span class="fw-bold" style="color: var(--primary);">{{ job.posted_at.strftime('%Y-%m-%d') if job.posted_at else 'N/A' }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <h6 class="fw-bold" style="color: var(--dark);"><i class="bi bi-text-paragraph me-1"></i>Description</h6>
+                    <p style="color: var(--gray);">{{ job.description }}</p>
+                </div>
+
+                {% if job.requirements %}
+                <div class="mb-3">
+                    <h6 class="fw-bold" style="color: var(--dark);"><i class="bi bi-list-check me-1"></i>Requirements</h6>
+                    <p style="color: var(--gray);">{{ job.requirements }}</p>
+                </div>
+                {% endif %}
+
+                <a href="{{ job.url }}" target="_blank" class="btn btn-career btn-lg w-100 mb-3">
+                    <i class="bi bi-box-arrow-up-right me-2"></i>Apply / View Original Posting
+                </a>
+
+                <div class="d-flex flex-wrap gap-2 mb-3">
+                    <a href="/interview_prep/job/{{ job.id }}" class="btn btn-career-outline btn-sm"><i class="bi bi-question-circle me-1"></i>Interview Prep</a>
+                    {% if is_saved %}
+                    <form method="POST" action="/unsave_job/{{ job.id }}" class="d-inline">
+                        <button type="submit" class="btn btn-sm" style="background: var(--warning); color: var(--dark); border-radius: 10px; font-weight: 600;"><i class="bi bi-x-circle me-1"></i>Unsave</button>
+                    </form>
+                    {% else %}
+                    <form method="POST" action="/save_job/{{ job.id }}" class="d-inline">
+                        <button type="submit" class="btn btn-sm" style="background: var(--success); color: #fff; border-radius: 10px; font-weight: 600;"><i class="bi bi-bookmark-plus me-1"></i>Save</button>
+                    </form>
+                    {% endif %}
+                </div>
+
+                {% if avg_salary %}
+                <div class="p-3 rounded-3 mb-3" style="background: rgba(6,214,160,0.08);">
+                    <i class="bi bi-currency-rupee me-1" style="color: var(--success);"></i><strong>Salary Insights:</strong> <span style="color: var(--success);">Avg. Salary: &#8377;{{ avg_salary|int|default('N/A') }}</span>
+                </div>
+                {% endif %}
+
+                <form method="POST" action="/apply_job/{{ job.id }}" class="mb-3">
+                    <div class="input-group input-group-sm">
+                        <select class="form-select" name="status">
+                            <option value="Applied" {% if job.status == 'Applied' %}selected{% endif %}>Applied</option>
+                            <option value="Interview" {% if job.status == 'Interview' %}selected{% endif %}>Interview</option>
+                            <option value="Offer" {% if job.status == 'Offer' %}selected{% endif %}>Offer</option>
+                            <option value="Rejected" {% if job.status == 'Rejected' %}selected{% endif %}>Rejected</option>
+                            <option value="Saved" {% if job.status == 'Saved' or not job.status %}selected{% endif %}>Saved</option>
+                        </select>
+                        <input type="text" class="form-control" name="notes" placeholder="Notes" value="{{ job.notes or '' }}">
+                        <button class="btn btn-career btn-sm" type="submit"><i class="bi bi-check2"></i></button>
+                    </div>
+                    {% if job.status %}<span class="badge mt-1" style="background: var(--primary); color: #fff;">Status: {{ job.status }}</span>{% endif %}
+                    {% if job.applied_at %}<span class="badge mt-1 ms-1" style="background: var(--gray); color: #fff;">Applied: {{ job.applied_at.strftime('%Y-%m-%d') }}</span>{% endif %}
+                </form>
+
+                <div class="d-flex gap-2">
+                    <a href="{{ url_for('my_jobs') }}" class="btn btn-career-outline btn-sm"><i class="bi bi-bookmark-heart me-1"></i>My Saved Jobs</a>
+                    <a href="{{ url_for('jobs') }}" class="btn btn-career-outline btn-sm"><i class="bi bi-list me-1"></i>Job Board</a>
+                </div>
             </div>
-            {% if job.status %}<span class="badge bg-info">Status: {{ job.status }}</span>{% endif %}
-            {% if job.applied_at %}<span class="badge bg-secondary ms-1">Applied: {{ job.applied_at.strftime('%Y-%m-%d') }}</span>{% endif %}
-          </form>
-          <a href="{{ url_for('my_jobs') }}" class="btn btn-outline-secondary me-2"><i class="bi bi-bookmark-heart"></i> My Saved Jobs</a>
-          <a href="{{ url_for('jobs') }}" class="btn btn-outline-secondary"><i class="bi bi-list"></i> Job Board</a>
         </div>
-      </div>
     </div>
-  </div>
 </div>
-{% endblock %} 
+{% endblock %}

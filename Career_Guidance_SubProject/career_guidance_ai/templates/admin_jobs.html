@@ -1,75 +1,76 @@
 {% extends 'base.html' %}
-{% block title %}Job Management | Admin | Career Guidance AI{% endblock %}
+{% block title %}Job Management - Admin{% endblock %}
 {% block content %}
-<div class="container py-4">
-  <h2 class="mb-4 text-primary text-center">Job Management</h2>
-  <div class="card mb-4">
-    <div class="card-body">
-      <h5 class="card-title">Add New Job</h5>
-      <form method="POST" class="row g-2">
-        <div class="col-md-3"><input type="text" name="title" class="form-control" placeholder="Title" required></div>
-        <div class="col-md-3"><input type="text" name="company" class="form-control" placeholder="Company" required></div>
-        <div class="col-md-3"><input type="text" name="location" class="form-control" placeholder="Location" required></div>
-        <div class="col-md-3"><input type="text" name="job_type" class="form-control" placeholder="Job Type (Full-time, Part-time, etc.)"></div>
-        <div class="col-md-3"><input type="number" name="salary" class="form-control" placeholder="Salary"></div>
-        <div class="col-md-3"><input type="text" name="url" class="form-control" placeholder="Job URL"></div>
-        <div class="col-md-3">
-          <select name="career_id" class="form-select" required>
-            <option value="">Select Career</option>
-            {% for career in careers %}
-              <option value="{{ career.id }}">{{ career.title }}</option>
-            {% endfor %}
-          </select>
-        </div>
-        <div class="col-12"><textarea name="description" class="form-control" placeholder="Description" rows="2"></textarea></div>
-        <div class="col-12"><textarea name="requirements" class="form-control" placeholder="Requirements" rows="2"></textarea></div>
-        <div class="col-12 text-end"><button type="submit" class="btn btn-success">Add Job</button></div>
-      </form>
+<div class="page-wrapper">
+    <div class="admin-header">
+        <h3><i class="bi bi-briefcase-fill me-2"></i>Job Management</h3>
+        <p class="mb-0 opacity-75">Add and manage job postings</p>
     </div>
-  </div>
-  <h5 class="mb-3">All Jobs</h5>
-  {% if jobs %}
-  <div class="table-responsive">
-    <table class="table table-bordered table-hover align-middle">
-      <thead class="table-light">
-        <tr>
-          <th>Title</th>
-          <th>Company</th>
-          <th>Location</th>
-          <th>Type</th>
-          <th>Salary</th>
-          <th>Description</th>
-          <th>Requirements</th>
-          <th>URL</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for job in jobs %}
-        <tr>
-          <form method="POST" action="/admin_edit_job/{{ job.id }}">
-            <td><input type="text" name="title" class="form-control form-control-sm" value="{{ job.title }}" required></td>
-            <td><input type="text" name="company" class="form-control form-control-sm" value="{{ job.company }}" required></td>
-            <td><input type="text" name="location" class="form-control form-control-sm" value="{{ job.location }}" required></td>
-            <td><input type="text" name="job_type" class="form-control form-control-sm" value="{{ job.job_type }}"></td>
-            <td><input type="number" name="salary" class="form-control form-control-sm" value="{{ job.salary }}"></td>
-            <td><textarea name="description" class="form-control form-control-sm" rows="1">{{ job.description }}</textarea></td>
-            <td><textarea name="requirements" class="form-control form-control-sm" rows="1">{{ job.requirements }}</textarea></td>
-            <td><input type="text" name="url" class="form-control form-control-sm" value="{{ job.url }}"></td>
-            <td>
-              <button type="submit" class="btn btn-primary btn-sm">Save</button>
-          </form>
-          <form method="POST" action="/admin_delete_job/{{ job.id }}" style="display:inline;">
-            <button type="submit" class="btn btn-danger btn-sm ms-2" onclick="return confirm('Delete this job?');">Delete</button>
-          </form>
-            </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
-  {% else %}
-  <div class="alert alert-info text-center">No jobs found.</div>
-  {% endif %}
+
+    <!-- Add Job Form -->
+    <div class="stat-card mb-4">
+        <h6 class="fw-bold mb-3" style="color: var(--dark);"><i class="bi bi-plus-circle me-1" style="color: var(--primary);"></i>Add New Job</h6>
+        <form method="POST" class="row g-2">
+            <div class="col-md-3"><input type="text" name="title" class="form-control form-control-sm" placeholder="Title" required></div>
+            <div class="col-md-3"><input type="text" name="company" class="form-control form-control-sm" placeholder="Company" required></div>
+            <div class="col-md-3"><input type="text" name="location" class="form-control form-control-sm" placeholder="Location" required></div>
+            <div class="col-md-3"><input type="text" name="job_type" class="form-control form-control-sm" placeholder="Job Type"></div>
+            <div class="col-md-3"><input type="number" name="salary" class="form-control form-control-sm" placeholder="Salary"></div>
+            <div class="col-md-3"><input type="text" name="url" class="form-control form-control-sm" placeholder="Job URL"></div>
+            <div class="col-md-3">
+                <select name="career_id" class="form-select form-select-sm" required>
+                    <option value="">Select Career</option>
+                    {% for career in careers %}<option value="{{ career.id }}">{{ career.title }}</option>{% endfor %}
+                </select>
+            </div>
+            <div class="col-12"><textarea name="description" class="form-control form-control-sm" placeholder="Description" rows="2"></textarea></div>
+            <div class="col-12"><textarea name="requirements" class="form-control form-control-sm" placeholder="Requirements" rows="2"></textarea></div>
+            <div class="col-12 text-end">
+                <button type="submit" class="btn btn-career btn-sm"><i class="bi bi-plus-circle me-1"></i>Add Job</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Jobs Table -->
+    <h5 class="section-title">All Jobs</h5>
+    {% if jobs %}
+    <div class="table-card">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0" style="font-size: 0.85rem;">
+                <thead><tr><th>Title</th><th>Company</th><th>Location</th><th>Type</th><th>Salary</th><th>Description</th><th>Requirements</th><th>URL</th><th>Actions</th></tr></thead>
+                <tbody>
+                    {% for job in jobs %}
+                    <tr>
+                        <form method="POST" action="/admin_edit_job/{{ job.id }}">
+                        <td><input type="text" name="title" class="form-control form-control-sm" value="{{ job.title }}" required></td>
+                        <td><input type="text" name="company" class="form-control form-control-sm" value="{{ job.company }}" required></td>
+                        <td><input type="text" name="location" class="form-control form-control-sm" value="{{ job.location }}" required></td>
+                        <td><input type="text" name="job_type" class="form-control form-control-sm" value="{{ job.job_type }}"></td>
+                        <td><input type="number" name="salary" class="form-control form-control-sm" value="{{ job.salary }}"></td>
+                        <td><textarea name="description" class="form-control form-control-sm" rows="1">{{ job.description }}</textarea></td>
+                        <td><textarea name="requirements" class="form-control form-control-sm" rows="1">{{ job.requirements }}</textarea></td>
+                        <td><input type="text" name="url" class="form-control form-control-sm" value="{{ job.url }}"></td>
+                        <td>
+                            <div class="d-flex gap-1">
+                                <button type="submit" class="btn btn-career btn-sm" style="font-size: 0.78rem;">Save</button>
+                        </form>
+                        <form method="POST" action="/admin_delete_job/{{ job.id }}">
+                                <button type="submit" class="btn btn-sm" style="background: var(--danger); color: #fff; border-radius: 10px; font-weight: 600; font-size: 0.78rem;" onclick="return confirm('Delete this job?');">Delete</button>
+                        </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <i class="bi bi-briefcase-fill d-block"></i>
+        <h5>No jobs found</h5>
+        <p>Add your first job posting above</p>
+    </div>
+    {% endif %}
 </div>
-{% endblock %} 
+{% endblock %}
