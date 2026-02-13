@@ -1,8 +1,13 @@
-import spacy
+try:
+    import spacy
+    nlp = spacy.load("en_core_web_sm")
+    SPACY_AVAILABLE = True
+except Exception:
+    nlp = None
+    SPACY_AVAILABLE = False
+
 import fitz  # PyMuPDF
 from docx import Document
-
-nlp = spacy.load("en_core_web_sm")
 
 COMMON_SKILLS = [
     'python', 'java', 'sql', 'machine learning', 'data analysis',
@@ -33,6 +38,19 @@ def extract_text_from_docx(path):
     return text
 
 def extract_resume_data(text):
+    if not SPACY_AVAILABLE or nlp is None:
+        # Fallback: simple keyword matching
+        text_lower = text.lower()
+        skills = set()
+        for skill in COMMON_SKILLS:
+            if skill in text_lower:
+                skills.add(skill)
+        return {
+            "skills": ", ".join(skills),
+            "education": "",
+            "experience": ""
+        }
+    
     doc = nlp(text)
     skills = set()
     for token in doc:
