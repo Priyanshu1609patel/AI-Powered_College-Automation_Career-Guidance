@@ -19,6 +19,8 @@ from functools import wraps
 from collections import defaultdict
 import secrets
 from datetime import datetime, timedelta
+import requests
+import uuid
 
 app = Flask(__name__, template_folder='career_guidance_ai/templates')
 app.secret_key = SECRET_KEY
@@ -922,16 +924,40 @@ def profile():
     if 'user_id' not in session:
         return redirect('/login')
     user_id = session['user_id']
-    edit_mode = request.args.get('edit') == '1'
     if request.method == 'POST':
         name = request.form.get('name')
         bio = request.form.get('bio')
         linkedin = request.form.get('linkedin')
         file = request.files.get('profile_pic')
         profile_pic_filename = None
-        if file and file.filename:
-            profile_pic_filename = f"profile_{user_id}_" + secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], profile_pic_filename))
+        
+        if file and file.filename and allowed_image(file.filename):
+            ext = file.filename.rsplit('.', 1)[1].lower()
+            profile_pic_filename = f"{user_id}_{uuid.uuid4().hex}.{ext}"
+            
+            # Upload to Supabase Storage
+            try:
+                file_data = file.read()
+                supabase_url = 'https://sjvzrzqzftixopjgiuos.supabase.co'
+                # REPLACE THIS WITH YOUR ACTUAL SERVICE_ROLE KEY FROM SUPABASE DASHBOARD
+                supabase_key = 'YOUR_SERVICE_ROLE_KEY_HERE'
+                storage_url = f"{supabase_url}/storage/v1/object/user_logo/{profile_pic_filename}"
+                
+                headers = {
+                    'Authorization': f'Bearer {supabase_key}',
+                    'Content-Type': f'image/{ext}'
+                }
+                
+                response = requests.post(storage_url, data=file_data, headers=headers)
+                
+                if response.status_code not in [200, 201]:
+                    flash(f'Upload failed: {response.text}', 'danger')
+                    return redirect(url_for('profile', edit=1))
+                    
+            except Exception as e:
+                flash(f'Upload error: {str(e)}', 'danger')
+                return redirect(url_for('profile', edit=1))
+        
         conn = get_db()
         try:
             with conn.cursor() as cursor:
@@ -946,6 +972,7 @@ def profile():
             conn.close()
         flash('Profile updated successfully!', 'success')
         return redirect(url_for('profile'))
+    
     # GET: show profile
     conn = get_db()
     try:
