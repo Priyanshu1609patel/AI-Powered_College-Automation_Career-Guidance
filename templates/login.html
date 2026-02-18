@@ -7,13 +7,189 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    <style>
+        body {
+            background: #0a0a1a !important;
+            overflow: hidden;
+        }
+
+        /* ---- Background Layers ---- */
+        .bg-base {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 40%, #16213e 70%, #0f1f3d 100%);
+        }
+
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(67, 97, 238, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(67, 97, 238, 0.05) 1px, transparent 1px);
+            background-size: 55px 55px;
+        }
+
+        /* Glowing orbs */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(75px);
+            pointer-events: none;
+            z-index: 1;
+        }
+        .orb-blue {
+            width: 520px; height: 520px;
+            background: radial-gradient(circle, rgba(67, 97, 238, 0.2) 0%, transparent 70%);
+            top: -180px; left: -180px;
+            animation: orbA 13s ease-in-out infinite alternate;
+        }
+        .orb-purple {
+            width: 420px; height: 420px;
+            background: radial-gradient(circle, rgba(114, 9, 183, 0.16) 0%, transparent 70%);
+            bottom: -160px; right: -160px;
+            animation: orbB 11s ease-in-out infinite alternate;
+        }
+        .orb-pink {
+            width: 260px; height: 260px;
+            background: radial-gradient(circle, rgba(247, 37, 133, 0.1) 0%, transparent 70%);
+            top: 45%; right: 15%;
+            animation: orbC 9s ease-in-out infinite alternate;
+        }
+        @keyframes orbA { 0% { transform: translate(0,0) scale(1); }    100% { transform: translate(90px, 70px) scale(1.25); } }
+        @keyframes orbB { 0% { transform: translate(0,0) scale(1); }    100% { transform: translate(-70px,-55px) scale(1.18); } }
+        @keyframes orbC { 0% { transform: translate(0,0) scale(1); }    100% { transform: translate(45px,-45px) scale(0.85); } }
+
+        /* Star/Particle canvas */
+        #star-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 2;
+        }
+
+        /* Floating tech icons */
+        .floating-icons {
+            position: fixed;
+            inset: 0;
+            z-index: 3;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .float-icon {
+            position: absolute;
+            bottom: -80px;
+            animation: floatRise linear infinite;
+        }
+        @keyframes floatRise {
+            0%   { transform: translateY(0) rotate(0deg) scale(0.9);   opacity: 0; }
+            8%   { opacity: 1; }
+            92%  { opacity: 0.8; }
+            100% { transform: translateY(calc(-100vh - 120px)) rotate(540deg) scale(1.1); opacity: 0; }
+        }
+
+        /* ---- Auth Wrapper & Card ---- */
+        .auth-wrapper {
+            position: relative;
+            z-index: 10;
+            background: transparent !important;
+        }
+
+        .auth-card {
+            background: rgba(255, 255, 255, 0.97) !important;
+            border: 1px solid rgba(255, 255, 255, 0.25) !important;
+            box-shadow:
+                0 30px 90px rgba(0, 0, 0, 0.55),
+                0 0 0 1px rgba(67, 97, 238, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6) !important;
+            animation: cardAppear 0.85s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+        @keyframes cardAppear {
+            0%   { transform: translateY(35px) scale(0.93); opacity: 0; }
+            100% { transform: translateY(0)    scale(1);    opacity: 1; }
+        }
+
+        /* Glowing top border on card */
+        .auth-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 10%; right: 10%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(67,97,238,0.6), rgba(114,9,183,0.6), transparent);
+            border-radius: 2px;
+        }
+
+        /* ---- Icon animation ---- */
+        .auth-icon-wrap {
+            display: inline-block;
+            animation: iconBob 3.5s ease-in-out infinite;
+            filter: drop-shadow(0 0 12px rgba(67, 97, 238, 0.5));
+        }
+        @keyframes iconBob {
+            0%, 100% { transform: translateY(0) rotate(-4deg); }
+            50%       { transform: translateY(-7px) rotate(4deg); }
+        }
+
+        /* ---- Form focus glow ---- */
+        .auth-card .form-control:focus,
+        .auth-card .form-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.18), 0 4px 12px rgba(67, 97, 238, 0.1);
+        }
+
+        /* ---- Button shimmer ---- */
+        .btn-primary {
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
+        }
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: -50%; left: -80%;
+            width: 55%; height: 200%;
+            background: rgba(255, 255, 255, 0.18);
+            transform: skewX(-22deg);
+            animation: shimmer 2.8s ease-in-out infinite;
+        }
+        @keyframes shimmer {
+            0%   { left: -80%; }
+            100% { left: 140%; }
+        }
+
+        /* ---- Tab pill active color ---- */
+        .nav-pills .nav-link.active {
+            background: var(--primary);
+        }
+
+        /* ---- Input group left border ---- */
+        .input-group-text {
+            border-color: #dee2e6;
+        }
+    </style>
 </head>
 <body>
+
+    <!-- === Layered Animated Background === -->
+    <div class="bg-base"></div>
+    <div class="bg-grid"></div>
+    <div class="orb orb-blue"></div>
+    <div class="orb orb-purple"></div>
+    <div class="orb orb-pink"></div>
+    <canvas id="star-canvas"></canvas>
+    <div class="floating-icons" id="floatingIcons"></div>
+
+    <!-- === Auth Card === -->
     <div class="auth-wrapper">
         <div class="auth-card">
             <div class="text-center mb-3">
                 <div style="font-size: 2.5rem; color: var(--primary);">
-                    <i class="bi bi-mortarboard-fill"></i>
+                    <span class="auth-icon-wrap"><i class="bi bi-mortarboard-fill"></i></span>
                 </div>
                 <h2>Welcome Back</h2>
                 <p class="subtitle">Sign in to College AI Assistant</p>
@@ -99,6 +275,126 @@
             </div>
         </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // ============================================================
+        //  STAR / CONSTELLATION PARTICLE SYSTEM
+        // ============================================================
+        const canvas = document.getElementById('star-canvas');
+        const ctx    = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width  = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const STAR_COUNT = 110;
+        const stars = [];
+
+        class Star {
+            constructor() { this.init(); }
+            init() {
+                this.x     = Math.random() * canvas.width;
+                this.y     = Math.random() * canvas.height;
+                this.size  = Math.random() * 1.6 + 0.3;
+                this.vx    = (Math.random() - 0.5) * 0.25;
+                this.vy    = (Math.random() - 0.5) * 0.25;
+                this.base  = Math.random() * 0.55 + 0.15;
+                this.phase = Math.random() * Math.PI * 2;
+                this.freq  = Math.random() * 0.018 + 0.008;
+            }
+            update() {
+                this.x     += this.vx;
+                this.y     += this.vy;
+                this.phase += this.freq;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.x > canvas.width)  this.x = 0;
+                if (this.y < 0) this.y = canvas.height;
+                if (this.y > canvas.height) this.y = 0;
+            }
+            draw() {
+                const opacity = this.base * (0.65 + 0.35 * Math.sin(this.phase));
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(190, 210, 255, ${opacity})`;
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < STAR_COUNT; i++) stars.push(new Star());
+
+        function drawConnections() {
+            for (let i = 0; i < stars.length; i++) {
+                for (let j = i + 1; j < stars.length; j++) {
+                    const dx   = stars[i].x - stars[j].x;
+                    const dy   = stars[i].y - stars[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 105) {
+                        const a = (1 - dist / 105) * 0.13;
+                        ctx.strokeStyle = `rgba(67, 97, 238, ${a})`;
+                        ctx.lineWidth   = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(stars[i].x, stars[i].y);
+                        ctx.lineTo(stars[j].x, stars[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animateStars() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            stars.forEach(s => { s.update(); s.draw(); });
+            drawConnections();
+            requestAnimationFrame(animateStars);
+        }
+        animateStars();
+
+        // ============================================================
+        //  FLOATING TECH ICONS
+        // ============================================================
+        const ICONS = [
+            'bi-book',         'bi-book-fill',    'bi-laptop',
+            'bi-code-slash',   'bi-mortarboard',  'bi-cpu',
+            'bi-braces',       'bi-terminal',     'bi-database',
+            'bi-keyboard',     'bi-code-square',  'bi-journal-code',
+            'bi-lightbulb',    'bi-pen',          'bi-gear',
+            'bi-file-code',    'bi-pc-display',   'bi-graph-up',
+            'bi-wifi',         'bi-cloud',        'bi-layers'
+        ];
+
+        const COLORS = [
+            'rgba(67,  97,  238, 0.22)',
+            'rgba(114, 9,   183, 0.18)',
+            'rgba(247, 37,  133, 0.14)',
+            'rgba(100, 180, 255, 0.20)',
+            'rgba(255, 255, 255, 0.10)'
+        ];
+
+        const container = document.getElementById('floatingIcons');
+
+        for (let i = 0; i < 24; i++) {
+            const el   = document.createElement('i');
+            el.className = `bi ${ICONS[Math.floor(Math.random() * ICONS.length)]} float-icon`;
+
+            const size     = Math.random() * 30 + 13;
+            const left     = Math.random() * 97;
+            const duration = Math.random() * 18 + 14;
+            const delay    = Math.random() * 24;
+            const color    = COLORS[Math.floor(Math.random() * COLORS.length)];
+
+            el.style.cssText = `
+                font-size: ${size}px;
+                left: ${left}%;
+                color: ${color};
+                animation-duration: ${duration}s;
+                animation-delay: -${delay}s;
+            `;
+            container.appendChild(el);
+        }
+    </script>
 </body>
 </html>

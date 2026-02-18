@@ -48,17 +48,17 @@
                     {% endif %}
                 </div>
                 
-                <div class="relative inline-block">
-                    {% if user.profile_pic %}
-                    <img src="https://sjvzrzqzftixopjgiuos.supabase.co/storage/v1/object/public/user_logo/{{ user.profile_pic }}" 
-                         alt="Profile" 
-                         class="w-32 h-32 rounded-full object-cover border-4 border-white shadow-xl mx-auto">
-                    {% else %}
-                    <div class="w-32 h-32 rounded-full bg-white/20 backdrop-blur flex items-center justify-center border-4 border-white/50 shadow-xl mx-auto">
-                        <span class="text-white text-5xl font-bold">{{ user.name[0]|upper }}</span>
+                    <div class="relative inline-block">
+                        {% if user.profile_pic %}
+                        <img id="profileImage" src="https://sjvzrzqzftixopjgiuos.supabase.co/storage/v1/object/public/user_logo/{{ user.profile_pic }}?t={{ range(1, 9999999) | random }}" 
+                             alt="Profile" 
+                             class="w-32 h-32 rounded-full object-cover border-4 border-white shadow-xl mx-auto">
+                        {% else %}
+                        <div id="profileImage" class="w-32 h-32 rounded-full bg-white/20 backdrop-blur flex items-center justify-center border-4 border-white/50 shadow-xl mx-auto">
+                            <span class="text-white text-5xl font-bold">{{ user.name[0]|upper }}</span>
+                        </div>
+                        {% endif %}
                     </div>
-                    {% endif %}
-                </div>
                 
                 <h1 class="text-3xl font-bold text-white mt-4">{{ user.name }}</h1>
                 <p class="text-indigo-100 mt-2">{{ user.email }}</p>
@@ -102,16 +102,16 @@
                         <div class="flex items-center space-x-4">
                             <div class="flex-shrink-0">
                                 {% if user.profile_pic %}
-                                <img src="https://sjvzrzqzftixopjgiuos.supabase.co/storage/v1/object/public/user_logo/{{ user.profile_pic }}" 
+                                <img id="editProfileImage" src="https://sjvzrzqzftixopjgiuos.supabase.co/storage/v1/object/public/user_logo/{{ user.profile_pic }}?t={{ range(1, 9999999) | random }}" 
                                      alt="Current" 
                                      class="w-20 h-20 rounded-full object-cover border-2 border-gray-200">
                                 {% else %}
-                                <div class="w-20 h-20 rounded-full bg-indigo-100 flex items-center justify-center border-2 border-gray-200">
+                                <div id="editProfileImage" class="w-20 h-20 rounded-full bg-indigo-100 flex items-center justify-center border-2 border-gray-200">
                                     <span class="text-indigo-600 text-2xl font-bold">{{ user.name[0]|upper }}</span>
                                 </div>
                                 {% endif %}
                             </div>
-                            <input type="file" id="profile_pic" name="profile_pic" accept="image/*"
+                            <input type="file" id="profile_pic" name="profile_pic" accept="image/*" onchange="previewImage(event)"
                                 class="flex-1 px-4 py-3 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
                         </div>
                         <p class="mt-2 text-sm text-gray-500">Upload a new profile picture (JPG, PNG, GIF)</p>
@@ -158,5 +158,27 @@
             </div>
         </div>
     </div>
+
+    <script>
+    function previewImage(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const editImg = document.getElementById('editProfileImage');
+                if (editImg.tagName === 'IMG') {
+                    editImg.src = e.target.result;
+                } else {
+                    const newImg = document.createElement('img');
+                    newImg.id = 'editProfileImage';
+                    newImg.src = e.target.result;
+                    newImg.className = 'w-20 h-20 rounded-full object-cover border-2 border-gray-200';
+                    editImg.parentNode.replaceChild(newImg, editImg);
+                }
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+    </script>
 </body>
 </html>

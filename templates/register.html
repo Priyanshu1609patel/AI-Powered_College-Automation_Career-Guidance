@@ -7,13 +7,204 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    <style>
+        body {
+            background: #060d1a !important;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        /* ---- Background Layers ---- */
+        .bg-base {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background: linear-gradient(135deg, #060d1a 0%, #0d1530 45%, #0a1520 100%);
+        }
+
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(67, 97, 238, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(67, 97, 238, 0.04) 1px, transparent 1px);
+            background-size: 45px 45px;
+        }
+
+        /* Glowing orbs - teal/blue theme to differentiate from login */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            z-index: 1;
+        }
+        .orb-teal {
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(6, 214, 160, 0.14) 0%, transparent 70%);
+            top: -180px; left: -180px;
+            animation: orbT 14s ease-in-out infinite alternate;
+        }
+        .orb-indigo {
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(67, 97, 238, 0.14) 0%, transparent 70%);
+            bottom: -140px; right: -140px;
+            animation: orbI 11s ease-in-out infinite alternate;
+        }
+        .orb-cyan {
+            width: 240px; height: 240px;
+            background: radial-gradient(circle, rgba(0, 188, 212, 0.1) 0%, transparent 70%);
+            top: 55%; left: 60%;
+            animation: orbC 9s ease-in-out infinite alternate;
+        }
+        @keyframes orbT { 0% { transform: translate(0,0) scale(1);   }  100% { transform: translate(80px,  65px) scale(1.22); } }
+        @keyframes orbI { 0% { transform: translate(0,0) scale(1);   }  100% { transform: translate(-65px,-50px) scale(1.15); } }
+        @keyframes orbC { 0% { transform: translate(0,0) scale(1);   }  100% { transform: translate(-45px, 40px) scale(0.85); } }
+
+        /* Matrix canvas */
+        #matrix-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 2;
+        }
+
+        /* Floating tech icons */
+        .floating-icons {
+            position: fixed;
+            inset: 0;
+            z-index: 3;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .float-icon {
+            position: absolute;
+            bottom: -80px;
+            animation: floatRise linear infinite;
+        }
+        @keyframes floatRise {
+            0%   { transform: translateY(0) rotate(0deg) scale(0.85);   opacity: 0; }
+            8%   { opacity: 1; }
+            92%  { opacity: 0.75; }
+            100% { transform: translateY(calc(-100vh - 120px)) rotate(-360deg) scale(1.1); opacity: 0; }
+        }
+
+        /* ---- Auth Wrapper & Card ---- */
+        .auth-wrapper {
+            position: relative;
+            z-index: 10;
+            background: transparent !important;
+            padding: 2rem 1rem;
+        }
+
+        .auth-card {
+            background: rgba(255, 255, 255, 0.97) !important;
+            border: 1px solid rgba(6, 214, 160, 0.18) !important;
+            box-shadow:
+                0 30px 90px rgba(0, 0, 0, 0.6),
+                0 0 0 1px rgba(6, 214, 160, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5) !important;
+            animation: cardAppear 0.85s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+        @keyframes cardAppear {
+            0%   { transform: translateY(35px) scale(0.93); opacity: 0; }
+            100% { transform: translateY(0)    scale(1);    opacity: 1; }
+        }
+
+        /* Glowing top border — teal gradient for register */
+        .auth-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 10%; right: 10%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(6,214,160,0.7), rgba(67,97,238,0.7), transparent);
+            border-radius: 2px;
+        }
+
+        /* ---- Icon animation ---- */
+        .auth-icon-wrap {
+            display: inline-block;
+            animation: iconPulse 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 14px rgba(6, 214, 160, 0.55));
+        }
+        @keyframes iconPulse {
+            0%, 100% { transform: scale(1)    rotate(-5deg); }
+            30%       { transform: scale(1.12) rotate( 5deg); }
+            70%       { transform: scale(1.08) rotate(-3deg); }
+        }
+
+        /* ---- Form focus glow — teal ---- */
+        .auth-card .form-control:focus,
+        .auth-card .form-select:focus {
+            border-color: #06d6a0;
+            box-shadow: 0 0 0 3px rgba(6, 214, 160, 0.18), 0 4px 12px rgba(6, 214, 160, 0.1);
+        }
+
+        /* ---- Button shimmer ---- */
+        .btn-primary {
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
+        }
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: -50%; left: -80%;
+            width: 55%; height: 200%;
+            background: rgba(255, 255, 255, 0.18);
+            transform: skewX(-22deg);
+            animation: shimmer 2.8s ease-in-out infinite;
+        }
+        @keyframes shimmer {
+            0%   { left: -80%; }
+            100% { left: 140%; }
+        }
+
+        /* Field label colour highlight */
+        .form-label { color: #2d3748; }
+
+        /* Badge strip at top of card */
+        .dept-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: linear-gradient(135deg, rgba(67,97,238,0.08), rgba(6,214,160,0.08));
+            border: 1px solid rgba(67,97,238,0.15);
+            border-radius: 20px;
+            padding: 3px 14px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: #4361ee;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.4px;
+        }
+    </style>
 </head>
 <body>
+
+    <!-- === Layered Animated Background === -->
+    <div class="bg-base"></div>
+    <div class="bg-grid"></div>
+    <div class="orb orb-teal"></div>
+    <div class="orb orb-indigo"></div>
+    <div class="orb orb-cyan"></div>
+    <canvas id="matrix-canvas"></canvas>
+    <div class="floating-icons" id="floatingIcons"></div>
+
+    <!-- === Auth Card === -->
     <div class="auth-wrapper">
         <div class="auth-card">
             <div class="text-center mb-3">
                 <div style="font-size: 2.5rem; color: var(--primary);">
-                    <i class="bi bi-mortarboard-fill"></i>
+                    <span class="auth-icon-wrap"><i class="bi bi-mortarboard-fill"></i></span>
+                </div>
+                <div>
+                    <span class="dept-badge"><i class="bi bi-cpu-fill"></i> CSE Department</span>
                 </div>
                 <h2>Create Account</h2>
                 <p class="subtitle">Register for College AI Assistant</p>
@@ -78,5 +269,112 @@
             </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // ============================================================
+        //  MATRIX CODE RAIN
+        // ============================================================
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx    = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width  = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            drops.length = 0;
+            const cols = Math.floor(canvas.width / FONT_SIZE);
+            for (let i = 0; i < cols; i++) drops.push(Math.random() * -60);
+        });
+
+        const FONT_SIZE = 13;
+        const CHARS     = '01アイウエクケコABCDEFGHabcdefgh{}[]<>/\\01234'.split('');
+
+        const drops = [];
+        const cols  = Math.floor(canvas.width / FONT_SIZE);
+        for (let i = 0; i < cols; i++) drops.push(Math.random() * -60);
+
+        function drawMatrix() {
+            // Semi-transparent overlay to create trail effect
+            ctx.fillStyle = 'rgba(6, 13, 26, 0.055)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.font = FONT_SIZE + 'px "Courier New", monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                const char = CHARS[Math.floor(Math.random() * CHARS.length)];
+                const y    = drops[i] * FONT_SIZE;
+
+                // Leading character is brighter
+                if (Math.random() > 0.95) {
+                    ctx.fillStyle = `rgba(160, 200, 255, ${Math.random() * 0.4 + 0.15})`;
+                } else {
+                    const alpha = Math.random() * 0.18 + 0.04;
+                    ctx.fillStyle = `rgba(67, 120, 238, ${alpha})`;
+                }
+
+                ctx.fillText(char, i * FONT_SIZE, y);
+
+                if (y > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i] += 0.55;
+            }
+        }
+
+        // Use rAF-throttled loop at ~20fps for classic matrix feel
+        let lastMx = 0;
+        function matrixLoop(ts) {
+            if (ts - lastMx > 48) { lastMx = ts; drawMatrix(); }
+            requestAnimationFrame(matrixLoop);
+        }
+        requestAnimationFrame(matrixLoop);
+
+        // ============================================================
+        //  FLOATING TECH ICONS  (code/study themed — different from login)
+        // ============================================================
+        const ICONS = [
+            'bi-book-fill',         'bi-laptop',            'bi-code-slash',
+            'bi-braces-asterisk',   'bi-terminal-fill',     'bi-database-fill',
+            'bi-journal-code',      'bi-cpu-fill',          'bi-file-code-fill',
+            'bi-layers-half',       'bi-cloud-upload-fill', 'bi-gear-wide-connected',
+            'bi-lightbulb-fill',    'bi-graph-up-arrow',    'bi-pc-display-horizontal',
+            'bi-wifi',              'bi-patch-check-fill',  'bi-trophy-fill',
+            'bi-mortarboard-fill',  'bi-pen-fill'
+        ];
+
+        const COLORS = [
+            'rgba(6,  214, 160, 0.22)',
+            'rgba(67, 97,  238, 0.20)',
+            'rgba(0,  188, 212, 0.18)',
+            'rgba(100,180, 255, 0.15)',
+            'rgba(255,255, 255, 0.09)'
+        ];
+
+        const floatContainer = document.getElementById('floatingIcons');
+
+        for (let i = 0; i < 22; i++) {
+            const el     = document.createElement('i');
+            el.className = `bi ${ICONS[Math.floor(Math.random() * ICONS.length)]} float-icon`;
+
+            const size     = Math.random() * 28 + 12;
+            const left     = Math.random() * 97;
+            const duration = Math.random() * 20 + 15;
+            const delay    = Math.random() * 26;
+            const color    = COLORS[Math.floor(Math.random() * COLORS.length)];
+
+            el.style.cssText = `
+                font-size: ${size}px;
+                left: ${left}%;
+                color: ${color};
+                animation-duration: ${duration}s;
+                animation-delay: -${delay}s;
+            `;
+            floatContainer.appendChild(el);
+        }
+    </script>
 </body>
 </html>

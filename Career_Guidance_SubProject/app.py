@@ -932,19 +932,26 @@ def profile():
         profile_pic_filename = None
         
         if file and file.filename and allowed_image(file.filename):
+            # Get old profile pic to delete
+            conn = get_db()
+            try:
+                with conn.cursor() as cursor:
+                    cursor.execute('SELECT profile_pic FROM users WHERE id = %s', (user_id,))
+                    old_user = cursor.fetchone()
+                    old_pic = old_user['profile_pic'] if old_user else None
+            finally:
+                conn.close()
+            
             ext = file.filename.rsplit('.', 1)[1].lower()
             profile_pic_filename = f"{user_id}_{uuid.uuid4().hex}.{ext}"
             
             # Upload to Supabase Storage
             try:
                 file_data = file.read()
-                supabase_url = 'https://sjvzrzqzftixopjgiuos.supabase.co'
-                # REPLACE THIS WITH YOUR ACTUAL SERVICE_ROLE KEY FROM SUPABASE DASHBOARD
-                supabase_key = 'YOUR_SERVICE_ROLE_KEY_HERE'
-                storage_url = f"{supabase_url}/storage/v1/object/user_logo/{profile_pic_filename}"
+                storage_url = f"{SUPABASE_URL}/storage/v1/object/{SUPABASE_BUCKET}/{profile_pic_filename}"
                 
                 headers = {
-                    'Authorization': f'Bearer {supabase_key}',
+                    'Authorization': f'Bearer {SUPABASE_SERVICE_ROLE_KEY}',
                     'Content-Type': f'image/{ext}'
                 }
                 
@@ -953,6 +960,11 @@ def profile():
                 if response.status_code not in [200, 201]:
                     flash(f'Upload failed: {response.text}', 'danger')
                     return redirect(url_for('profile', edit=1))
+                
+                # Delete old image from Supabase if exists
+                if old_pic:
+                    delete_url = f"{SUPABASE_URL}/storage/v1/object/{SUPABASE_BUCKET}/{old_pic}"
+                    requests.delete(delete_url, headers={'Authorization': f'Bearer {SUPABASE_SERVICE_ROLE_KEY}'})
                     
             except Exception as e:
                 flash(f'Upload error: {str(e)}', 'danger')
@@ -970,6 +982,10 @@ def profile():
             conn.commit()
         finally:
             conn.close()
+        
+        # Update session name
+        session['user_name'] = name
+        
         flash('Profile updated successfully!', 'success')
         return redirect(url_for('profile'))
     
