@@ -66,8 +66,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Show welcome if no active chat
-    if (!currentChatId) {
+    // Check if dashboard redirected us to a specific chat
+    const pendingChatId = localStorage.getItem('loadChat');
+    if (pendingChatId) {
+        localStorage.removeItem('loadChat');
+        loadChat(pendingChatId);
+    } else if (!currentChatId) {
         showWelcome();
     }
 });

@@ -175,9 +175,15 @@ def dashboard():
                     })
         finally:
             conn.close()
+        raw_pic = user['profile_pic'] if user else None
+        print(f"[DEBUG dashboard] user={user}, raw_pic={raw_pic!r}")
+        if raw_pic:
+            profile_pic_url = f"{SUPABASE_URL}/storage/v1/object/public/{SUPABASE_BUCKET}/{raw_pic}"
+        else:
+            profile_pic_url = None
         return render_template('dashboard.html',
             name=session['user_name'],
-            profile_pic=user['profile_pic'] if user and 'profile_pic' in user else None,
+            profile_pic_url=profile_pic_url,
             notifications=notifications,
             feedback_count=feedback_count,
             last_milestone=last_milestone,
