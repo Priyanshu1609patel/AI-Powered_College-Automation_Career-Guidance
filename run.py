@@ -53,6 +53,7 @@ career_app.config['SESSION_COOKIE_NAME'] = 'main_session'
 career_app.config['SESSION_COOKIE_PATH'] = '/'       # read cookie set at root
 career_app.config['UPLOAD_FOLDER'] = os.path.join(OLD_APP_DIR, 'uploads')
 career_app.config['APPLICATION_ROOT'] = '/Career_Guidance_SubProject'
+career_app.config['TEMPLATES_AUTO_RELOAD'] = True    # reload templates on every request
 
 # ── Combine with DispatcherMiddleware ───────────────────────
 application = DispatcherMiddleware(main_app, {'/Career_Guidance_SubProject': career_app})

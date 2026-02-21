@@ -7,8 +7,11 @@
         <div class="row align-items-center">
             <div class="col">
                 <div class="d-flex align-items-center mb-2">
-                    {% if profile_pic %}
-                    <img src="{{ url_for('uploaded_file', filename=profile_pic) }}" alt="Profile" class="rounded-circle border border-2 border-white me-3" width="60" height="60" style="object-fit:cover;">
+                    {% if profile_pic_url %}
+                    <img src="{{ profile_pic_url }}" alt="Profile"
+                         class="rounded-circle border border-2 border-white me-3"
+                         width="60" height="60" style="object-fit:cover;"
+                         onerror="this.onerror=null;this.src='https://ui-avatars.com/api/?name={{ name|urlencode }}&size=60&background=ffffff&color=4361ee';">
                     {% else %}
                     <img src="https://ui-avatars.com/api/?name={{ name|urlencode }}&size=60&background=ffffff&color=4361ee" alt="Profile" class="rounded-circle me-3" width="60" height="60">
                     {% endif %}
