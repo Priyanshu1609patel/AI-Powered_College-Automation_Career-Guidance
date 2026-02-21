@@ -1,0 +1,574 @@
+{
+  "university": "Indus University",
+  "department": "Computer Engineering",
+  "program": "B.Tech Computer Engineering",
+
+  "drive_links": {
+    "semester_1": "https://drive.google.com/drive/folders/1fvT743km8ZGLWMe1CdIc-hYkFcUf15Ng?usp=drive_link",
+    "semester_2": "https://drive.google.com/drive/folders/1BCM_CLGDklxWesUwa4Ryl7DlrIB7RBse?usp=drive_link",
+    "semester_3": "https://drive.google.com/drive/folders/1cgOhgQQiWxrrzG6g6sPCDCAuffqMegNc?usp=drive_link",
+    "semester_4": "https://drive.google.com/drive/folders/1ObSnEpV1vxJDtTlsxwqP-12wrkCcqE2Y?usp=drive_link",
+    "semester_5": "https://drive.google.com/drive/folders/1G8kQGpBSGsMP2kJ_tDZZ2TITPkYTo5tm?usp=drive_link",
+    "semester_6": "https://drive.google.com/drive/folders/1Lli1eezOjfMOhvD8jupSEmiTMYRQl2GQ?usp=drive_link",
+    "semester_7": "https://drive.google.com/drive/folders/13H2TyB8GNzecGK96zR2cZWBoUH8fG2hJ?usp=drive_link",
+    "minor_track": "https://drive.google.com/drive/folders/13H2TyB8GNzecGK96zR2cZWBoUH8fG2hJ?usp=drive_link"
+  },
+
+  "semesters": [
+    {
+      "semester": 1,
+      "drive_link": "https://drive.google.com/drive/folders/1fvT743km8ZGLWMe1CdIc-hYkFcUf15Ng?usp=drive_link",
+      "subjects": [
+        {
+          "code": "MA0111",
+          "name": "Calculus",
+          "credits": 4,
+          "category": "BS",
+          "has_practical": false,
+          "keywords": ["calculus", "maths", "math", "mathematics", "ma0111"]
+        },
+        {
+          "code": "CH0011",
+          "name": "Engineering Chemistry",
+          "credits": 4,
+          "category": "BS",
+          "has_practical": true,
+          "keywords": ["chemistry", "engineering chemistry", "ch0011", "chem"]
+        },
+        {
+          "code": "EN0111",
+          "name": "Technical Communication",
+          "credits": 2,
+          "category": "HS",
+          "has_practical": true,
+          "keywords": ["technical communication", "communication", "english", "en0111"]
+        },
+        {
+          "code": "ME0019",
+          "name": "Engineering Graphics",
+          "credits": 3,
+          "category": "ES",
+          "has_practical": true,
+          "keywords": ["engineering graphics", "graphics", "drawing", "me0019", "eg"]
+        },
+        {
+          "code": "CV0004",
+          "name": "Environmental Science",
+          "credits": 2,
+          "category": "ES",
+          "has_practical": false,
+          "keywords": ["environmental science", "environment", "ev", "ev science", "cv0004"]
+        },
+        {
+          "code": "IKS001",
+          "name": "Indian Knowledge System",
+          "credits": 3,
+          "category": "VA",
+          "has_practical": false,
+          "keywords": ["indian knowledge system", "iks", "iks001", "indian knowledge"]
+        }
+      ]
+    },
+    {
+      "semester": 2,
+      "drive_link": "https://drive.google.com/drive/folders/1BCM_CLGDklxWesUwa4Ryl7DlrIB7RBse?usp=drive_link",
+      "subjects": [
+        {
+          "code": "MA0211",
+          "name": "Differential Equations & Linear Algebra",
+          "credits": 4,
+          "category": "BS",
+          "has_practical": false,
+          "keywords": ["differential equations", "linear algebra", "ma0211", "de", "maths 2", "math 2"]
+        },
+        {
+          "code": "PH0011",
+          "name": "Engineering Physics",
+          "credits": 4,
+          "category": "BS",
+          "has_practical": true,
+          "keywords": ["engineering physics", "physics", "ph0011", "phy"]
+        },
+        {
+          "code": "EN0211",
+          "name": "Business Communication & Presentation Skills",
+          "credits": 2,
+          "category": "HS",
+          "has_practical": true,
+          "keywords": ["business communication", "presentation skills", "en0211", "communication 2"]
+        },
+        {
+          "code": "ME0117",
+          "name": "Workshop Practice",
+          "credits": 2,
+          "category": "ES",
+          "has_practical": true,
+          "keywords": ["workshop practice", "workshop", "me0117", "wsp"]
+        },
+        {
+          "code": "CE0216",
+          "name": "Programming for Problem Solving",
+          "credits": 4,
+          "category": "ES",
+          "has_practical": true,
+          "keywords": ["programming for problem solving", "pps", "ce0216", "c programming", "problem solving", "programming basics"]
+        },
+        {
+          "code": "IST001",
+          "name": "Indian Science Technology",
+          "credits": 1,
+          "category": "VA",
+          "has_practical": false,
+          "keywords": ["indian science technology", "ist", "ist001", "indian science"]
+        }
+      ]
+    },
+    {
+      "semester": 3,
+      "drive_link": "https://drive.google.com/drive/folders/1cgOhgQQiWxrrzG6g6sPCDCAuffqMegNc?usp=drive_link",
+      "subjects": [
+        {
+          "code": "MA0311",
+          "name": "Probability, Statistics & Numerical Methods",
+          "credits": 4,
+          "category": "BS",
+          "has_practical": false,
+          "keywords": ["probability", "statistics", "numerical methods", "ma0311", "psnm", "stats", "maths 3"]
+        },
+        {
+          "code": "CE0320",
+          "name": "Computer Organization & Architecture",
+          "credits": 3,
+          "category": "Core",
+          "has_practical": false,
+          "keywords": ["computer organization", "computer architecture", "coa", "ce0320", "co&a"]
+        },
+        {
+          "code": "EC0319",
+          "name": "Digital Electronics",
+          "credits": 4,
+          "category": "ES",
+          "has_practical": true,
+          "keywords": ["digital electronics", "de", "digital", "ec0319", "logic gates", "digital circuits"]
+        },
+        {
+          "code": "CE0316",
+          "name": "Object Oriented Concepts with UML",
+          "credits": 4,
+          "category": "Core",
+          "has_practical": true,
+          "keywords": ["object oriented", "oops", "oop", "uml", "ce0316", "object oriented concepts", "ooc"]
+        },
+        {
+          "code": "CE0317",
+          "name": "Database Management System",
+          "credits": 4,
+          "category": "Core",
+          "has_practical": true,
+          "keywords": ["database management system", "dbms", "database", "ce0317", "sql", "db"]
+        },
+        {
+          "code": "SS0301",
+          "name": "Human Values and Professional Ethics",
+          "credits": 2,
+          "category": "HS",
+          "has_practical": false,
+          "keywords": ["human values", "professional ethics", "ethics", "hvpe", "ss0301"]
+        },
+        {
+          "code": "CE0318",
+          "name": "Internship Credit / Online Courses / MOOC",
+          "credits": 2,
+          "category": "IC",
+          "has_practical": false,
+          "keywords": ["internship", "mooc", "online course", "ce0318"]
+        }
+      ]
+    },
+    {
+      "semester": 4,
+      "drive_link": "https://drive.google.com/drive/folders/1ObSnEpV1vxJDtTlsxwqP-12wrkCcqE2Y?usp=drive_link",
+      "subjects": [
+        {
+          "code": "CE0425",
+          "name": "ICT Tools and Technology",
+          "credits": 2,
+          "category": "ES",
+          "has_practical": true,
+          "keywords": ["ict tools", "ict", "ce0425", "information communication technology"]
+        },
+        {
+          "code": "CE0417",
+          "name": "Data Structure & Algorithms",
+          "credits": 4,
+          "category": "Core",
+          "has_practical": true,
+          "keywords": ["data structure", "algorithms", "dsa", "ds", "ce0417", "data structures and algorithms"]
+        },
+        {
+          "code": "CE0418",
+          "name": "Operating System",
+          "credits": 4,
+          "category": "Core",
+          "has_practical": true,
+          "keywords": ["operating system", "os", "ce0418", "operating systems"]
+        },
+        {
+          "code": "BB0311",
+          "name": "Management for Engineers",
+          "credits": 2,
+          "category": "HS",
+          "has_practical": false,
+          "keywords": ["management for engineers", "management", "bb0311", "engineering management"]
+        },
+        {
+          "code": "CE0421",
+          "name": "Core Java Programming",
+          "credits": 4,
+          "category": "Core",
+          "has_practical": true,
+          "keywords": ["core java", "java", "ce0421", "java programming", "core java programming"]
+        }
+      ]
+    },
+    {
+      "semester": 5,
+      "drive_link": "https://drive.google.com/drive/folders/1G8kQGpBSGsMP2kJ_tDZZ2TITPkYTo5tm?usp=drive_link",
+      "subjects": [
+        {
+          "code": "CE0516",
+          "name": "Design and Analysis of Algorithms",
+          "credits": 4,
+          "category": "Core",
+          "has_practical": true,
+          "keywords": ["design and analysis of algorithms", "daa", "algorithms", "ce0516", "algorithm design"]
+        },
+        {
+          "code": "CE0517",
+          "name": "Microprocessing and Interfacing",
+          "credits": 4,
+          "category": "ES",
+          "has_practical": true,
+          "keywords": ["microprocessing", "microprocessor", "interfacing", "ce0517", "8086", "mp&i"]
+        },
+        {
+          "code": "CE0518",
+          "name": "Computer Networks",
+          "credits": 4,
+          "category": "Core",
+          "has_practical": true,
+          "keywords": ["computer networks", "networks", "cn", "ce0518", "networking", "network"]
+        },
+        {
+          "code": "CE0525",
+          "name": "Programming for Scientific Computing",
+          "credits": 4,
+          "category": "Core",
+          "has_practical": true,
+          "keywords": ["scientific computing", "python", "programming scientific", "ce0525", "psc"]
+        },
+        {
+          "code": "CE0522",
+          "name": "Web Technology",
+          "credits": 4,
+          "category": "Core",
+          "has_practical": true,
+          "keywords": ["web technology", "web tech", "html", "css", "javascript", "ce0522", "wt"]
+        },
+        {
+          "code": "CE0523",
+          "name": "Internship Credit / Online Courses / MOOC",
+          "credits": 2,
+          "category": "IC",
+          "has_practical": false,
+          "keywords": ["internship", "mooc", "online course", "ce0523"]
+        }
+      ]
+    },
+    {
+      "semester": 6,
+      "drive_link": "https://drive.google.com/drive/folders/1Lli1eezOjfMOhvD8jupSEmiTMYRQl2GQ?usp=drive_link",
+      "subjects": [
+        {
+          "code": "CE0616",
+          "name": "Software Engineering with UML",
+          "credits": 4,
+          "category": "Core",
+          "has_practical": true,
+          "keywords": ["software engineering", "uml", "se", "ce0616", "software engineering with uml"]
+        },
+        {
+          "code": "CE0617",
+          "name": "Theory of Computation",
+          "credits": 4,
+          "category": "Core",
+          "has_practical": false,
+          "keywords": ["theory of computation", "toc", "automata", "ce0617", "formal languages", "turing machine"]
+        },
+        {
+          "code": "CE0630",
+          "name": "Data Science",
+          "credits": 4,
+          "category": "PE",
+          "has_practical": true,
+          "keywords": ["data science", "ce0630", "ds", "data analytics"]
+        },
+        {
+          "code": "CE0631",
+          "name": "Information Retrieval",
+          "credits": 4,
+          "category": "PE",
+          "has_practical": true,
+          "keywords": ["information retrieval", "ir", "ce0631", "search engine"]
+        },
+        {
+          "code": "CE0632",
+          "name": "Web Data Management",
+          "credits": 4,
+          "category": "PE",
+          "has_practical": true,
+          "keywords": ["web data management", "wdm", "ce0632"]
+        },
+        {
+          "code": "CE0618",
+          "name": "Advanced Java Technology",
+          "credits": 4,
+          "category": "PE",
+          "has_practical": true,
+          "keywords": ["advanced java", "java advanced", "ce0618", "java ee", "advanced java technology"]
+        },
+        {
+          "code": "CE0619",
+          "name": "Advance .Net Framework",
+          "credits": 4,
+          "category": "PE",
+          "has_practical": true,
+          "keywords": ["dotnet", ".net", "advance dotnet", "ce0619", ".net framework", "asp.net", "c#"]
+        },
+        {
+          "code": "CE0628",
+          "name": "Mobile Application Development (Android & iOS)",
+          "credits": 4,
+          "category": "PE",
+          "has_practical": true,
+          "keywords": ["mobile application", "android", "ios", "mobile app", "ce0628", "mad", "app development"]
+        },
+        {
+          "code": "CE0633",
+          "name": "Distributed Systems",
+          "credits": 4,
+          "category": "PE",
+          "has_practical": true,
+          "keywords": ["distributed systems", "ce0633", "distributed computing", "ds"]
+        },
+        {
+          "code": "CE0634",
+          "name": "Cryptography & Network Security",
+          "credits": 4,
+          "category": "PE",
+          "has_practical": true,
+          "keywords": ["cryptography", "network security", "cns", "ce0634", "crypto", "security"]
+        },
+        {
+          "code": "CE0629",
+          "name": "Data Compression",
+          "credits": 4,
+          "category": "PE",
+          "has_practical": true,
+          "keywords": ["data compression", "compression", "ce0629"]
+        },
+        {
+          "code": "CE0622",
+          "name": "Internet of Things",
+          "credits": 4,
+          "category": "ES",
+          "has_practical": true,
+          "keywords": ["internet of things", "iot", "ce0622", "smart devices", "embedded iot"]
+        }
+      ]
+    },
+    {
+      "semester": 7,
+      "drive_link": "https://drive.google.com/drive/folders/13H2TyB8GNzecGK96zR2cZWBoUH8fG2hJ?usp=drive_link",
+      "subjects": [
+        {
+          "code": "CE0716",
+          "name": "Data Warehouse & Mining",
+          "credits": 4,
+          "category": "PE",
+          "has_practical": true,
+          "keywords": ["data warehouse", "data mining", "dwm", "ce0716", "data warehousing"]
+        },
+        {
+          "code": "CE0718",
+          "name": "Advance Computer Architecture",
+          "credits": 4,
+          "category": "PE",
+          "has_practical": true,
+          "keywords": ["advance computer architecture", "aca", "ce0718", "computer architecture advanced"]
+        },
+        {
+          "code": "CE0721",
+          "name": "Advance Operating System",
+          "credits": 4,
+          "category": "PE",
+          "has_practical": true,
+          "keywords": ["advance operating system", "aos", "ce0721", "advanced os"]
+        },
+        {
+          "code": "CE0717",
+          "name": "Compiler Design",
+          "credits": 4,
+          "category": "Core",
+          "has_practical": false,
+          "keywords": ["compiler design", "cd", "ce0717", "compiler", "lex yacc"]
+        },
+        {
+          "code": "CE0728",
+          "name": "Natural Language Processing",
+          "credits": 4,
+          "category": "PE",
+          "has_practical": true,
+          "keywords": ["natural language processing", "nlp", "ce0728", "text processing", "language model"]
+        },
+        {
+          "code": "CE0730",
+          "name": "Human Computer Interface",
+          "credits": 4,
+          "category": "PE",
+          "has_practical": true,
+          "keywords": ["human computer interface", "hci", "ce0730", "ui ux", "user interface"]
+        },
+        {
+          "code": "CE0732",
+          "name": "Computer Vision and Applications",
+          "credits": 4,
+          "category": "PE",
+          "has_practical": true,
+          "keywords": ["computer vision", "cv", "ce0732", "image processing", "opencv"]
+        },
+        {
+          "code": "CE0723",
+          "name": "Cloud Computing",
+          "credits": 4,
+          "category": "PE",
+          "has_practical": true,
+          "keywords": ["cloud computing", "cloud", "ce0723", "aws", "azure", "cloud services"]
+        },
+        {
+          "code": "CE0727",
+          "name": "Software Group Project-I",
+          "credits": 2,
+          "category": "PRJ",
+          "has_practical": true,
+          "keywords": ["software group project", "project", "ce0727", "sgp"]
+        },
+        {
+          "code": "CE0726",
+          "name": "Internship Credit / Online Courses / MOOC",
+          "credits": 2,
+          "category": "IC",
+          "has_practical": false,
+          "keywords": ["internship", "mooc", "online course", "ce0726"]
+        },
+        {
+          "code": "IT0501",
+          "name": "Computer Graphics",
+          "credits": 4,
+          "category": "OE",
+          "has_practical": true,
+          "keywords": ["computer graphics", "cg", "it0501", "opengl", "3d graphics"]
+        },
+        {
+          "code": "IT0701",
+          "name": "Artificial Intelligence",
+          "credits": 4,
+          "category": "OE",
+          "has_practical": true,
+          "keywords": ["artificial intelligence", "ai", "it0701", "expert systems", "ai algorithms"]
+        },
+        {
+          "code": "IT0602",
+          "name": "Big Data Analytics",
+          "credits": 4,
+          "category": "OE",
+          "has_practical": true,
+          "keywords": ["big data analytics", "big data", "it0602", "hadoop", "spark", "bda"]
+        },
+        {
+          "code": "CS0602",
+          "name": "Data Preparation & Analysis",
+          "credits": 4,
+          "category": "OE",
+          "has_practical": true,
+          "keywords": ["data preparation", "data analysis", "cs0602", "dpa", "data cleaning"]
+        },
+        {
+          "code": "CS0501",
+          "name": "Advance Microprocessor",
+          "credits": 4,
+          "category": "OE",
+          "has_practical": true,
+          "keywords": ["advance microprocessor", "microprocessor", "cs0501", "arm", "advanced microprocessor"]
+        },
+        {
+          "code": "CS0701",
+          "name": "Machine Learning",
+          "credits": 4,
+          "category": "OE",
+          "has_practical": true,
+          "keywords": ["machine learning", "ml", "cs0701", "deep learning", "neural networks", "sklearn"]
+        }
+      ]
+    }
+  ],
+
+  "chatbot_intents": [
+    {
+      "intent": "greeting",
+      "patterns": ["hi", "hello", "hey", "hii", "helo", "start", "help", "namaste"],
+      "response": "Hello! I am your CSE Study Bot for Indus University. Ask me for study material or practicals for any subject!"
+    },
+    {
+      "intent": "material_request",
+      "patterns": ["material", "study material", "notes", "pdf", "resources", "drive", "link"],
+      "logic": "Match subject name or code from user query -> find semester -> return drive_link for that semester"
+    },
+    {
+      "intent": "practical_request",
+      "patterns": ["practical", "lab", "experiment", "prac", "lab file", "practical file"],
+      "logic": "Match subject name or code from user query -> find semester -> return drive_link for that semester. If subject has_practical is false, inform user."
+    },
+    {
+      "intent": "semester_subjects",
+      "patterns": ["sem 1 subjects", "sem 2 subjects", "list subjects", "all subjects", "subjects in sem"],
+      "logic": "Extract semester number from query -> return all subjects for that semester from semesters array"
+    },
+    {
+      "intent": "semester_material",
+      "patterns": ["sem 1 material", "sem 2 notes", "semester 3 drive", "all material sem"],
+      "logic": "Extract semester number -> return drive_link for that semester"
+    },
+    {
+      "intent": "minor_track",
+      "patterns": ["minor", "minor track", "minor subject"],
+      "response_link": "https://drive.google.com/drive/folders/13H2TyB8GNzecGK96zR2cZWBoUH8fG2hJ?usp=drive_link"
+    }
+  ],
+
+  "response_logic": {
+    "description": "How the chatbot should respond to user queries",
+    "steps": [
+      "1. Normalize user input to lowercase",
+      "2. Check if query matches any subject keyword from the subjects list",
+      "3. If match found, get the semester number of that subject",
+      "4. Return the drive_link for that semester",
+      "5. If query contains 'practical' or 'lab', mention practical files; else mention study material",
+      "6. If no subject match, check if query mentions a semester number directly",
+      "7. If semester number found, return that semester's drive_link",
+      "8. If query mentions 'minor' or 'minor track', return minor_track drive link",
+      "9. If nothing matches, ask user to rephrase with subject name or code"
+    ],
+    "note": "Semester 8 is excluded as it only contains the final project (CE0816)"
+  }
+}

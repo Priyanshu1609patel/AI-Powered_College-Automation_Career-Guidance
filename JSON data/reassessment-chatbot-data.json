@@ -1,0 +1,243 @@
+{
+  "university": "Indus University",
+  "topic": "Re-Checking and Re-Assessment Information",
+
+  "fees": {
+    "re_assessment": {
+      "without_late_fees": {
+        "amount": 1000,
+        "currency": "INR",
+        "per": "per course"
+      },
+      "with_late_fees": {
+        "amount": 2000,
+        "currency": "INR",
+        "per": "per course"
+      }
+    },
+    "re_checking": {
+      "without_late_fees": {
+        "amount": 500,
+        "currency": "INR",
+        "per": "per course"
+      },
+      "with_late_fees": {
+        "amount": 1000,
+        "currency": "INR",
+        "per": "per course"
+      }
+    },
+    "payment_modes": ["Online", "Offline"],
+    "refund_policy": "Fee will NOT be returned irrespective of change or no change in marks"
+  },
+
+  "eligibility": {
+    "allowed_for": [
+      "End Semester Examination of Theory Subjects only"
+    ],
+    "not_allowed_for": [
+      "Mid Semester Exam",
+      "CIE (Continuous Internal Evaluation)",
+      "Term Work component",
+      "Project",
+      "Dissertation",
+      "Practical Exam"
+    ],
+    "special_rules": [
+      "Student failing in more than 3 subjects is NOT eligible to apply for re-assessment",
+      "Re-checking is permitted in all subjects of all semesters",
+      "Re-assessment is only for theory subjects"
+    ]
+  },
+
+  "procedure": {
+    "re_checking": {
+      "description": "Verification of marks calculation in the answer book",
+      "steps": [
+        "Checker calculates the total marks awarded in the answer book",
+        "Checker verifies marks allotted to each answer inside the answer book",
+        "Checker confirms marks are correctly carried forward to the front page",
+        "Checker verifies the final calculation on the front page"
+      ]
+    },
+    "re_assessment": {
+      "description": "Full re-evaluation of the answer book by a different examiner",
+      "steps": [
+        "Re-assessment always starts with re-checking (marks calculation) first",
+        "If marks improve in re-checking, re-assessment is stopped and new marks are awarded to the student",
+        "If no improvement in re-checking, full re-assessment is carried out",
+        "The examiner for re-assessment must be different from the original examiner",
+        "Student identity and original marks are hidden from the new examiner before re-assessment",
+        "If the difference between re-assessment marks and original marks is less than 9% of maximum marks — no second re-assessment and no change in marks",
+        "If the difference is more than 9% of maximum marks — a second re-assessment is done and the result nearer to the original marks is declared as final"
+      ]
+    }
+  },
+
+  "rules": [
+    "Re-checking and Re-assessment is only for End Semester Exam Theory subjects",
+    "No re-assessment for Mid Semester Exam, CIE, Term Work, Project, Dissertation, or Practical",
+    "Student failing in more than 3 subjects cannot apply for re-assessment",
+    "Re-checking is allowed for all subjects of all semesters",
+    "Student must accept the revised result even if it is adverse (marks decrease)",
+    "Result of re-assessment will be communicated to student via email, letter, or notice board",
+    "Fee once paid will not be refunded under any circumstance",
+    "Payment can be made through online or offline mode"
+  ],
+
+  "chatbot_intents": [
+    {
+      "intent": "reassessment_fee",
+      "patterns": [
+        "reassessment fee",
+        "re assessment fee",
+        "how much for reassessment",
+        "reassessment charges",
+        "reassessment cost",
+        "fee for reassessment",
+        "reassessment kitna lagega",
+        "reassessment ka fees"
+      ],
+      "response": "Re-Assessment Fee:\n• Without Late Fees: ₹1,000 per course\n• With Late Fees: ₹2,000 per course"
+    },
+    {
+      "intent": "rechecking_fee",
+      "patterns": [
+        "rechecking fee",
+        "re checking fee",
+        "how much for rechecking",
+        "rechecking charges",
+        "rechecking cost",
+        "fee for rechecking",
+        "rechecking kitna lagega",
+        "rechecking ka fees"
+      ],
+      "response": "Re-Checking Fee:\n• Without Late Fees: ₹500 per course\n• With Late Fees: ₹1,000 per course"
+    },
+    {
+      "intent": "all_fees",
+      "patterns": [
+        "fees",
+        "all fees",
+        "charges",
+        "how much",
+        "fee details",
+        "fee structure",
+        "kitna fee hai"
+      ],
+      "response": "Fee Structure:\n\nRe-Assessment:\n• Without Late Fees: ₹1,000 per course\n• With Late Fees: ₹2,000 per course\n\nRe-Checking:\n• Without Late Fees: ₹500 per course\n• With Late Fees: ₹1,000 per course\n\nPayment Mode: Online or Offline\nNote: Fee is non-refundable."
+    },
+    {
+      "intent": "eligibility",
+      "patterns": [
+        "who can apply",
+        "eligible",
+        "eligibility",
+        "can i apply",
+        "am i eligible",
+        "criteria",
+        "who is eligible",
+        "kaun apply kar sakta hai",
+        "eligible hun kya"
+      ],
+      "response": "Eligibility:\n✅ Allowed for: End Semester Exam Theory subjects only\n\n❌ NOT allowed for:\n• Mid Semester Exam\n• CIE (Internal Assessment)\n• Term Work\n• Project / Dissertation / Practical\n\n⚠️ Special Rule: If you have failed in MORE than 3 subjects, you are NOT eligible for re-assessment.\n\nNote: Re-checking is allowed for all subjects of all semesters."
+    },
+    {
+      "intent": "procedure_rechecking",
+      "patterns": [
+        "how rechecking works",
+        "rechecking process",
+        "procedure rechecking",
+        "what is rechecking",
+        "rechecking procedure",
+        "rechecking kaise hota hai"
+      ],
+      "response": "Re-Checking Process:\n1. Checker calculates total marks in the answer book\n2. Verifies marks allotted to each answer inside the answer book\n3. Confirms marks are correctly carried forward to the front page\n4. Verifies the final calculation"
+    },
+    {
+      "intent": "procedure_reassessment",
+      "patterns": [
+        "how reassessment works",
+        "reassessment process",
+        "procedure reassessment",
+        "what is reassessment",
+        "reassessment procedure",
+        "reassessment kaise hota hai"
+      ],
+      "response": "Re-Assessment Process:\n1. Always starts with re-checking first\n2. If marks improve in re-checking → re-assessment stops, new marks awarded\n3. If no improvement → full re-assessment done by a DIFFERENT examiner\n4. Student identity and original marks are hidden from the new examiner\n5. If difference < 9% of max marks → no second re-assessment, no change in marks\n6. If difference > 9% → second re-assessment done, result nearer to original is final"
+    },
+    {
+      "intent": "refund",
+      "patterns": [
+        "refund",
+        "fee refund",
+        "money back",
+        "get money back",
+        "fee returned",
+        "will fee be refunded",
+        "paisa wapas milega"
+      ],
+      "response": "❌ No Refund Policy: The re-checking/re-assessment fee will NOT be returned under any circumstances, whether marks change or remain the same."
+    },
+    {
+      "intent": "result",
+      "patterns": [
+        "result",
+        "how result declared",
+        "result kab aayega",
+        "marks change hoge",
+        "what if marks decrease",
+        "adverse result",
+        "result kaise milega"
+      ],
+      "response": "Result Policy:\n• Result is declared by the university\n• Communicated via email, letter, or notice board\n• Student MUST accept the revised result even if it is adverse (marks decrease)\n• Fee is non-refundable regardless of outcome"
+    },
+    {
+      "intent": "payment_mode",
+      "patterns": [
+        "how to pay",
+        "payment mode",
+        "online payment",
+        "offline payment",
+        "payment kaise kare",
+        "fee kaise bhare"
+      ],
+      "response": "Payment can be made through:\n• Online mode\n• Offline mode\n\nRegistration is done through the SEROSOFT ERP System."
+    },
+    {
+      "intent": "difference_rechecking_reassessment",
+      "patterns": [
+        "difference between rechecking and reassessment",
+        "rechecking vs reassessment",
+        "which is better rechecking or reassessment",
+        "rechecking aur reassessment mein kya fark hai",
+        "difference"
+      ],
+      "response": "Difference:\n\nRe-Checking (₹500 normal / ₹1,000 late):\n• Only marks calculation is verified\n• Checks if marks are correctly totalled and carried forward\n• Allowed for all subjects of all semesters\n\nRe-Assessment (₹1,000 normal / ₹2,000 late):\n• Full re-evaluation of the answer book\n• Done by a different examiner\n• More thorough process\n• Starts with re-checking first; if marks improve, re-assessment stops there\n• NOT available if failing in more than 3 subjects"
+    },
+    {
+      "intent": "more_than_3_fail",
+      "patterns": [
+        "failed 3 subjects",
+        "fail in 4 subjects",
+        "more than 3 fail",
+        "3 se jyada fail",
+        "4 subject fail",
+        "multiple subject fail"
+      ],
+      "response": "⚠️ Important Rule: If you have failed in MORE than 3 subjects, you are NOT eligible to apply for re-assessment. However, you can still apply for re-checking as it is permitted in all subjects of all semesters."
+    },
+    {
+      "intent": "practical_project_reassessment",
+      "patterns": [
+        "practical reassessment",
+        "project reassessment",
+        "lab reassessment",
+        "cie reassessment",
+        "term work reassessment",
+        "dissertation reassessment"
+      ],
+      "response": "❌ Re-assessment is NOT allowed for:\n• Practical Exam\n• Project\n• Dissertation\n• CIE (Internal Assessment)\n• Mid Semester Exam\n• Term Work\n\nRe-assessment is ONLY for End Semester Theory subjects."
+    }
+  ]
+}

@@ -1,0 +1,270 @@
+{
+  "university": "Indus University, Ahmedabad",
+  "course": "B.Tech Computer Science and Engineering (CSE)",
+  "duration_years": 4,
+  "academic_session": "2025-2026",
+
+  "fee_structure": {
+    "currency": "INR",
+    "total_course_fee": 447000,
+    "total_course_fee_readable": "₹4.47 Lakhs (approx.)",
+    "semester_breakdown": {
+      "semesters_1_to_6": {
+        "tuition_fee": 48000,
+        "library_fee": 3000,
+        "miscellaneous_fee": 4300,
+        "total_per_semester": 55300,
+        "total_readable": "₹55,300 per semester"
+      },
+      "semesters_7_to_8": {
+        "tuition_fee": 50400,
+        "library_fee": 3000,
+        "miscellaneous_fee": 4300,
+        "total_per_semester": 57700,
+        "total_readable": "₹57,700 per semester"
+      }
+    },
+    "yearly_estimates": {
+      "year_1": 110600,
+      "year_2": 110600,
+      "year_3": 110600,
+      "year_4": 115400,
+      "year_1_to_3_readable": "₹1.11 Lakhs per year",
+      "year_4_readable": "₹1.15 Lakhs"
+    }
+  },
+
+  "fee_payment_details": {
+    "payment_methods": [
+      "UPI (BHIM, Google Pay, PhonePe)",
+      "Debit Card (Online Mode)",
+      "Credit Card (Online Mode)",
+      "Net Banking",
+      "Cheque / DD (at nearest ICICI Bank branch)",
+      "Education Loan (via ICICI Bank challan generation)"
+    ],
+    "installment_policy": {
+      "standard_installments": {
+        "max_parts": 3,
+        "reference_format": "Enrollment Number + A / B / C suffix",
+        "process": "Select installment option on the IU portal or ERP login during the payment window"
+      },
+      "emi_option": {
+        "provider": "GrayQuest",
+        "interest": "0% interest EMI",
+        "type": "Third-party EMI plan"
+      }
+    }
+  },
+
+  "attendance_policy": {
+    "minimum_for_exam_eligibility": "80%",
+    "minimum_for_scholarship_renewal": "75% (MYSY) / 90% (general scholarship eligibility)",
+    "punctuality_rule": "Students arriving more than 5 minutes late are NOT granted attendance for that period",
+    "important_note": "Students failing to maintain 80% attendance are NOT eligible to appear in Semester Examinations"
+  },
+
+  "mysy_scholarship": {
+    "full_name": "Mukhyamantri Yuva Swavalamban Yojana (MYSY)",
+    "applicable_for": "B.Tech Engineering students at Indus University",
+    "eligibility": {
+      "residency": "Gujarat State Domicile required",
+      "academic_criteria": "Minimum 80th percentile in Class 12 (Science / General stream)",
+      "income_limit": "Annual family income must be ₹6,00,000 or less",
+      "attendance_for_renewal": "Minimum 75% attendance required annually for renewal"
+    },
+    "benefits": {
+      "tuition_fee_grant": "50% of tuition fee OR ₹50,000 per year (whichever is less)",
+      "book_and_equipment_allowance": "₹5,000 one-time grant in first year",
+      "hostel_grant": "₹1,200 per month for 10 months (only if residing outside native Taluka)"
+    },
+    "application_process": {
+      "portal": "mysy.guj.nic.in",
+      "steps": [
+        "Step 1: Register as a Fresh Applicant using board and enrollment details",
+        "Step 2: Receive password on registered mobile number",
+        "Step 3: Login and fill personal, academic, and bank details",
+        "Step 4: Upload required documents (Income Certificate, Aadhaar, Admission Receipt, etc.)",
+        "Step 5: Submit application for institute and government verification"
+      ]
+    }
+  },
+
+  "chatbot_intents": [
+    {
+      "intent": "total_fee",
+      "patterns": [
+        "total fee",
+        "course fee",
+        "btech fee",
+        "cse fee",
+        "kitna fee hai",
+        "total kitna lagega",
+        "4 year fee",
+        "complete fee",
+        "overall fee"
+      ],
+      "response": "Total B.Tech CSE Fee at Indus University:\n• Total 4-Year Course Fee: ₹4.47 Lakhs (approx.)\n• Year 1–3: ₹1.11 Lakhs per year\n• Year 4: ₹1.15 Lakhs"
+    },
+    {
+      "intent": "semester_fee",
+      "patterns": [
+        "semester fee",
+        "per semester fee",
+        "sem fee",
+        "semester kitna lagta hai",
+        "semester fees",
+        "fee per semester"
+      ],
+      "response": "Semester-wise Fee:\n\nSemesters 1–6:\n• Tuition: ₹48,000\n• Library: ₹3,000\n• Miscellaneous: ₹4,300\n• Total: ₹55,300 per semester\n\nSemesters 7–8:\n• Tuition: ₹50,400\n• Library: ₹3,000\n• Miscellaneous: ₹4,300\n• Total: ₹57,700 per semester"
+    },
+    {
+      "intent": "tuition_fee",
+      "patterns": [
+        "tuition fee",
+        "tution fee",
+        "only tuition",
+        "tuition kitna hai"
+      ],
+      "response": "Tuition Fee:\n• Semesters 1–6: ₹48,000 per semester\n• Semesters 7–8: ₹50,400 per semester\n\n(Additional: ₹3,000 library + ₹4,300 miscellaneous per semester)"
+    },
+    {
+      "intent": "yearly_fee",
+      "patterns": [
+        "yearly fee",
+        "annual fee",
+        "per year fee",
+        "year 1 fee",
+        "year 2 fee",
+        "year 3 fee",
+        "year 4 fee",
+        "saal ka fee"
+      ],
+      "response": "Yearly Fee Estimate:\n• Year 1: ₹1,10,600\n• Year 2: ₹1,10,600\n• Year 3: ₹1,10,600\n• Year 4: ₹1,15,400\n• Total: ₹4.47 Lakhs (approx.)"
+    },
+    {
+      "intent": "payment_methods",
+      "patterns": [
+        "payment method",
+        "how to pay fee",
+        "fee payment",
+        "online payment",
+        "fee kaise bhare",
+        "payment mode",
+        "upi fee",
+        "card payment"
+      ],
+      "response": "Fee Payment Methods at Indus University:\n• UPI (Google Pay, PhonePe, BHIM)\n• Debit / Credit Card\n• Net Banking\n• Cheque / DD (at ICICI Bank branch)\n• Education Loan (via ICICI Bank challan)\n\nPayment is done through the IU Portal / SEROSOFT ERP."
+    },
+    {
+      "intent": "installment",
+      "patterns": [
+        "installment",
+        "emi",
+        "fee in parts",
+        "pay in 3 parts",
+        "kisto mein fee",
+        "fee installment",
+        "part payment"
+      ],
+      "response": "Fee Installment Options:\n\n1. Standard Installments:\n• Pay in up to 3 parts\n• Reference: Enrollment No. + A / B / C suffix\n• Apply via IU Portal / ERP during payment window\n\n2. EMI Option:\n• Partner: GrayQuest\n• 0% interest EMI plan\n• Third-party provider"
+    },
+    {
+      "intent": "attendance_exam",
+      "patterns": [
+        "attendance",
+        "minimum attendance",
+        "attendance for exam",
+        "kitna attendance chahiye",
+        "exam attendance",
+        "attendance rule",
+        "80 percent attendance"
+      ],
+      "response": "Attendance Policy:\n• Minimum 80% attendance is mandatory to appear in Semester Examinations\n• Students with less than 80% attendance are NOT eligible for exams\n• Late arrival (more than 5 minutes) = No attendance for that period"
+    },
+    {
+      "intent": "attendance_scholarship",
+      "patterns": [
+        "scholarship attendance",
+        "attendance for scholarship",
+        "mysy attendance",
+        "90 percent attendance",
+        "scholarship ke liye attendance"
+      ],
+      "response": "Attendance for Scholarship:\n• MYSY Scholarship renewal: Minimum 75% attendance required annually\n• General scholarship eligibility: Typically 90% or above attendance required"
+    },
+    {
+      "intent": "late_attendance",
+      "patterns": [
+        "late attendance",
+        "late to class",
+        "5 minutes late",
+        "late aane pe attendance",
+        "late entry"
+      ],
+      "response": "Punctuality Rule:\n⚠️ If a student arrives MORE than 5 minutes late to a class, they are NOT granted attendance for that period."
+    },
+    {
+      "intent": "mysy_scholarship",
+      "patterns": [
+        "mysy",
+        "mysy scholarship",
+        "scholarship",
+        "government scholarship",
+        "mukhyamantri scholarship",
+        "scholarship kaise milega",
+        "fee scholarship",
+        "gujarat scholarship"
+      ],
+      "response": "MYSY Scholarship (Mukhyamantri Yuva Swavalamban Yojana):\n\nEligibility:\n• Gujarat State Domicile\n• Min. 80th percentile in Class 12 (Science/General)\n• Family income ≤ ₹6,00,000 per year\n• Min. 75% attendance for annual renewal\n\nBenefits:\n• Tuition Grant: 50% of tuition OR ₹50,000/year (whichever is less)\n• Book/Equipment: ₹5,000 one-time (1st year)\n• Hostel: ₹1,200/month × 10 months (if outside native Taluka)\n\nApply at: mysy.guj.nic.in"
+    },
+    {
+      "intent": "mysy_eligibility",
+      "patterns": [
+        "mysy eligibility",
+        "who can apply mysy",
+        "mysy ke liye eligible",
+        "mysy criteria",
+        "mysy income limit",
+        "mysy income"
+      ],
+      "response": "MYSY Scholarship Eligibility:\n• Must be Gujarat State Domicile\n• Minimum 80th percentile in Class 12 (Science/General stream)\n• Annual family income must be ₹6,00,000 or less\n• Minimum 75% attendance required every year for renewal"
+    },
+    {
+      "intent": "mysy_benefits",
+      "patterns": [
+        "mysy benefits",
+        "mysy kitna milega",
+        "scholarship amount",
+        "how much scholarship",
+        "mysy grant",
+        "mysy money"
+      ],
+      "response": "MYSY Scholarship Benefits:\n• Tuition Fee Grant: 50% of tuition fee OR ₹50,000/year (whichever is lower)\n• Book & Equipment Allowance: ₹5,000 (one-time, first year only)\n• Hostel Grant: ₹1,200/month for 10 months (only if staying outside native Taluka)"
+    },
+    {
+      "intent": "mysy_apply",
+      "patterns": [
+        "mysy apply",
+        "how to apply mysy",
+        "mysy application",
+        "mysy portal",
+        "mysy kaise apply kare",
+        "mysy registration"
+      ],
+      "response": "MYSY Application Process:\n1. Visit: mysy.guj.nic.in\n2. Register as Fresh Applicant with board & enrollment details\n3. Get password on your registered mobile number\n4. Login and fill personal, academic & bank details\n5. Upload documents:\n   - Income Certificate\n   - Aadhaar Card\n   - Admission Receipt\n   - Other required docs\n6. Submit for institute & government verification"
+    },
+    {
+      "intent": "education_loan",
+      "patterns": [
+        "education loan",
+        "loan",
+        "fee loan",
+        "bank loan",
+        "icici loan",
+        "loan ke liye"
+      ],
+      "response": "Education Loan:\n• Available via ICICI Bank\n• Challan generation done through the IU portal\n• Contact the university accounts office for guidance on the process"
+    }
+  ]
+}

@@ -1,0 +1,665 @@
+{
+  "university": "Indus University",
+  "document": "Academic Calendar 2025-2026",
+  "academic_year": "2025-2026",
+
+  "legend": {
+    "T": "Teaching Day (T1, T2, ... = sequential teaching day number)",
+    "MID": "Mid Semester Examination",
+    "REP-REM": "Repeater and Remedial Classes",
+    "REM": "Remedial Classes",
+    "ESE-PR": "End Semester Exam - Practical",
+    "ESE-THY": "End Semester Exam - Theory",
+    "TH-ESE": "Theory End Semester Exam",
+    "PR-ESE": "Practical End Semester Exam",
+    "REP": "Repeater Exam / Repeat examination period",
+    "TERM STARTS": "First day of the semester term",
+    "TERM END": "Last day of the semester term"
+  },
+
+  "semester_structure": {
+    "odd_semesters": {
+      "semesters": ["Sem I", "Sem III", "Sem V", "Sem VII", "Sem IX"],
+      "months": "July 2025 to November 2025",
+      "term_start": "01 July 2025",
+      "note": "Odd semesters (1, 3, 5, 7, 9) run from July to November"
+    },
+    "even_semesters": {
+      "semesters": ["Sem II", "Sem IV", "Sem VI", "Sem VIII", "Sem X"],
+      "months": "January 2026 to May 2026",
+      "term_start": "01 January 2026",
+      "note": "Even semesters (2, 4, 6, 8, 10) run from January to May"
+    }
+  },
+
+  "vacation_periods": {
+    "winter_vacation": {
+      "month": "December 2025",
+      "description": "Full vacation month between odd and even semesters",
+      "start_date": "01 December 2025",
+      "end_date": "31 December 2025",
+      "note": "Repeater/Backlog ESE exams for Sem I are held during this month",
+      "repeater_ese_during_vacation": {
+        "sem1_ese_jury": { "period": "04 Dec – 05 Dec 2025", "label": "Sem I End Semester Jury" },
+        "sem1_ese_theory_exams": { "period": "08 Dec – 13 Dec 2025", "label": "Sem I End Semester Exams (Theory)" },
+        "rsp1": { "period": "15 Dec – 27 Dec 2025", "label": "RSP-1 (Remedial/Special Program)" }
+      },
+      "activities": [
+        "Winter School-2025: Skill Development Internship in Civil Engineering (8–19 Dec)",
+        "Certification Course of all departments of IITE",
+        "08–18 Dec: Certificate Course, IIICT",
+        "23–24 Dec: Workshop from Industry Expert, IIICT",
+        "26–27 Dec: International Conference DDCIOT",
+        "15–20 Dec: IIPR FDP"
+      ]
+    },
+    "summer_vacation": {
+      "month": "June 2026",
+      "description": "Full vacation month after even semester ends",
+      "start_date": "01 June 2026",
+      "end_date": "30 June 2026",
+      "note": "Repeater/Backlog ESE exams for even semester students are held during this month",
+      "activities": [
+        "Certification Course of all departments of IITE",
+        "08–10 June 2026: IAS Thesis Semester Final Jury",
+        "08–18 June: Certificate Course, IIICT",
+        "21 June: World Yoga Day – iSAC/NSS"
+      ]
+    }
+  },
+
+  "key_academic_dates_summary": {
+    "term_dates": {
+      "odd_sem_term_start": "01 July 2025",
+      "odd_sem_sem1_acpc_tentative_start": "18 August 2025",
+      "odd_sem_sem3_5_9_term_end": "17 October 2025",
+      "odd_sem_sem1_term_end": "29 November 2025",
+      "winter_vacation": "01 December 2025 to 31 December 2025",
+      "even_sem_term_start": "01 January 2026",
+      "even_sem_ias_term_end": "30 April 2026",
+      "even_sem_ese_ends": "30 May 2026",
+      "summer_vacation": "01 June 2026 to 30 June 2026"
+    },
+    "examination_schedule": {
+      "odd_semester": {
+        "mid_sem_exams": "08 Sep – 23 Sep 2025",
+        "mid_sem_jury_sem3_5_9": "15 Sep – 19 Sep 2025",
+        "repeater_remedial_after_mid": "24 Sep – 09 Oct 2025 (REP-REM)",
+        "remedial_classes": "10 Oct – 17 Oct 2025 (REM)",
+        "sem3_5_9_term_end": "17 October 2025",
+        "ese_practical": "27 Oct – 08 Nov 2025 (ESE-PR)",
+        "ese_jury_sem3_5_9": "03 Nov – 08 Nov 2025",
+        "ese_theory": "10 Nov – 29 Nov 2025 (ESE-THY)",
+        "sem1_term_end": "29 November 2025",
+        "sem1_ese_jury_vacation": "04–05 December 2025 (during winter vacation)",
+        "sem1_ese_exams_vacation": "08–13 December 2025 (during winter vacation)"
+      },
+      "even_semester": {
+        "mid_sem_jury_sem4_6_8": "23 Mar – 26 Mar 2026",
+        "mid_sem_jury_sem2": "30 Mar 2026",
+        "mid_sem_exams": "23 Mar – 11 Apr 2026 (MID)",
+        "repeater_remedial": "13 Apr – 17 Apr 2026 (REP-REM)",
+        "remedial_classes": "20 Apr – 30 Apr 2026 (REM)",
+        "ias_term_end": "30 April 2026",
+        "ese_practical": "01 May – 09 May 2026 (PR. ESE)",
+        "ias_ese_jury": "04–09 May 2026",
+        "ias_ese_exams": "11–16 May 2026",
+        "ese_theory": "11 May – 30 May 2026 (TH. ESE)"
+      },
+      "repeater_exams": {
+        "winter_vacation": {
+          "for_semester": "Sem I (Odd)",
+          "jury": "04–05 December 2025",
+          "theory_exams": "08–13 December 2025",
+          "note": "Held during December winter vacation"
+        },
+        "summer_vacation": {
+          "for_semester": "Even Semester backlogs",
+          "period": "June 2026",
+          "note": "Held during June summer vacation"
+        }
+      }
+    },
+    "holidays": [
+      { "date": "09 Aug 2025", "occasion": "Raksha Bandhan" },
+      { "date": "15 Aug 2025", "occasion": "Independence Day" },
+      { "date": "16 Aug 2025", "occasion": "Janmashtami" },
+      { "date": "27 Aug 2025", "occasion": "Ganesh Chaturthi" },
+      { "date": "02 Oct 2025", "occasion": "Lal Bahadur Shastri Jayanti" },
+      { "dates": "20–25 Oct 2025", "occasion": "Diwali Holidays" },
+      { "date": "14 Jan 2026", "occasion": "Makar Sankranti" },
+      { "date": "26 Jan 2026", "occasion": "Republic Day" },
+      { "date": "15 Feb 2026", "occasion": "Shiv Ratri" },
+      { "date": "04 Mar 2026", "occasion": "Dhuleti" },
+      { "date": "27 Mar 2026", "occasion": "Ram Navami" },
+      { "date": "01 Apr 2026", "occasion": "Mahavir Jayanti" }
+    ]
+  },
+
+  "monthly_calendar": {
+    "july_2025": {
+      "month": "July 2025",
+      "semester": "Odd Semester — Term Starts",
+      "term_start": "01 July 2025 (T1)",
+      "teaching_days": "T1 (01 Jul) to T27 (31 Jul)",
+      "type": "Teaching",
+      "holidays": [],
+      "notable_events": [
+        "01 Jul: TERM STARTS",
+        "01 Jul: IAS SEM III, V, IX starts",
+        "10 Jul: IIPR Expert Talk",
+        "11 Jul: Seminar on Blockchain Technology, CE Dept",
+        "11 Jul: Expert Talk on Salesforce, CSE Dept",
+        "12 Jul: Hands-on Workshop on Automobile Engine, Diploma Students",
+        "12 Jul: Web Development Event, CSE Dept",
+        "12 Jul: Expert Session on UI/UX, IIICT",
+        "15 Jul: Peer Learning Session, IIICT",
+        "18 Jul: Industrial Visit for Civil Engg Students",
+        "18 Jul: Industrial Visit for MME Dept Students",
+        "18 Jul: IIPR Expert Talk",
+        "21 Jul: Industrial Visit for Mechanical Engineering Students",
+        "22 Jul: e-Yantra Workshop, ECE Dept",
+        "24 Jul: Expert Talk on Semiconductor Design, EC Dept",
+        "24 Jul: Alumni Talk for Civil Engg Students",
+        "25 Jul: Rural Tech Camp – ECE & EL Dept",
+        "25 Jul: Industrial Visit – CSE Dept",
+        "25 Jul: Industrial Visit – IT Dept",
+        "25 Jul: IIPR Industrial Visit",
+        "26 Jul: Seminar on Sales Force, IT Dept",
+        "26 Jul: Talk It Up Communication Workshop, IIICT",
+        "29 Jul: Seminar on Electric Vehicles, EL Dept",
+        "30 Jul: Industrial Visit for ECE/ICT Students",
+        "31 Jul: Industrial Visit for Automobile Students",
+        "Design Fest Aikyam 2025 – 17, 18, 19 July 2025",
+        "1–15 Jul: NSS Enrolment for 2025-26",
+        "8–14 Jul: International Literacy Week NSS",
+        "25 Jul: NSS Orientation Program"
+      ]
+    },
+
+    "august_2025": {
+      "month": "August 2025",
+      "semester": "Odd Semester — Teaching Continues",
+      "teaching_days": "T28 to T49",
+      "type": "Teaching",
+      "holidays": [
+        { "date": "09 Aug", "occasion": "Raksha Bandhan" },
+        { "date": "15 Aug", "occasion": "Independence Day" },
+        { "date": "16 Aug", "occasion": "Janmashtami" },
+        { "date": "27 Aug", "occasion": "Ganesh Chaturthi" }
+      ],
+      "notable_events": [
+        "SEM I Start (ACPC): Tentative 18 Aug 2025",
+        "22 Aug: IDEA LECTURE SERIES",
+        "04 Aug: Reel Competition, EC Dept",
+        "5–6 Aug: Hands-on Workshop on Revit Software, Civil Engg Dept",
+        "08 Aug: Alumni Talk Series-1 MME Department",
+        "08 Aug: Expert Session on Ethical Hacking, IT Dept",
+        "12 Aug: IIPR Industrial Visit",
+        "13 Aug: Poster Making Competition, IIICT",
+        "14 Aug: iSAC – Akhand Bharat Divas",
+        "15 Aug: iSAC – Celebration of Independence Day",
+        "18 Aug: Industrial Visit for Mechanical Engineering Students",
+        "20 Aug: Industrial Visit for Civil Engg Students",
+        "20 Aug: Industrial Visit, IIICT",
+        "21–22 Aug: Auto-Cad Workshop for Civil Engg Dept",
+        "22 Aug: Expert Session on Data Visualization, CE Dept",
+        "22 Aug: Alumni Talk Series-2 MME Department",
+        "22 Aug: Technical Quiz 'Tecknowlogy'",
+        "22 Aug: IoT-a-thon, ECE Dept",
+        "23 Aug: Expert Talk on Data Visualization, CSE Dept",
+        "26 Aug: Expert Talk for Civil Engg Students",
+        "28–30 Aug: Tech Events, CSE Dept",
+        "29 Aug: Industrial Visit for EC/ICT Students",
+        "30 Aug: Industrial Visit, CSE Dept",
+        "30 Aug: Seminar on Software Testing and QA Tools, IT Dept",
+        "01 Aug: NSS Cyber Awareness Program",
+        "22 Aug: NSS Health Checkup Camp at Rancharda Village"
+      ]
+    },
+
+    "september_2025": {
+      "month": "September 2025",
+      "semester": "Odd Semester — Mid Semester Exams",
+      "type": "Teaching + MID Exams + REP-REM",
+      "teaching_days": "T50 to T54 (01–05 Sep)",
+      "exam_periods": {
+        "mid_semester_exams": { "label": "MID", "period": "08 Sep – 13 Sep 2025 (start)" },
+        "mid_sem_jury_sem3_5_9": { "period": "15 Sep – 19 Sep 2025" },
+        "mid_sem_exams_extended": { "label": "MID", "period": "08 Sep – 23 Sep 2025" },
+        "rep_rem": { "label": "REP-REM", "period": "24 Sep – 30 Sep 2025" }
+      },
+      "holidays": [],
+      "notable_events": [
+        "01 Sep: IIMS – Agri Supply Chain Session",
+        "02 Sep: Interpersonal Skills Development Workshop, IIICT",
+        "03 Sep: IIMS i3 Cell – Industry Guest Session-5",
+        "03 Sep: IIPR Expert Talk",
+        "04 Sep: IIMS Expert Session on Taxation Planning",
+        "05 Sep: Teachers' Day Celebration – IIICT and iSAC",
+        "11 Sep: iSAC – Hindu Digvijay Diwas",
+        "12 Sep: IIPR Industrial Visit",
+        "15–19 Sep: Sem III, V, IX Mid Semester Jury",
+        "18 Sep: IIPR Expert Talk",
+        "19 Sep: iSAC Garba Workshop",
+        "19 Sep: NSS Free Dental Checkup Camp (KD Hospital)",
+        "24 Sep: iSAC RAASRANG – Navratri Night",
+        "24 Sep: NSS Foundation Day",
+        "25 Sep: IIMS POSH Act Training",
+        "26 Sep: IIPR Industrial Visit",
+        "26 Sep: IIMS Seminar/Webinar",
+        "26 Sep: IDEA LECTURE SERIES",
+        "27 Sep: Reel Making Competition, IIICT",
+        "1–13 Sep: IAS RSP – Communication & Product Design (tentative)"
+      ]
+    },
+
+    "october_2025": {
+      "month": "October 2025",
+      "semester": "Odd Semester — Remedial Classes + ESE Practical Exams",
+      "type": "REP-REM + REM + ESE-PR",
+      "exam_periods": {
+        "rep_rem": { "label": "REP-REM", "period": "01–09 Oct 2025" },
+        "rem": { "label": "REM", "period": "10 Oct – 17 Oct 2025" },
+        "sem3_5_9_term_end": { "date": "17 October 2025" },
+        "ese_practical": { "label": "ESE-PR", "period": "27 Oct – 31 Oct 2025" }
+      },
+      "holidays": [
+        { "date": "02 Oct", "occasion": "Lal Bahadur Shastri Jayanti" },
+        { "dates": "20–25 Oct", "occasion": "Diwali Holidays" }
+      ],
+      "notable_events": [
+        "02 Oct: Lal Bahadur Shastri Jayanti (Holiday)",
+        "01 Oct: Expert Session 'Know about your Constitution from Lawyers', IIICT",
+        "03 Oct: IIPR Expert Talk",
+        "03 Oct: IIMS CSR/ISR Activities",
+        "07 Oct: Poster Exhibition for Environmental Awareness, B.Tech 1st year",
+        "07 Oct: IIL Lok Adalat Visit",
+        "10 Oct: IIMS Management Conclave",
+        "10 Oct: iSAC Vocal for Local",
+        "10 Oct: IIPR Industrial Visit",
+        "13 Oct: Clothes & Footwear Distribution Drive, EC Dept",
+        "14 Oct: Hands on Training Session",
+        "15 Oct: IIPR Expert Talk",
+        "16 Oct: IIL Moot Court Competition",
+        "17 Oct: Sem III, V, IX TERM END",
+        "20–25 Oct: DIWALI HOLIDAYS",
+        "27–31 Oct: ESE-PR (Practical End Semester Exams)",
+        "31 Oct: IIL Expert Session on National Unity Day and United Nations Day",
+        "1–8 Oct: NSS Swatchata Abhiyan",
+        "16 Oct: NSS World Food Day Health Camp",
+        "27–31 Oct: NSS Traffic Week"
+      ]
+    },
+
+    "november_2025": {
+      "month": "November 2025",
+      "semester": "Odd Semester — End Semester Exams (Theory)",
+      "type": "ESE-PR (continued) + ESE-THY",
+      "exam_periods": {
+        "ese_practical_continued": { "label": "ESE-PR", "period": "03 Nov – 08 Nov 2025" },
+        "ese_jury_sem3_5_9": { "label": "End Semester Jury", "period": "03 Nov – 08 Nov 2025", "semesters": "Sem III, V, IX" },
+        "ese_theory": { "label": "ESE-THY", "period": "10 Nov – 29 Nov 2025" },
+        "sem1_term_end": { "date": "29 November 2025", "label": "Sem I TERM END" },
+        "winter_collaborative": { "period": "17 Nov – 30 Nov 2025", "label": "Winter Collaborative Program 2025" }
+      },
+      "holidays": [],
+      "notable_events": [
+        "03–08 Nov: Sem III, V, IX End Semester Jury",
+        "07 Nov: IIL Awareness Drive on National Legal Services Day",
+        "07 Nov: IIPR Industrial Visit",
+        "10–15 Nov: Sem III, V, IX End Semester Exams (Theory)",
+        "11 Nov: IIPR Expert Talk",
+        "15 Nov: iSAC Janjatiy Gaurav Divas",
+        "17–30 Nov: Winter Collaborative Program 2025",
+        "21 Nov: IIPR Industrial Visit",
+        "22 Nov: NSS World AIDS Day",
+        "26 Nov: IIL Celebration of Constitution Day",
+        "26 Nov: IIPR Expert Talk",
+        "29 Nov: SEM I – TERM END",
+        "IDS: External Jury 10–25 Nov",
+        "IDS: End Sem Exhibition 26–29 Nov"
+      ]
+    },
+
+    "december_2025": {
+      "month": "December 2025",
+      "semester": "WINTER VACATION (Between Odd and Even Semesters)",
+      "type": "VACATION + Repeater ESE",
+      "is_vacation": true,
+      "all_days_code": "REP",
+      "start_date": "01 December 2025",
+      "end_date": "31 December 2025",
+      "repeater_ese_schedule": {
+        "sem1_ese_jury": { "period": "04–05 Dec 2025", "label": "Sem I End Semester Jury" },
+        "sem1_ese_theory": { "period": "08–13 Dec 2025", "label": "Sem I End Semester Exams (Theory)" },
+        "rsp1": { "period": "15–27 Dec 2025", "label": "RSP-1" }
+      },
+      "notable_events": [
+        "01–31 Dec: WINTER VACATION",
+        "04–05 Dec: Sem I End Semester Jury (Repeater)",
+        "08–13 Dec: Sem I End Semester Theory Exams (Repeater)",
+        "8–19 Dec: Winter School-2025 Skill Development Internship – Civil Engineering, IITE",
+        "Certification Course – all departments of IITE",
+        "08–18 Dec: Certificate Course, IIICT",
+        "10 Dec: NSS Human Rights Day",
+        "11 Dec: iSAC Shree Geeta Jayanti",
+        "15–27 Dec: RSP-1",
+        "15–20 Dec: IIPR FDP",
+        "18 Dec: iSAC Talent Hunt",
+        "19 Dec: iSAC World Meditation Day",
+        "23–24 Dec: Workshop from Industry Expert, IIICT",
+        "26–27 Dec: International Conference DDCIOT"
+      ]
+    },
+
+    "january_2026": {
+      "month": "January 2026",
+      "semester": "Even Semester — Term Starts (Sem II, IV, VI, VIII, X)",
+      "type": "Teaching",
+      "term_start": "01 January 2026 (T1)",
+      "teaching_days": "T1 to T23",
+      "holidays": [
+        { "date": "14 Jan", "occasion": "Makar Sankranti" },
+        { "date": "26 Jan", "occasion": "Republic Day" }
+      ],
+      "notable_events": [
+        "01 Jan: EVEN SEMESTER TERM STARTS",
+        "01 Jan: IAS SEM IV, VI, VIII, X Start",
+        "05 Jan: IAS SEM II Start",
+        "09 Jan: Industrial Visit for MME Department",
+        "10 Jan: Peer Learning Session, IIICT",
+        "10 Jan: IIPR Expert Talk",
+        "12 Jan: Alumni Talk for Automobile Students",
+        "14 Jan: Makar Sankranti (Holiday)",
+        "21 Jan: IIPR Expert Talk",
+        "22 Jan: Industrial Visit for Mechanical Engineering Students",
+        "23 Jan: Seminar on Data Science using ML & DL, CE Dept",
+        "23 Jan: Industrial Visit for Electrical Engineering Students",
+        "23 Jan: Industrial Visit for Civil Engg Students",
+        "23 Jan: Industrial Visit for IT Dept Students",
+        "23 Jan: TechnoFreaks-2026, IIICT",
+        "23 Jan: IIPR Industrial Visit",
+        "24 Jan: Workshop on Spring Framework in Java, IT Dept",
+        "24 Jan: IDEA LECTURE SERIES",
+        "26 Jan: Republic Day (Holiday)",
+        "26 Jan: iSAC – Celebration of Republic Day",
+        "28 Jan: Industrial Visit for EC/ICT Students",
+        "30–31 Jan: Technical/Project Competition, CSE Dept",
+        "31 Jan: IIPR Industrial Visit",
+        "5–10 Jan: iSAC INDUS CUP 2K26",
+        "12 Jan: iSAC Swami Vivekanand Jyanti",
+        "15 Jan: NSS Voter Awareness Campaign"
+      ]
+    },
+
+    "february_2026": {
+      "month": "February 2026",
+      "semester": "Even Semester — Teaching Continues",
+      "type": "Teaching",
+      "teaching_days": "T24 to T45",
+      "holidays": [
+        { "date": "15 Feb", "occasion": "Shiv Ratri" }
+      ],
+      "notable_events": [
+        "02 Feb: Social Activity, IIICT",
+        "04 Feb: NSS World Cancer Day",
+        "04 Feb: Alumni Talk for Civil Engg Students",
+        "12 Feb: Seminar by eInfochips Team for EC/ICT Students",
+        "12 Feb: Alumni Talk for Automobile Students",
+        "12 Feb: Industrial Visit, CSE Dept",
+        "13 Feb: Industrial Visit for Mechanical Engineering Students",
+        "13 Feb: Workshop on Mobile Application Development, CE Dept",
+        "13 Feb: Agnitio, IIICT",
+        "15 Feb: Shiv Ratri (Holiday)",
+        "18 Feb: Industrial Visit for Electrical Engineering Students",
+        "20 Feb: Industrial Visit for Civil Engg Students",
+        "20 Feb: Alumni Talk Series-3 MME Department",
+        "20 Feb: Debate Competition on Technical Topic",
+        "20 Feb: iSAC IIPR Industrial Visit",
+        "21 Feb: iSAC Matrubhasha Divas",
+        "20 Feb: iSAC Talent Hunt",
+        "26 Feb: IIPR Expert Talk",
+        "27 Feb: Industrial Visit for EC/EL/ICT Students",
+        "27 Feb: Industrial Visit for IT Dept",
+        "27 Feb: One Day Picnic",
+        "27 Feb: IDEA LECTURE SERIES",
+        "27 Feb: IIPR Industrial Visit",
+        "28 Feb: Industrial Visit for Automobile Students",
+        "28 Feb: Alumni Talk for Students of IT Dept",
+        "05 Feb: IIL Legal Drafting Competition",
+        "10 Feb: IIL Central Jail Visit",
+        "20 Feb: IIL Celebration of World Day of Social Justice"
+      ]
+    },
+
+    "march_2026": {
+      "month": "March 2026",
+      "semester": "Even Semester — Mid Semester Exams",
+      "type": "Teaching + MID Exams",
+      "teaching_days": "T46 to T60 then MID",
+      "exam_periods": {
+        "mid_sem_jury_sem4_6_8": { "label": "Mid Semester Jury", "period": "23 Mar – 26 Mar 2026", "semesters": "Sem IV, VI, VIII" },
+        "mid_sem_jury_sem2": { "label": "Mid Semester Jury", "period": "30 Mar – 31 Mar 2026", "semesters": "Sem II" },
+        "mid_exams": { "label": "MID", "period": "23 Mar – 31 Mar 2026" }
+      },
+      "holidays": [
+        { "date": "04 Mar", "occasion": "Dhuleti" },
+        { "date": "27 Mar", "occasion": "Ram Navami" }
+      ],
+      "notable_events": [
+        "02 Mar: Industrial Visit, IIICT",
+        "04 Mar: Dhuleti (Holiday)",
+        "05 Mar: iSAC Swami Dayanand Sarswati Jyanti",
+        "06 Mar: Expert Talk for Civil Engg Students",
+        "06 Mar: IIPR National Pharmacy Education Day Celebration",
+        "08 Mar: IIL Celebration of International Women's Day",
+        "08 Mar: NSS International Women's Day",
+        "09 Mar: IIPR Expert Talk",
+        "11–14 Mar: iSAC INSTINCTS 2K26",
+        "11–14 Mar: SETUK 2026 WEEK, IITE",
+        "13 Mar: Workshop on UI & UX Design using Figma, CE Dept",
+        "13 Mar: Alumni Talk Series-4 MME Department",
+        "13 Mar: IIPR Industrial Visit",
+        "14 Mar: Workshop on Data Analysis using Python, CSE Dept",
+        "15 Mar: IIL Celebration of World Consumer Day",
+        "15 Mar: NSS World Consumer Day",
+        "16 Mar: Expert Session, IIICT",
+        "17 Mar: IIPR Expert Talk",
+        "23–26 Mar: Sem IV, VI, VIII Mid Semester Jury",
+        "27 Mar: Ram Navami (Holiday)",
+        "28 Mar: iSAC Chhatrapati Shivaji Maharaj Jayanti",
+        "28 Mar: IIPR Industrial Visit",
+        "30–31 Mar: Sem II Mid Semester Jury"
+      ]
+    },
+
+    "april_2026": {
+      "month": "April 2026",
+      "semester": "Even Semester — REP-REM + Remedial Classes",
+      "type": "MID (continued) + REP-REM + REM",
+      "exam_periods": {
+        "mid_exams_continued": { "label": "MID", "period": "02 Apr – 11 Apr 2026" },
+        "rep_rem": { "label": "REP-REM", "period": "13 Apr – 17 Apr 2026" },
+        "rem": { "label": "REM", "period": "20 Apr – 30 Apr 2026" },
+        "ias_term_end": { "date": "30 April 2026", "note": "IAS – Sem II, IV, VI, VIII TERM END" }
+      },
+      "holidays": [
+        { "date": "01 Apr", "occasion": "Mahavir Jayanti" }
+      ],
+      "notable_events": [
+        "01 Apr: Mahavir Jayanti (Holiday)",
+        "07 Apr: NSS World Health Day (Health Checkup Camp)",
+        "08 Apr: IIPR Expert Talk",
+        "11 Apr: IIPR Industrial Visit",
+        "14 Apr: iSAC Ambedakar Jyanti",
+        "16 Apr: IIL Workshop on Professional Ethics and Etiquettes",
+        "17 Apr: iSAC Shamiyana 3.0",
+        "17 Apr: IIPR Industrial Visit",
+        "17 Apr: IIPR Expert Talk",
+        "23 Apr: iSAC Mahatma Buddha Jyanti",
+        "24 Apr: IIPR Industrial Visit",
+        "24 Apr: IIICT Tree Plantation Activity",
+        "27 Apr: IIL Expert Session on Maritime Law",
+        "28 Apr: IIL Farewell of IIL Students",
+        "30 Apr: IAS – Sem II, IV, VI, VIII TERM END"
+      ]
+    },
+
+    "may_2026": {
+      "month": "May 2026",
+      "semester": "Even Semester — End Semester Examinations",
+      "type": "ESE-PR + ESE-THY",
+      "exam_periods": {
+        "ese_practical": { "label": "PR. ESE", "period": "01 May – 09 May 2026" },
+        "ias_ese_jury": { "period": "04–09 May 2026", "label": "IAS Sem II, IV, VI, VIII End Semester Jury" },
+        "ias_ese_exams": { "period": "11–16 May 2026", "label": "IAS Sem II, IV, VI, VIII End Semester Exams" },
+        "ese_theory": { "label": "TH. ESE", "period": "11 May – 30 May 2026" },
+        "summer_collaborative": { "period": "18 May – 06 Jun 2026", "label": "Summer Collaborative Program 2026" },
+        "ids_external_jury": { "period": "11–25 May", "label": "IDS External Jury" },
+        "ids_end_sem_exhibition": { "period": "26–30 May", "label": "IDS End Sem Exhibition" }
+      },
+      "holidays": [],
+      "notable_events": [
+        "01 May: Project Exhibitions – Mech, EC, EL, Civil, MME Engg Depts (IITE)",
+        "04–09 May: IAS End Semester Jury (Sem II, IV, VI, VIII)",
+        "04 May: IIPR Expert Talk",
+        "09 May: IIPR Industrial Visit",
+        "11–16 May: IAS End Semester Exams",
+        "11 May: TH. ESE begins (Theory ESE for all semesters)",
+        "15 May: IIPR Expert Talk",
+        "18 May: Summer Collaborative Program 2026 starts",
+        "31 May: NSS World No Tobacco Day"
+      ]
+    },
+
+    "june_2026": {
+      "month": "June 2026",
+      "semester": "SUMMER VACATION (After Even Semester)",
+      "type": "VACATION + Repeater ESE",
+      "is_vacation": true,
+      "all_days_code": "REP",
+      "start_date": "01 June 2026",
+      "end_date": "30 June 2026",
+      "repeater_ese_note": "Even semester backlog/repeater ESE exams are held during June vacation.",
+      "notable_events": [
+        "01–30 Jun: SUMMER VACATION",
+        "Certification Course – all departments of IITE",
+        "08–10 Jun: IAS Thesis Semester Final Jury",
+        "08–18 Jun: Certificate Course, IIICT",
+        "21 Jun: World Yoga Day – iSAC/NSS"
+      ]
+    }
+  },
+
+  "chatbot_training_qa": [
+    {
+      "question": "When does the academic year 2025-26 start at Indus University?",
+      "answer": "The academic year 2025-26 starts on 1st July 2025 with the beginning of the odd semester (Sem I, III, V, VII, IX)."
+    },
+    {
+      "question": "When does the odd semester start and end?",
+      "answer": "The odd semester starts on 1st July 2025. Sem III, V, IX term ends on 17th October 2025. Sem I term ends on 29th November 2025."
+    },
+    {
+      "question": "When does the even semester start and end?",
+      "answer": "The even semester (Sem II, IV, VI, VIII, X) starts on 1st January 2026. IAS term ends on 30th April 2026, and End Semester Theory Exams end by 30th May 2026."
+    },
+    {
+      "question": "Which semesters run from July to November?",
+      "answer": "Odd semesters — Sem I, III, V, VII, and IX — run from July 2025 to November 2025."
+    },
+    {
+      "question": "Which semesters run from January to May?",
+      "answer": "Even semesters — Sem II, IV, VI, VIII, and X — run from January 2026 to May 2026."
+    },
+    {
+      "question": "When are the Mid Semester Exams for odd semester 2025?",
+      "answer": "Mid Semester Exams for the odd semester run from 8th to 23rd September 2025. For Sem III, V, IX the Mid Semester Jury is from 15th to 19th September 2025."
+    },
+    {
+      "question": "When are the End Semester Exams (ESE) for odd semester?",
+      "answer": "For odd semester: ESE Practicals (ESE-PR) run from 27th October to 8th November 2025. End Semester Jury for Sem III, V, IX is 3rd–8th November 2025. Theory End Semester Exams (ESE-THY) run from 10th November to 29th November 2025."
+    },
+    {
+      "question": "When are the Mid Semester Exams for even semester 2026?",
+      "answer": "Mid Semester Jury for Sem IV, VI, VIII is from 23rd–26th March 2026, and for Sem II it starts 30th March 2026. Mid Semester Exams overall run from 23rd March to 11th April 2026."
+    },
+    {
+      "question": "When are the End Semester Exams for even semester 2026?",
+      "answer": "For even semester: ESE Practicals are from 1st–9th May 2026. IAS End Semester Jury is 4th–9th May 2026 and exams from 11th–16th May 2026. Theory End Semester Exams run from 11th–30th May 2026."
+    },
+    {
+      "question": "Is there a winter vacation? When is it?",
+      "answer": "Yes. December 2025 is the full winter vacation month, from 1st to 31st December 2025. It falls between the odd and even semesters."
+    },
+    {
+      "question": "Is there a summer vacation? When is it?",
+      "answer": "Yes. June 2026 is the full summer vacation month, from 1st to 30th June 2026. It comes after the even semester ends."
+    },
+    {
+      "question": "Are there exams during the December vacation?",
+      "answer": "Yes. Sem I End Semester Jury is held on 4th–5th December 2025, and Sem I End Semester Theory Exams are from 8th–13th December 2025. RSP-1 also runs from 15th–27th December 2025. All these are during the winter vacation for repeater/first-time Sem I students."
+    },
+    {
+      "question": "Are there exams during the June vacation?",
+      "answer": "Yes. Even semester backlog/repeater End Semester Exams are held during June 2026, the summer vacation period."
+    },
+    {
+      "question": "What is ESE-THY in the academic calendar?",
+      "answer": "ESE-THY stands for End Semester Exam – Theory. These are the written theory examinations at the end of each semester."
+    },
+    {
+      "question": "What is ESE-PR in the academic calendar?",
+      "answer": "ESE-PR stands for End Semester Exam – Practical. These are the practical/lab examinations held before the theory exams at the end of each semester."
+    },
+    {
+      "question": "What does MID mean in the academic calendar?",
+      "answer": "MID refers to Mid Semester Examinations held approximately halfway through each semester."
+    },
+    {
+      "question": "What does REP-REM mean in the academic calendar?",
+      "answer": "REP-REM stands for Repeater and Remedial classes/exams. These are held for students who need to repeat or improve their performance in certain subjects, usually after mid semester exams."
+    },
+    {
+      "question": "What does REM mean in the academic calendar?",
+      "answer": "REM stands for Remedial classes — additional classes to help students bridge gaps in learning before End Semester Exams."
+    },
+    {
+      "question": "What does REP mean in December and June months?",
+      "answer": "REP in December and June indicates these are vacation months where Repeater End Semester Exams are scheduled. December is for odd semester (Sem I) repeaters, and June is for even semester repeaters."
+    },
+    {
+      "question": "When is Diwali holiday in 2025-26?",
+      "answer": "Diwali holidays are from 20th to 25th October 2025."
+    },
+    {
+      "question": "What are all the public holidays in the academic year 2025-26?",
+      "answer": "The holidays are: Raksha Bandhan (9 Aug), Independence Day (15 Aug), Janmashtami (16 Aug), Ganesh Chaturthi (27 Aug), Lal Bahadur Shastri Jayanti (2 Oct), Diwali (20–25 Oct), Makar Sankranti (14 Jan), Republic Day (26 Jan), Shiv Ratri (15 Feb), Dhuleti (4 Mar), Ram Navami (27 Mar), Mahavir Jayanti (1 Apr)."
+    },
+    {
+      "question": "When does Semester 1 start for ACPC batch students?",
+      "answer": "Semester 1 for new students admitted through ACPC tentatively starts on 18th August 2025, as per the ACPC calendar."
+    },
+    {
+      "question": "When does the INSTINCTS festival happen in 2025-26?",
+      "answer": "INSTINCTS 2K26 is scheduled from 11th to 14th March 2026 at iSAC. The SETUK 2026 Week at IITE also runs 11th–14th March 2026."
+    },
+    {
+      "question": "When is the Winter Collaborative Program?",
+      "answer": "The Winter Collaborative Program 2025 runs from 17th November to 30th November 2025."
+    },
+    {
+      "question": "When is the Summer Collaborative Program?",
+      "answer": "The Summer Collaborative Program 2026 runs from 18th May to 6th June 2026."
+    },
+    {
+      "question": "What is RSP-1 in the academic calendar?",
+      "answer": "RSP-1 is a Remedial/Special Program period that runs from 15th to 27th December 2025 during the winter vacation."
+    },
+    {
+      "question": "When does IAS (Architecture School) semester end in 2025-26?",
+      "answer": "For odd semester, IAS Sem III, V, IX starts 1st July 2025. For even semester, IAS Sem II, IV, VI, VIII TERM END is 30th April 2026. IAS Thesis Semester Final Jury is 8th–10th June 2026 during summer vacation."
+    }
+  ]
+}

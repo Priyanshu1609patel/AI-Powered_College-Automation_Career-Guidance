@@ -1,0 +1,1380 @@
+{
+  "program": "B.Tech Computer Engineering",
+  "institute": "Indus Institute of Engineering & Technology, Indus University",
+  "semesters": [
+    {
+      "semester": "I",
+      "subjects": [
+        {
+          "sr_no": 1,
+          "subject_code": "MA0111",
+          "subject_name": "Calculus",
+          "credits": 4,
+          "teaching_scheme": {
+            "theory_hours": 3,
+            "tutorial_hours": 1,
+            "practical_hours": 0,
+            "total_hours_per_week": 4
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "practical": {
+              "CIE": 0,
+              "ESE": 0
+            },
+            "total_marks": 100
+          },
+          "category": "BS"
+        },
+        {
+          "sr_no": 2,
+          "subject_code": "CH0011",
+          "subject_name": "Engineering Chemistry",
+          "credits": 4,
+          "teaching_scheme": {
+            "theory_hours": 3,
+            "tutorial_hours": 0,
+            "practical_hours": 2,
+            "total_hours_per_week": 5
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "practical": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "total_marks": 200
+          },
+          "category": "BS"
+        },
+        {
+          "sr_no": 3,
+          "subject_code": "EN0111",
+          "subject_name": "Technical Communication",
+          "credits": 2,
+          "teaching_scheme": {
+            "theory_hours": 1,
+            "tutorial_hours": 0,
+            "practical_hours": 2,
+            "total_hours_per_week": 3
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "practical": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "total_marks": 200
+          },
+          "category": "HS"
+        },
+        {
+          "sr_no": 4,
+          "subject_code": null,
+          "subject_name": "Open Elective 1",
+          "credits": 3,
+          "teaching_scheme": {
+            "theory_hours": 3,
+            "tutorial_hours": 0,
+            "practical_hours": 0,
+            "total_hours_per_week": 3
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "practical": {
+              "CIE": 0,
+              "ESE": 0
+            },
+            "total_marks": 100
+          },
+          "category": "OE"
+        },
+        {
+          "sr_no": 5,
+          "subject_code": "ME0019",
+          "subject_name": "Engineering Graphics",
+          "credits": 3,
+          "teaching_scheme": {
+            "theory_hours": 1,
+            "tutorial_hours": 0,
+            "practical_hours": 4,
+            "total_hours_per_week": 5
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "practical": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "total_marks": 200
+          },
+          "category": "ES"
+        },
+        {
+          "sr_no": 6,
+          "subject_code": "CV0004",
+          "subject_name": "Environmental Science",
+          "credits": 2,
+          "teaching_scheme": {
+            "theory_hours": 2,
+            "tutorial_hours": 0,
+            "practical_hours": 0,
+            "total_hours_per_week": 2
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "practical": {
+              "CIE": 0,
+              "ESE": 0
+            },
+            "total_marks": 100
+          },
+          "category": "ES"
+        },
+        {
+          "sr_no": 7,
+          "subject_code": null,
+          "subject_name": "Open Elective 2",
+          "credits": 3,
+          "teaching_scheme": {
+            "theory_hours": 3,
+            "tutorial_hours": 0,
+            "practical_hours": 0,
+            "total_hours_per_week": 3
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "practical": {
+              "CIE": 0,
+              "ESE": 0
+            },
+            "total_marks": 100
+          },
+          "category": "OE"
+        },
+        {
+          "sr_no": 8,
+          "subject_code": null,
+          "subject_name": "Indian Knowledge System",
+          "credits": 3,
+          "teaching_scheme": {
+            "theory_hours": 3,
+            "tutorial_hours": 0,
+            "practical_hours": 0,
+            "total_hours_per_week": 3
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 100,
+              "ESE": 0
+            },
+            "practical": {
+              "CIE": 0,
+              "ESE": 0
+            },
+            "total_marks": 100
+          },
+          "category": "VA"
+        }
+      ]
+    },
+    {
+      "semester": "II",
+      "subjects": [
+        {
+          "sr_no": 1,
+          "subject_code": "MA0211",
+          "subject_name": "Differential Equations & Linear Algebra",
+          "credits": 4,
+          "teaching_scheme": {
+            "theory_hours": 3,
+            "tutorial_hours": 1,
+            "practical_hours": 0,
+            "total_hours_per_week": 4
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "practical": {
+              "CIE": 0,
+              "ESE": 0
+            },
+            "total_marks": 100
+          },
+          "category": "BS"
+        },
+        {
+          "sr_no": 2,
+          "subject_code": "PH0011",
+          "subject_name": "Engineering Physics",
+          "credits": 4,
+          "teaching_scheme": {
+            "theory_hours": 3,
+            "tutorial_hours": 0,
+            "practical_hours": 2,
+            "total_hours_per_week": 5
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "practical": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "total_marks": 200
+          },
+          "category": "BS"
+        },
+        {
+          "sr_no": 3,
+          "subject_code": "EN0211",
+          "subject_name": "Business Communication & Presentation Skills",
+          "credits": 2,
+          "teaching_scheme": {
+            "theory_hours": 1,
+            "tutorial_hours": 0,
+            "practical_hours": 2,
+            "total_hours_per_week": 3
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "practical": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "total_marks": 200
+          },
+          "category": "HS"
+        },
+        {
+          "sr_no": 4,
+          "subject_code": null,
+          "subject_name": "Open Elective 3",
+          "credits": 3,
+          "teaching_scheme": {
+            "theory_hours": 3,
+            "tutorial_hours": 0,
+            "practical_hours": 0,
+            "total_hours_per_week": 3
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "practical": {
+              "CIE": 0,
+              "ESE": 0
+            },
+            "total_marks": 100
+          },
+          "category": "OE"
+        },
+        {
+          "sr_no": 5,
+          "subject_code": "ME0117",
+          "subject_name": "Workshop Practice",
+          "credits": 2,
+          "teaching_scheme": {
+            "theory_hours": 0,
+            "tutorial_hours": 0,
+            "practical_hours": 4,
+            "total_hours_per_week": 4
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 0,
+              "ESE": 0
+            },
+            "practical": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "total_marks": 100
+          },
+          "category": "ES"
+        },
+        {
+          "sr_no": 6,
+          "subject_code": "CE0216",
+          "subject_name": "Programming for Problem Solving",
+          "credits": 4,
+          "teaching_scheme": {
+            "theory_hours": 3,
+            "tutorial_hours": 0,
+            "practical_hours": 2,
+            "total_hours_per_week": 5
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "practical": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "total_marks": 200
+          },
+          "category": "ES"
+        },
+        {
+          "sr_no": 7,
+          "subject_code": "IST0001",
+          "subject_name": "Indian Science Technology",
+          "credits": 1,
+          "teaching_scheme": {
+            "theory_hours": 1,
+            "tutorial_hours": 0,
+            "practical_hours": 0,
+            "total_hours_per_week": 0
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 100,
+              "ESE": 0
+            },
+            "practical": {
+              "CIE": 0,
+              "ESE": 0
+            },
+            "total_marks": 100
+          },
+          "category": "VA"
+        }
+      ]
+    },
+    {
+      "semester": "III",
+      "subjects": [
+        {
+          "sr_no": 1,
+          "subject_code": "MA0311",
+          "subject_name": "Probability, Statistics & Numerical Methods",
+          "credits": 4,
+          "teaching_scheme": {
+            "theory_hours": 3,
+            "tutorial_hours": 1,
+            "practical_hours": 0,
+            "total_hours_per_week": 4
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "practical": {
+              "CIE": 0,
+              "ESE": 0
+            },
+            "total_marks": 100
+          },
+          "category": "BS"
+        },
+        {
+          "sr_no": 2,
+          "subject_code": "CE0320",
+          "subject_name": "Computer Organization & Architecture",
+          "credits": 3,
+          "teaching_scheme": {
+            "theory_hours": 3,
+            "tutorial_hours": 0,
+            "practical_hours": 0,
+            "total_hours_per_week": 3
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "practical": {
+              "CIE": 0,
+              "ESE": 0
+            },
+            "total_marks": 100
+          },
+          "category": "Core"
+        },
+        {
+          "sr_no": 3,
+          "subject_code": "EC0319",
+          "subject_name": "Digital Electronics",
+          "credits": 4,
+          "teaching_scheme": {
+            "theory_hours": 3,
+            "tutorial_hours": 0,
+            "practical_hours": 2,
+            "total_hours_per_week": 5
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "practical": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "total_marks": 200
+          },
+          "category": "ES"
+        },
+        {
+          "sr_no": 4,
+          "subject_code": "CE0316",
+          "subject_name": "Object Oriented Concepts with UML",
+          "credits": 4,
+          "teaching_scheme": {
+            "theory_hours": 3,
+            "tutorial_hours": 0,
+            "practical_hours": 2,
+            "total_hours_per_week": 5
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "practical": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "total_marks": 200
+          },
+          "category": "Core"
+        },
+        {
+          "sr_no": 5,
+          "subject_code": "CE0317",
+          "subject_name": "Database Management System",
+          "credits": 4,
+          "teaching_scheme": {
+            "theory_hours": 3,
+            "tutorial_hours": 0,
+            "practical_hours": 2,
+            "total_hours_per_week": 5
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "practical": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "total_marks": 200
+          },
+          "category": "Core"
+        },
+        {
+          "sr_no": 6,
+          "subject_code": "SS0301",
+          "subject_name": "Human Values and Professional Ethics",
+          "credits": 2,
+          "teaching_scheme": {
+            "theory_hours": 2,
+            "tutorial_hours": 0,
+            "practical_hours": 0,
+            "total_hours_per_week": 2
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 100,
+              "ESE": 0
+            },
+            "practical": {
+              "CIE": 0,
+              "ESE": 0
+            },
+            "total_marks": 100
+          },
+          "category": "HS"
+        },
+        {
+          "sr_no": 7,
+          "subject_code": "CE0318",
+          "subject_name": "Internship Credit / Online Courses / MOOC",
+          "credits": 2,
+          "teaching_scheme": {
+            "theory_hours": 0,
+            "tutorial_hours": 0,
+            "practical_hours": 0,
+            "total_hours_per_week": 0
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 0,
+              "ESE": 0
+            },
+            "practical": {
+              "CIE": 100,
+              "ESE": 0
+            },
+            "total_marks": 100
+          },
+          "category": "IC"
+        }
+      ]
+    },
+    {
+      "semester": "IV",
+      "subjects": [
+        {
+          "sr_no": 1,
+          "subject_code": "CE0425",
+          "subject_name": "ICT Tools and Technology",
+          "credits": 2,
+          "teaching_scheme": {
+            "theory_hours": 0,
+            "tutorial_hours": 1,
+            "practical_hours": 2,
+            "total_hours_per_week": 3
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 0,
+              "ESE": 0
+            },
+            "practical": {
+              "CIE": 100,
+              "ESE": 0
+            },
+            "total_marks": 100
+          },
+          "category": "ES"
+        },
+        {
+          "sr_no": 2,
+          "subject_code": "CE0417",
+          "subject_name": "Data Structure & Algorithms",
+          "credits": 4,
+          "teaching_scheme": {
+            "theory_hours": 3,
+            "tutorial_hours": 0,
+            "practical_hours": 2,
+            "total_hours_per_week": 5
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "practical": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "total_marks": 200
+          },
+          "category": "Core"
+        },
+        {
+          "sr_no": 3,
+          "subject_code": "CE0418",
+          "subject_name": "Operating System",
+          "credits": 4,
+          "teaching_scheme": {
+            "theory_hours": 3,
+            "tutorial_hours": 0,
+            "practical_hours": 2,
+            "total_hours_per_week": 5
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "practical": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "total_marks": 200
+          },
+          "category": "Core"
+        },
+        {
+          "sr_no": 4,
+          "subject_code": "BB0311",
+          "subject_name": "Management for Engineers",
+          "credits": 2,
+          "teaching_scheme": {
+            "theory_hours": 2,
+            "tutorial_hours": 0,
+            "practical_hours": 0,
+            "total_hours_per_week": 2
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "practical": {
+              "CIE": 0,
+              "ESE": 0
+            },
+            "total_marks": 100
+          },
+          "category": "HS"
+        },
+        {
+          "sr_no": 5,
+          "subject_code": "CE0421",
+          "subject_name": "Core Java Programming",
+          "credits": 4,
+          "teaching_scheme": {
+            "theory_hours": 3,
+            "tutorial_hours": 0,
+            "practical_hours": 2,
+            "total_hours_per_week": 5
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "practical": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "total_marks": 200
+          },
+          "category": "Core"
+        },
+        {
+          "sr_no": 6,
+          "subject_code": null,
+          "subject_name": "Open Elective 4",
+          "credits": 3,
+          "teaching_scheme": {
+            "theory_hours": 3,
+            "tutorial_hours": 0,
+            "practical_hours": 0,
+            "total_hours_per_week": 3
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "practical": {
+              "CIE": 0,
+              "ESE": 0
+            },
+            "total_marks": 100
+          },
+          "category": "OE"
+        },
+        {
+          "sr_no": 7,
+          "subject_code": null,
+          "subject_name": "Open Elective 5",
+          "credits": 3,
+          "teaching_scheme": {
+            "theory_hours": 3,
+            "tutorial_hours": 0,
+            "practical_hours": 0,
+            "total_hours_per_week": 3
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "practical": {
+              "CIE": 0,
+              "ESE": 0
+            },
+            "total_marks": 100
+          },
+          "category": "OE"
+        }
+      ]
+    },
+    {
+      "semester": "V",
+      "subjects": [
+        {
+          "sr_no": 1,
+          "subject_code": "CE0516",
+          "subject_name": "Design and Analysis of Algorithms",
+          "credits": 4,
+          "teaching_scheme": {
+            "theory_hours": 3,
+            "tutorial_hours": 0,
+            "practical_hours": 2,
+            "total_hours_per_week": 5
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "practical": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "total_marks": 200
+          },
+          "category": "Core"
+        },
+        {
+          "sr_no": 2,
+          "subject_code": "CE0517",
+          "subject_name": "Microprocessing and Interfacing",
+          "credits": 4,
+          "teaching_scheme": {
+            "theory_hours": 3,
+            "tutorial_hours": 0,
+            "practical_hours": 2,
+            "total_hours_per_week": 5
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "practical": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "total_marks": 200
+          },
+          "category": "ES"
+        },
+        {
+          "sr_no": 3,
+          "subject_code": "CE0518",
+          "subject_name": "Computer Networks",
+          "credits": 4,
+          "teaching_scheme": {
+            "theory_hours": 3,
+            "tutorial_hours": 0,
+            "practical_hours": 2,
+            "total_hours_per_week": 5
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "practical": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "total_marks": 200
+          },
+          "category": "Core"
+        },
+        {
+          "sr_no": 4,
+          "subject_code": null,
+          "subject_name": "Open Elective 6",
+          "credits": 3,
+          "teaching_scheme": {
+            "theory_hours": 3,
+            "tutorial_hours": 0,
+            "practical_hours": 0,
+            "total_hours_per_week": 3
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "practical": {
+              "CIE": 0,
+              "ESE": 0
+            },
+            "total_marks": 100
+          },
+          "category": "OE"
+        },
+        {
+          "sr_no": 5,
+          "subject_code": "CE0525",
+          "subject_name": "Programming for Scientific Computing",
+          "credits": 4,
+          "teaching_scheme": {
+            "theory_hours": 3,
+            "tutorial_hours": 0,
+            "practical_hours": 2,
+            "total_hours_per_week": 5
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "practical": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "total_marks": 200
+          },
+          "category": "Core"
+        },
+        {
+          "sr_no": 6,
+          "subject_code": "CE0522",
+          "subject_name": "Web Technology",
+          "credits": 4,
+          "teaching_scheme": {
+            "theory_hours": 3,
+            "tutorial_hours": 0,
+            "practical_hours": 2,
+            "total_hours_per_week": 5
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "practical": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "total_marks": 200
+          },
+          "category": "Core"
+        },
+        {
+          "sr_no": 7,
+          "subject_code": "CE0523",
+          "subject_name": "Internship Credit / Online Courses / MOOC",
+          "credits": 2,
+          "teaching_scheme": {
+            "theory_hours": 0,
+            "tutorial_hours": 0,
+            "practical_hours": 0,
+            "total_hours_per_week": 0
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 0,
+              "ESE": 0
+            },
+            "practical": {
+              "CIE": 100,
+              "ESE": 0
+            },
+            "total_marks": 100
+          },
+          "category": "IC"
+        }
+      ]
+    },
+    {
+      "semester": "VI",
+      "subjects": [
+        {
+          "sr_no": 1,
+          "subject_code": "CE0616",
+          "subject_name": "Software Engineering with UML",
+          "credits": 4,
+          "teaching_scheme": {
+            "theory_hours": 3,
+            "tutorial_hours": 0,
+            "practical_hours": 2,
+            "total_hours_per_week": 5
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "practical": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "total_marks": 200
+          },
+          "category": "Core"
+        },
+        {
+          "sr_no": 2,
+          "subject_code": "CE0617",
+          "subject_name": "Theory of Computation",
+          "credits": 4,
+          "teaching_scheme": {
+            "theory_hours": 4,
+            "tutorial_hours": 0,
+            "practical_hours": 0,
+            "total_hours_per_week": 4
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "practical": {
+              "CIE": 0,
+              "ESE": 0
+            },
+            "total_marks": 100
+          },
+          "category": "Core"
+        },
+        {
+          "sr_no": 3,
+          "subject_name": "Program Elective I (choose one)",
+          "elective_options": [
+            {
+              "subject_code": "CE0630",
+              "subject_name": "Data Science"
+            },
+            {
+              "subject_code": "CE0631",
+              "subject_name": "Information Retrieval"
+            },
+            {
+              "subject_code": "CE0632",
+              "subject_name": "Web Data Management"
+            }
+          ],
+          "credits": 4,
+          "teaching_scheme": {
+            "theory_hours": 3,
+            "tutorial_hours": 0,
+            "practical_hours": 2,
+            "total_hours_per_week": 5
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "practical": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "total_marks": 200
+          },
+          "category": "PE"
+        },
+        {
+          "sr_no": 4,
+          "subject_name": "Program Elective II (choose one)",
+          "elective_options": [
+            {
+              "subject_code": "CE0618",
+              "subject_name": "Advanced Java Technology"
+            },
+            {
+              "subject_code": "CE0619",
+              "subject_name": "Advance .Net Framework"
+            },
+            {
+              "subject_code": "CE0628",
+              "subject_name": "Mobile Application Development (Android & iOS)"
+            }
+          ],
+          "credits": 4,
+          "teaching_scheme": {
+            "theory_hours": 3,
+            "tutorial_hours": 0,
+            "practical_hours": 2,
+            "total_hours_per_week": 5
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "practical": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "total_marks": 200
+          },
+          "category": "PE"
+        },
+        {
+          "sr_no": 5,
+          "subject_name": "Program Elective III (choose one)",
+          "elective_options": [
+            {
+              "subject_code": "CE0633",
+              "subject_name": "Distributed Systems"
+            },
+            {
+              "subject_code": "CE0634",
+              "subject_name": "Cryptography & Network Security"
+            },
+            {
+              "subject_code": "CE0629",
+              "subject_name": "Data Compression"
+            }
+          ],
+          "credits": 4,
+          "teaching_scheme": {
+            "theory_hours": 3,
+            "tutorial_hours": 0,
+            "practical_hours": 2,
+            "total_hours_per_week": 5
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "practical": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "total_marks": 200
+          },
+          "category": "PE"
+        },
+        {
+          "sr_no": 6,
+          "subject_code": null,
+          "subject_name": "Open Elective 7",
+          "credits": 3,
+          "teaching_scheme": {
+            "theory_hours": 3,
+            "tutorial_hours": 0,
+            "practical_hours": 0,
+            "total_hours_per_week": 3
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "practical": {
+              "CIE": 0,
+              "ESE": 0
+            },
+            "total_marks": 100
+          },
+          "category": "OE"
+        },
+        {
+          "sr_no": 7,
+          "subject_code": null,
+          "subject_name": "Research Guided Seminar",
+          "credits": 2,
+          "teaching_scheme": {
+            "theory_hours": 0,
+            "tutorial_hours": 2,
+            "practical_hours": 0,
+            "total_hours_per_week": 2
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 100,
+              "ESE": 0
+            },
+            "practical": {
+              "CIE": 0,
+              "ESE": 0
+            },
+            "total_marks": 100
+          },
+          "category": "HS"
+        },
+        {
+          "sr_no": 8,
+          "subject_code": "CE0622",
+          "subject_name": "Internet of Things",
+          "credits": 4,
+          "teaching_scheme": {
+            "theory_hours": 3,
+            "tutorial_hours": 0,
+            "practical_hours": 2,
+            "total_hours_per_week": 5
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "practical": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "total_marks": 200
+          },
+          "category": "ES"
+        }
+      ]
+    },
+    {
+      "semester": "VII",
+      "subjects": [
+        {
+          "sr_no": 1,
+          "subject_name": "Program Elective IV (choose one)",
+          "elective_options": [
+            {
+              "subject_code": "CE0716",
+              "subject_name": "Data Warehouse & Mining"
+            },
+            {
+              "subject_code": "CE0718",
+              "subject_name": "Advance Computer Architecture"
+            },
+            {
+              "subject_code": "CE0721",
+              "subject_name": "Advance Operating System"
+            }
+          ],
+          "credits": 4,
+          "teaching_scheme": {
+            "theory_hours": 3,
+            "tutorial_hours": 0,
+            "practical_hours": 2,
+            "total_hours_per_week": 5
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "practical": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "total_marks": 200
+          },
+          "category": "PE"
+        },
+        {
+          "sr_no": 2,
+          "subject_code": "CE0717",
+          "subject_name": "Compiler Design",
+          "credits": 4,
+          "teaching_scheme": {
+            "theory_hours": 3,
+            "tutorial_hours": 1,
+            "practical_hours": 0,
+            "total_hours_per_week": 4
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "practical": {
+              "CIE": 0,
+              "ESE": 0
+            },
+            "total_marks": 100
+          },
+          "category": "Core"
+        },
+        {
+          "sr_no": 3,
+          "subject_name": "Open Elective 8 (choose one)",
+          "elective_options": [
+            {
+              "subject_code": null,
+              "subject_name": "Cyber Security"
+            },
+            {
+              "subject_code": null,
+              "subject_name": "Block Chaining"
+            },
+            {
+              "subject_code": null,
+              "subject_name": "Soft Computing"
+            },
+            {
+              "subject_code": null,
+              "subject_name": "Embedded System"
+            }
+          ],
+          "credits": 3,
+          "teaching_scheme": {
+            "theory_hours": 2,
+            "tutorial_hours": 0,
+            "practical_hours": 2,
+            "total_hours_per_week": 4
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 0,
+              "ESE": 0
+            },
+            "practical": {
+              "CIE": 0,
+              "ESE": 0
+            },
+            "total_marks": 0
+          },
+          "category": "OE"
+        },
+        {
+          "sr_no": 4,
+          "subject_name": "Program Elective V (choose one)",
+          "elective_options": [
+            {
+              "subject_code": "CE0728",
+              "subject_name": "Natural Language Processing"
+            },
+            {
+              "subject_code": "CE0730",
+              "subject_name": "Human Computer Interface"
+            },
+            {
+              "subject_code": "CE0732",
+              "subject_name": "Computer Vision and Applications"
+            },
+            {
+              "subject_code": "CE0723",
+              "subject_name": "Cloud Computing"
+            }
+          ],
+          "credits": 4,
+          "teaching_scheme": {
+            "theory_hours": 3,
+            "tutorial_hours": 0,
+            "practical_hours": 2,
+            "total_hours_per_week": 5
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "practical": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "total_marks": 200
+          },
+          "category": "PE"
+        },
+        {
+          "sr_no": 5,
+          "subject_code": "CE0727",
+          "subject_name": "Software Group Project-I",
+          "credits": 2,
+          "teaching_scheme": {
+            "theory_hours": 0,
+            "tutorial_hours": 1,
+            "practical_hours": 2,
+            "total_hours_per_week": 3
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 0,
+              "ESE": 0
+            },
+            "practical": {
+              "CIE": 100,
+              "ESE": 0
+            },
+            "total_marks": 100
+          },
+          "category": "PRJ"
+        },
+        {
+          "sr_no": 6,
+          "subject_code": null,
+          "subject_name": "Open Elective 9",
+          "credits": 3,
+          "teaching_scheme": {
+            "theory_hours": 0,
+            "tutorial_hours": 0,
+            "practical_hours": 0,
+            "total_hours_per_week": 3
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "practical": {
+              "CIE": 0,
+              "ESE": 0
+            },
+            "total_marks": 100
+          },
+          "category": "OE"
+        },
+        {
+          "sr_no": 7,
+          "subject_code": "CE0726",
+          "subject_name": "Internship Credit / Online Courses / MOOC",
+          "credits": 2,
+          "teaching_scheme": {
+            "theory_hours": 0,
+            "tutorial_hours": 0,
+            "practical_hours": 0,
+            "total_hours_per_week": 0
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 0,
+              "ESE": 0
+            },
+            "practical": {
+              "CIE": 100,
+              "ESE": 0
+            },
+            "total_marks": 100
+          },
+          "category": "IC"
+        }
+      ]
+    },
+    {
+      "semester": "VIII",
+      "subjects": [
+        {
+          "sr_no": 1,
+          "subject_code": "CE0816",
+          "subject_name": "Project",
+          "credits": 14,
+          "teaching_scheme": {
+            "theory_hours": 0,
+            "tutorial_hours": 0,
+            "practical_hours": 28,
+            "total_hours_per_week": 28
+          },
+          "evaluation_scheme": {
+            "theory": {
+              "CIE": 0,
+              "ESE": 0
+            },
+            "practical": {
+              "CIE": 60,
+              "ESE": 40
+            },
+            "total_marks": 100
+          },
+          "category": "PRJ"
+        }
+      ]
+    }
+  ]
+}

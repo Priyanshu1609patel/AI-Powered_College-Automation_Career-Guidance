@@ -1,0 +1,414 @@
+{
+  "university": "Indus University",
+  "document": "Library Policy - 2021",
+  "address": "Indus Campus, P O Rancharda, Via: Thaltej, Ahmedabad - 382115, Gujarat - India",
+
+  "sections": {
+
+    "1_library_space_and_building": {
+      "title": "Library Space & Building",
+      "key_points": [
+        "Library should have a separate digital library section and technical processing section.",
+        "A cloak room facility should be provided for students to keep their personal belongings.",
+        "The reading room should have sufficient seating capacity.",
+        "A separate library building is planned for the future."
+      ]
+    },
+
+    "2_library_committee": {
+      "title": "Library Committee",
+      "description": "A library committee is constituted with the VC/Director as Chairman and Librarian as Member Secretary, along with one or two members from each constituent institute of the University.",
+      "members": [
+        "One Faculty representative from each academic department/Centre (generally the Faculty-in-Charge of the Departmental Library)",
+        "Three representatives each from UG, PG, and Research Scholars",
+        "Additional nominees by the Chairman if required"
+      ],
+      "tenure": {
+        "chairman": "Not more than 3 years",
+        "faculty_members": "2 years",
+        "student_members": "1 year"
+      },
+      "meetings": "At least once per quarter in an academic year with 50% membership as quorum",
+      "functions": [
+        "Provide general direction to library staff",
+        "Monitor sufficiency of resources as per statutory/regulatory requirements",
+        "Scrutinize and recommend books/journals/e-resources for procurement",
+        "Maintain liaison between library and academic departments",
+        "Review library functioning in support of academic programs",
+        "Advise management on library development policy",
+        "Outline library collection development policy",
+        "Monitor trends in IT, networking, library automation, and direct adoption",
+        "Formulate action plans for infrastructure, facilities, products, and services",
+        "Evaluate department-wise book procurement and budget allocation",
+        "Formulate inter-library loan policy",
+        "Focus on library staff development and training",
+        "Librarian submits monthly transaction report including books added, walk-ins, downloads, circulation status, OPAC visits etc."
+      ]
+    },
+
+    "3_acquisition_policy": {
+      "title": "Acquisition Policy (Materials Procurement Policy)",
+      "book_selection": {
+        "description": "Faculty members and students may participate in book selection. Library staff may also recommend general or reference books.",
+        "key_points": [
+          "Students/Research Scholars can recommend books if endorsed by a faculty member.",
+          "Book recommendations for semester courses should be sent with one clear semester's notice using the Library Book Recommendation Form.",
+          "The library checks for duplication and places the list before the Library Committee (LC) for review.",
+          "Urgent requirements by Deans/Chairpersons may be purchased with LC Chairperson approval.",
+          "Indents are routed through HODs and the library committee for approval.",
+          "Purchase orders are issued by the Librarian after approval and financial sanction.",
+          "Faculty may also buy books from online stores (e.g., Flipkart) on urgent basis with proper approval."
+        ]
+      },
+      "procurement_process": {
+        "initiation_of_acquisition": [
+          "Receive recommendations via indent forms and emails",
+          "Find exact details of the recommended title",
+          "Duplicate checking",
+          "Correspond with suppliers/vendors for availability",
+          "Put up for approval by competent authority",
+          "Prepare and issue purchase orders by librarian"
+        ],
+        "accessioning": [
+          "Enter invoice and book details in Accession Register",
+          "Assign accession numbers to titles",
+          "Get invoice approved by competent authority and forward bills to accounts",
+          "Maintain bill file and bill register data in Excel for reporting"
+        ],
+        "classifying": [
+          "Classify books/thesis/dissertations as per Dewey Decimal Classification (DDC) scheme",
+          "Write class number and book number (first 3 letters of author's surname) on the title page"
+        ],
+        "cataloguing": [
+          "Bibliographic details of each book entered into physical register and SOUL library management software cataloguing module"
+        ],
+        "processing_books": [
+          "Stamping: library stamp on back of title page, secret page, and last page",
+          "Prepare and paste barcodes on front and title pages, laminate with cello tape",
+          "Paste class number label on book spine",
+          "Send email to users about newly added books",
+          "Display newly added books on new arrival desk"
+        ]
+      },
+      "journals_and_e_resources": {
+        "key_points": [
+          "Students/Research Scholars can recommend print/e-journals if endorsed by a faculty member.",
+          "Recommendations may also come from faculty of the department.",
+          "Indents routed through HODs and library committee for approval.",
+          "Print/e-Journals are subscribed once approved by the library committee and sanctioned by the competent authority.",
+          "Print/e-Journals are no discount items.",
+          "Each journal is treated as a separate item and payment is treated as Advance Payment.",
+          "Journals are subscribed in the name of the Institute.",
+          "Stamp and date to be put on cover page of periodicals before displaying on the periodicals rack."
+        ]
+      }
+    },
+
+    "4_collection_development": {
+      "title": "Collection Development",
+      "key_points": [
+        "Library should develop collections in both print and electronic formats supporting curricular and research programs.",
+        "Library may accept gifts of books/periodicals/multimedia from donors, provided they are not duplicates, outdated, or damaged.",
+        "Only licensed e-resources should be purchased or accepted; license agreements must be properly studied before signing."
+      ]
+    },
+
+    "5_procurement_and_preservation": {
+      "title": "Procurement and Preservation of Library Resources (Furniture/Infrastructure)",
+      "infrastructure_items": [
+        "Cupboards", "Book Racks", "Magazine Racks", "Newspaper stands",
+        "Tables and chairs", "Computers", "Wi-Fi and CCTV within library"
+      ],
+      "computers": {
+        "description": "One computer for advanced book search. A separate Digital Library consisting of 20 computers for e-journal and resource access, with 5 computers solely dedicated to Ph.D. candidates."
+      }
+    },
+
+    "6_circulation_policy": {
+      "title": "Circulation Policy",
+      "membership": {
+        "teaching_and_non_teaching_staff": "Apply through prescribed Library Membership Application Form.",
+        "students": "Details directly uploaded in library software."
+      },
+      "loan_periods_and_fines": [
+        {
+          "category": "Faculty",
+          "max_books": 7,
+          "max_loan_duration": "Term End",
+          "overdue_fine": "Rs. 2/- per item per day"
+        },
+        {
+          "category": "Staff",
+          "max_books": 7,
+          "max_loan_duration": "Term End",
+          "overdue_fine": "Rs. 2/- per item per day"
+        },
+        {
+          "category": "Students",
+          "max_books": 3,
+          "max_loan_duration": "15 Days",
+          "overdue_fine": "Rs. 2/- per item per day"
+        },
+        {
+          "category": "Visiting/Adhoc Faculty",
+          "max_books": 2,
+          "max_loan_duration": "15 Days",
+          "overdue_fine": "Rs. 2/- per item per day"
+        }
+      ],
+      "renewal": "Books can be renewed for another term if there is no demand for them.",
+      "reservation": "If a book is not available for issue, members can reserve it.",
+      "reference_books": "Reference books shall be issued for not more than 24 hours.",
+      "materials_that_cannot_be_issued": [
+        "Reference books, periodicals, bound volumes, and standards must be referred within library premises.",
+        "Bound volumes less than 3 years old are to be referred within the library only."
+      ],
+      "loss_or_mutilation": [
+        "If a book is lost or mutilated beyond usable condition, the user must replace it with the same or latest edition.",
+        "If the book is out of print, three times the cost of the book must be paid to the library.",
+        "The library account must be cleared within two weeks."
+      ]
+    },
+
+    "7_weeding_discarding_repairing": {
+      "title": "Weeding / Discarding / Repairing",
+      "description": "Weeding is the process of withdrawing documents from shelves for storage or permanent discarding. It is done to allow space for new materials and ensure easier access to the collection.",
+      "key_points": [
+        "A sub-committee should be appointed for weeding tasks.",
+        "The sub-committee must give 15 days' notice before weeding/discarding materials.",
+        "Normal damaged books are repaired at the library; those needing major repair are sent outside."
+      ],
+      "categories_for_weeding": [
+        "Mutilated, brittle, or pest-infected documents",
+        "Multiple copies of documents",
+        "Older outdated editions",
+        "Poor content",
+        "Documents on subjects not relevant to the institute's programmes",
+        "Ephemeral materials such as newsletters, pamphlets, annual reports, yearbooks (weeded annually)"
+      ]
+    },
+
+    "8_stock_verification": {
+      "title": "Stock Verification and Shelf Rectification Policy",
+      "key_points": [
+        "Physical verification of library stocks must be carried out to identify losses, misplaced/mutilated documents, or items to be weeded.",
+        "Verification is carried out by a team appointed by the Library Committee; library staff assists the team.",
+        "If total books are below 20,000: verification every year.",
+        "If total books exceed 20,000: verification once in three years.",
+        "If total books exceed 50,000: sample physical verification at intervals of not more than five years."
+      ],
+      "write_off_procedure": [
+        "List documents not found during stock verification",
+        "Make all possible efforts to locate missing documents",
+        "Prepare pre-final list and circulate among the committee",
+        "Compile a final list of missing documents",
+        "Compare with earlier stock verification list",
+        "Submit list with justification to the Vice-Chancellor",
+        "Get approval from the Library Committee",
+        "Issue official memo",
+        "Make necessary entries in accession register, write-off register, assets register",
+        "Remove records from databases",
+        "Close file"
+      ]
+    },
+
+    "11_library_automation": {
+      "title": "Library Automation",
+      "key_points": [
+        "Library Portal should be available on the Indus University website.",
+        "Online Catalogue (OPAC) should be available to check resource availability and library account status.",
+        "Users should be automatically notified about overdue books via email.",
+        "Online book reservation and renewal facility should be provided.",
+        "Library should use integrated automation software like SOUL or KOHA."
+      ]
+    },
+
+    "12_library_services_and_facilities": {
+      "title": "Library and Information Services & Facilities",
+      "services": {
+        "circulation_service": {
+          "description": "The nerve center of the library handling direct contact with readers.",
+          "responsibilities": [
+            "Membership of users",
+            "Issuing and return of books and reading materials",
+            "Sending reminders for overdue books",
+            "Realization of overdue charges and maintaining accounts",
+            "Reservation of books",
+            "Maintaining circulation statistics"
+          ]
+        },
+        "book_bank_facility": "Library may provide book bank scheme as extra service on demand by students, especially during semester gaps.",
+        "newspaper_clipping": "Library subscribes to newspapers. Important news may be cut/photocopied, arranged subject-wise, and kept in library files for readers.",
+        "reference_service": "The librarian assists readers in finding information. If information is unavailable in the library, users are directed to other libraries (referral service).",
+        "inter_library_loan": "Inter-Library Loan facility allows access to reprints/books not available in the library through networks like ADINET/DELNET/INFLIBENT.",
+        "opac": "Online Public Access Catalogue (OPAC) provides searchable bibliographic records by author, title, subject headings, and keywords.",
+        "photocopy_printing": "Photocopying and printing of library references is available at nominal cost. Printouts from e-resources can also be provided.",
+        "faculty_student_orientation": "Library orientation is conducted once a year at the commencement of the semester.",
+        "new_arrivals": "Newly purchased books are displayed on the New Arrival Stand and users are notified by email.",
+        "library_exhibition": "A library exhibition is held once a year wherein publishers display/sell their recent editions at concessional rates."
+      }
+    },
+
+    "13_reading_area_instructions": {
+      "title": "Instructions for Use of Reading Area in the Library",
+      "rules": [
+        "Identity Card is compulsory for library access.",
+        "All students/scholars/outsiders must deposit bags and belongings at the entrance and sign in the register at the checkpoint.",
+        "Only notebooks and library books to be returned are allowed inside.",
+        "Do not leave valuables at the checkpoint; the library is not responsible for loss of personal belongings.",
+        "The 'PASS OUT' slip must be handed to the security guard at the checkpoint before taking out issued books.",
+        "Students must not issue books to others on their own names.",
+        "Students must not bring their own books/journals or already issued books inside the library.",
+        "Carrying a radio, Walkman, or similar devices is restricted.",
+        "Eatables, tea, and coffee are not allowed inside the library.",
+        "Smoking and chewing tobacco is not allowed.",
+        "Mobile phones must be kept on silent mode.",
+        "Furniture arrangement must not be disturbed.",
+        "Sitting on tables is not permitted.",
+        "Silence is mandatory inside the library.",
+        "Newspapers must be folded properly after reading and kept back in the designated place.",
+        "Group discussions or common meetings are not permitted inside the library.",
+        "Do not litter the reading room; use dustbins for rough papers and stationery.",
+        "Strict disciplinary action will be taken for violation of library norms.",
+        "Contact library staff anytime for help or suggestions."
+      ]
+    },
+
+    "14_library_forms": {
+      "title": "Various Forms Used in Library",
+      "forms": [
+        {
+          "form_name": "Book Recommendation Form",
+          "fields": ["Sr. No.", "Title", "Author", "Publisher", "Publication Year", "Text/Ref", "Semester", "No. of Copies Available in Library", "Required Qty", "Price/Copy", "Remark"],
+          "signatories": ["Signature of Faculty", "Head of the Department", "Librarian"]
+        },
+        {
+          "form_name": "Journals/Magazines Recommendation Form",
+          "fields": ["Sr. No.", "Name of the Journal", "Publisher & Address", "Periodicity", "Price", "Remarks (If Any)"],
+          "signatories": ["Signature of Faculty", "Head of the Department", "Librarian"]
+        },
+        {
+          "form_name": "Library Membership Form (for Faculty/Staff)",
+          "fields": ["Name", "Email (IU)", "Email (Private)", "Phone (Res.)", "Cell", "Present Address", "Permanent Address", "Institute", "Department", "Designation"],
+          "signatories": ["Sign of Applicant", "Sign of HOD"],
+          "library_staff_section": ["Membership No.", "Date", "Signature (Librarian)"]
+        }
+      ]
+    }
+  },
+
+  "chatbot_training_qa": [
+    {
+      "question": "How many books can a student borrow from the Indus University library?",
+      "answer": "Students can borrow a maximum of 3 books at a time for a duration of 15 days."
+    },
+    {
+      "question": "How many books can a faculty member borrow from the library?",
+      "answer": "Faculty members can borrow up to 7 books, and the loan period lasts until the Term End."
+    },
+    {
+      "question": "What is the overdue fine for library books at Indus University?",
+      "answer": "The overdue fine is Rs. 2/- per item per day, applicable to all categories — faculty, staff, students, and visiting/adhoc faculty."
+    },
+    {
+      "question": "Can I borrow reference books from the library?",
+      "answer": "Reference books, periodicals, bound volumes, and standards cannot be taken outside the library. Reference books may be issued for a maximum of 24 hours only."
+    },
+    {
+      "question": "What happens if I lose a library book?",
+      "answer": "If a book is lost or mutilated beyond use, you must replace it with the same or latest edition. If the book is out of print, you must pay three times the cost of the book. The library account must be cleared within two weeks."
+    },
+    {
+      "question": "Can I renew library books?",
+      "answer": "Yes, books can be renewed for another term if there is no demand for them from other users."
+    },
+    {
+      "question": "Can I reserve a book that is currently not available?",
+      "answer": "Yes, if a book is not available for issue, you can reserve it through the library."
+    },
+    {
+      "question": "Can students recommend books for the library?",
+      "answer": "Yes, students and research scholars can recommend books for procurement, provided their recommendation is endorsed by a faculty member. Use the Library Book Recommendation Form for this purpose."
+    },
+    {
+      "question": "How can faculty recommend books or journals for the library?",
+      "answer": "Faculty can use the Library Book Recommendation Form for books or the Journals/Magazines Recommendation Form for journals/magazines. Recommendations are routed through the HOD and library committee for approval."
+    },
+    {
+      "question": "Do I need an ID card to enter the library?",
+      "answer": "Yes, an Identity Card is compulsory for accessing the library."
+    },
+    {
+      "question": "Can I carry my bag inside the library?",
+      "answer": "No. All students, scholars, and outsiders must deposit their bags and belongings at the entrance and sign in the register at the checkpoint. Only notebooks and library books to be returned are allowed inside."
+    },
+    {
+      "question": "Is mobile phone allowed inside the library?",
+      "answer": "Mobile phones must be kept on silent mode inside the library. They should not be used for calls inside the library premises."
+    },
+    {
+      "question": "Can I eat or drink inside the library?",
+      "answer": "No. Eatables, tea, and coffee are not allowed inside the library. Smoking and chewing tobacco are also strictly prohibited."
+    },
+    {
+      "question": "Are group discussions allowed in the library?",
+      "answer": "No. Group discussions and common meetings are not permitted inside the library. Silence must be maintained at all times."
+    },
+    {
+      "question": "What is OPAC?",
+      "answer": "OPAC stands for Online Public Access Catalogue. It is an online catalogue of bibliographic records that allows users to search for library resources by author, title, subject headings, or keywords. It also helps check the availability of resources and the status of your library account."
+    },
+    {
+      "question": "What is the Inter-Library Loan facility?",
+      "answer": "Inter-Library Loan (ILL) allows you to access books or reprints not available in the Indus University library by borrowing them from other libraries through networks such as ADINET, DELNET, and INFLIBENT."
+    },
+    {
+      "question": "How is the library committee structured at Indus University?",
+      "answer": "The Library Committee is headed by the VC/Director as Chairman and the Librarian as Member Secretary. It includes one faculty representative from each department, three representatives each from UG, PG, and Research Scholars, and any additional nominees by the Chairman. Faculty members serve for 2 years, student members for 1 year, and the Chairman for not more than 3 years. The committee meets at least once per quarter."
+    },
+    {
+      "question": "How often is stock verification done in the library?",
+      "answer": "If total books are below 20,000, verification is done every year. If books exceed 20,000, verification is once in three years. For libraries with more than 50,000 volumes, sample physical verification is done at intervals of not more than five years."
+    },
+    {
+      "question": "What software does Indus University library use?",
+      "answer": "The library uses SOUL (or KOHA) as its integrated library automation software for cataloguing, circulation, OPAC, and other services."
+    },
+    {
+      "question": "Does the library provide photocopying or printing facilities?",
+      "answer": "Yes, photocopying and printing of library references is available at a nominal cost. Printouts from e-resources can also be provided on request."
+    },
+    {
+      "question": "How are books classified in the library?",
+      "answer": "Books, theses, and dissertations are classified using the Dewey Decimal Classification (DDC) scheme. The class number and book number (first three letters of the author's surname) are written on the title page."
+    },
+    {
+      "question": "What is the book-bank facility?",
+      "answer": "The book-bank scheme is an extra service where the library provides additional books on demand by students, particularly during the gap between semesters when regular circulation may not be sufficient."
+    },
+    {
+      "question": "How does the library notify users about new books?",
+      "answer": "Newly added books are displayed on the New Arrival Stand and users are sent email notifications about newly purchased titles."
+    },
+    {
+      "question": "How can faculty apply for library membership?",
+      "answer": "Teaching and non-teaching staff can apply for library membership through the prescribed Library Membership Application Form, which requires the applicant's signature and HOD's signature."
+    },
+    {
+      "question": "What is the library's policy on accepting gift books?",
+      "answer": "The library may accept gifts of books, periodicals, and multimedia materials from donors, provided the items are not duplicates, outdated, or damaged. Only licensed e-resources should be purchased or accepted, and license agreements must be studied carefully before signing."
+    },
+    {
+      "question": "Can visiting faculty borrow books from the library?",
+      "answer": "Yes. Visiting/Adhoc faculty can borrow up to 2 books for 15 days. Overdue fine is Rs. 2/- per item per day."
+    },
+    {
+      "question": "What is the library orientation program?",
+      "answer": "A library orientation is conducted once a year at the beginning of the semester as part of the student/faculty orientation program to familiarise users with library services and facilities."
+    },
+    {
+      "question": "What is the library exhibition at Indus University?",
+      "answer": "A library exhibition is held once a year where publishers are invited to display and sell their recent editions at concessional rates."
+    }
+  ]
+}

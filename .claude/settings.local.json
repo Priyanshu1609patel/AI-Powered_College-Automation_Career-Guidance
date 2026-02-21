@@ -15,7 +15,26 @@
       "Bash(cmd:*)",
       "Bash(powershell -Command:*)",
       "Bash(xcopy:*)",
-      "Bash(ren \"C:\\\\Users\\\\91910\\\\OneDrive\\\\Documents\\\\career_guidance_ai\\\\career_old\" \"Career_Guidance_SubProject\")"
+      "Bash(ren \"C:\\\\Users\\\\91910\\\\OneDrive\\\\Documents\\\\career_guidance_ai\\\\career_old\" \"Career_Guidance_SubProject\")",
+      "Bash(pip3 install:*)",
+      "Bash(py -m pip install:*)",
+      "Bash(where:*)",
+      "Bash(\"C:\\\\Program Files\\\\Python312\\\\python.exe\" -m pip install:*)",
+      "Bash(\"C:\\\\Program Files\\\\Python312\\\\python.exe\" -c:*)",
+      "Bash(\"C:\\\\Program Files\\\\Python312\\\\python.exe\" -c \"\nimport pdfplumber\nwith pdfplumber.open\\(r''C:\\\\Users\\\\91910\\\\OneDrive\\\\Documents\\\\career_guidance_ai\\\\PDF\\\\CSE-Subject.pdf''\\) as pdf:\n    for i in range\\(9, 30\\):\n        print\\(f''\\\\n===== PAGE {i+1} =====''\\)\n        print\\(pdf.pages[i].extract_text\\(\\)\\)\n\")",
+      "Bash(\"C:\\\\Program Files\\\\Python312\\\\python.exe\" -c \"\nwith open\\(''C:/Users/91910/OneDrive/Documents/career_guidance_ai/pdf_full.txt'', encoding=''utf-8''\\) as f:\n    lines = f.readlines\\(\\)\nprint\\(f''Total lines: {len\\(lines\\)}''\\)\n# Print first 200 lines\nfor l in lines[:200]:\n    print\\(l, end=''''\\)\n\")",
+      "Bash(\"C:\\\\Program Files\\\\Python312\\\\python.exe\":*)",
+      "Bash(\"C:\\\\Program Files\\\\Python312\\\\python.exe\" \"C:/Users/91910/OneDrive/Documents/career_guidance_ai/generate_json.py\")",
+      "Bash(echo:*)",
+      "Bash(dir:*)",
+      "Bash(python3:*)",
+      "WebFetch(domain:aistudio.google.com)",
+      "WebFetch(domain:console.groq.com)",
+      "WebFetch(domain:openrouter.ai)",
+      "WebFetch(domain:console.mistral.ai)",
+      "WebSearch",
+      "WebFetch(domain:ai.google.dev)",
+      "WebFetch(domain:docs.mistral.ai)"
     ]
   }
 }

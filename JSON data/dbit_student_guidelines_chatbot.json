@@ -1,0 +1,360 @@
+{
+  "institute": "Don Bosco Institute of Technology (DBIT)",
+  "document": "Student Guidelines & Disciplinary Committee",
+  "website": "http://www.dbit.in",
+
+  "sections": {
+    "section_1_code_of_conduct": {
+      "title": "Code of Conduct",
+      "rules": {
+        "id_card": {
+          "description": "All students must carry and wear their ID card at all times on campus.",
+          "key_points": [
+            "ID card must be worn at all times inside college premises.",
+            "Entry into college is strictly based on possession of a valid ID card."
+          ]
+        },
+        "dress_code": {
+          "description": "Students must wear semi-formals. Inappropriate dressing may result in penalties.",
+          "key_points": [
+            "T-shirts with objectionable pictures or statements are not allowed.",
+            "Girls must wear skirts or pants of at least knee length. Short skirts and shorts are not allowed.",
+            "Boys are not permitted to wear shorts or three-fourths inside campus.",
+            "Hair must be neatly tied back during lab, workshop, and machine shop practicals.",
+            "Closed shoes are mandatory in workshop, machine shop, and all mechanical engineering labs.",
+            "Formals are required for oral exams, presentations, interviews, placement activities, and technical sessions."
+          ]
+        },
+        "campus_behaviour": {
+          "description": "Students must maintain discipline and decorum on campus at all times.",
+          "key_points": [
+            "Eatables are not permitted in classrooms, library, or computer centre.",
+            "Smoking, alcohol, and drug consumption are strictly prohibited. Violation may lead to rustication.",
+            "The college is a strict No Ragging campus.",
+            "Gambling and playing cards on campus is not allowed.",
+            "Any damage to college property must be compensated by the student.",
+            "Behavior that brings disrepute to the institution inside or outside campus will result in disciplinary action.",
+            "The institute is not responsible for police or regulatory action taken against students for misdemeanors.",
+            "Eve teasing and objectionable personal comments will be dealt with seriously. Legal action may be taken.",
+            "Public display of affection in any form is strictly prohibited.",
+            "Mobile phones are strictly prohibited in classrooms, library, labs, workshops, computer rooms, and examination halls.",
+            "Stealing, fighting, and misbehaviour with faculty will be dealt with very seriously.",
+            "Possession of firearms, knives, or other sharp objects is strictly prohibited and may result in legal action.",
+            "Changing or modifying personal information in digital form is a serious offense and may result in rustication.",
+            "Any student found indulging in substance abuse will be dealt with seriously."
+          ]
+        }
+      }
+    },
+
+    "section_2_academic_discipline": {
+      "title": "Academic Discipline",
+      "rules": {
+        "classroom_attendance": {
+          "description": "Students must maintain at least 75% attendance in each subject as per university norms.",
+          "key_points": [
+            "Minimum attendance requirement is 75% per subject.",
+            "Failure to meet attendance norms will result in the term not being granted and ineligibility to appear for the semester exam.",
+            "Students must monitor their own attendance; no separate notice will be displayed.",
+            "No student may leave the classroom during a class without the teacher's permission."
+          ]
+        },
+        "late_coming": {
+          "description": "Students are expected to arrive at least 5 minutes before the class starts.",
+          "key_points": [
+            "Faculty will not permit latecomers into the class.",
+            "Late students will be marked partially absent for that class."
+          ]
+        },
+        "leave": {
+          "description": "Leave of more than 3 days must be supported with proper documents.",
+          "key_points": [
+            "Medical, personal, or official leave of more than 3 days requires supporting documents.",
+            "Leave consideration is as per University norms.",
+            "Special leave may be granted for students representing DBIT or the University in extra-curricular activities.",
+            "Prior written intimation is required for leave of absence.",
+            "All leave must be sanctioned by the Head of the Department.",
+            "Students must complete all assignments, projects, or term work missed during leave."
+          ]
+        },
+        "laboratories_and_workshop": {
+          "description": "Students must strictly follow safety norms in all labs and workshops.",
+          "key_points": [
+            "Safety norms prescribed for each lab/workshop must be strictly followed.",
+            "Indiscipline in labs or workshops will be handled by the concerned faculty.",
+            "Cost of any damage caused to lab/workshop equipment will be recovered from the student.",
+            "A written record must be maintained in the maintenance register for any damage."
+          ]
+        },
+        "tutorials_and_assignments": {
+          "description": "All tutorial and assignment work must be completed and submitted during the respective class.",
+          "key_points": [
+            "Tutorial/assignment work must be completed during the tutorial class and submitted to the concerned faculty.",
+            "Doing tutorial/assignment work during other lectures is not permitted.",
+            "Shortfall in tutorial/assignment work is not allowed for any reason.",
+            "Timely submission is mandatory; failure to submit may result in term work not being accepted."
+          ]
+        }
+      }
+    },
+
+    "section_3_examinations": {
+      "title": "Examinations",
+      "rules": {
+        "internal_assessment": {
+          "description": "Class tests, viva-voce, seminars, and projects are all part of internal assessment.",
+          "key_points": [
+            "Students must attend all class tests.",
+            "Retests are allowed only for absence due to illness or emergency with valid documents.",
+            "Short-term projects, seminars, and other activities are part of internal assessment and compulsory.",
+            "Use of unfair means during exams is not tolerated and will be dealt with as per University norms.",
+            "In the examination room, the invigilator is the sole authority for any queries or disputes.",
+            "It is the student's sole responsibility to hand over the answer booklet to the invigilator."
+          ]
+        },
+        "absenteeism_during_exams": {
+          "key_points": [
+            "Absence in any exam is considered a backlog (AB grade).",
+            "Refer to the university examination guidelines for AB grade implications."
+          ]
+        }
+      }
+    },
+
+    "section_4_college_facilities": {
+      "title": "Use of College Facilities",
+      "rules": {
+        "library": {
+          "key_points": [
+            "Only students with a valid ID card can access the library.",
+            "Bags, notebooks, laptops, and personal possessions cannot be carried inside the library.",
+            "Silence must be maintained. Mobile phones must be switched off or on silent mode.",
+            "Photography, filming, videotaping, or audio taping inside the library is not permitted.",
+            "Electronic resources of the library must be used strictly for DBIT purposes.",
+            "Unauthorized removal or damage of library material is a serious offense and may result in a fine or disciplinary action.",
+            "Fines are charged for overdue books as per the notice board guidelines.",
+            "Unpaid fines may result in suspension of borrowing rights and electronic access.",
+            "Reference books marked 'For Reference Only' cannot be issued.",
+            "Journals cannot be taken outside the library; only photocopies for personal use are allowed.",
+            "Loss or damage of books/periodicals will result in the student paying for or replacing the item.",
+            "Non-compliance may result in a warning or being debarred from the library for a specific period."
+          ]
+        },
+        "computing_facilities": {
+          "key_points": [
+            "Computers are available in the library and in respective departments.",
+            "Misuse of computing facilities may result in withdrawal of computer access rights.",
+            "Computers can be accessed on all working days from 9:00 AM to 5:00 PM, but not at the cost of lectures, practicals, or tutorials."
+          ]
+        },
+        "canteen": {
+          "key_points": [
+            "Students may visit the canteen only during short breaks, long breaks, or after college hours."
+          ]
+        },
+        "playground": {
+          "key_points": [
+            "Playground is available on weekdays: 8:00 AM–8:45 AM, 1:15 PM–2:00 PM, 5:00 PM–6:00 PM.",
+            "Use on holidays requires prior permission from the Administrator.",
+            "Using the playground during working hours disturbs classes and is not permitted; violators may be penalised.",
+            "No food items or beverages should be consumed on the playground.",
+            "Littering on the playground should be avoided."
+          ]
+        }
+      }
+    },
+
+    "section_5_cocurricular_activities": {
+      "title": "Co-curricular and Extra-curricular Activities",
+      "rules": {
+        "college_festivals": {
+          "key_points": [
+            "DBIT organises a technical festival (COLOSSEUM) and a cultural festival (CREXTAL) every year.",
+            "Festival dates and participation details are displayed on main notice boards in advance.",
+            "Intra-collegiate sports are organised annually with details on the main notice board."
+          ]
+        },
+        "nss": {
+          "key_points": [
+            "Two NSS units operate in the institute with 100 students.",
+            "Only SE, TE, and BE students can enrol for NSS activities.",
+            "Students who fulfil NSS service criteria receive 10 extra marks in the even semester from the university.",
+            "NSS camps are held annually for community interaction and service."
+          ]
+        },
+        "inter_collegiate_events": {
+          "key_points": [
+            "Students need prior written approval from the faculty-in-charge to participate in inter-collegiate events.",
+            "Written approval must be submitted to the class teacher or HOD before the event.",
+            "Students are responsible for making up any missed academic work; no concession is granted.",
+            "FE Semester I students generally cannot participate, except state-level athletes/players with prior written permission.",
+            "Students winning awards should inform the Faculty In-charge and submit proof; they will be felicitated."
+          ]
+        },
+        "professional_bodies": {
+          "key_points": [
+            "Every department has a student chapter of a professional body (SAE, ISHRAE, IEEE, IETE, CSI, ACM, ISTE, etc.).",
+            "Industrial visits, technical competitions, and expert lectures are organised through these chapters.",
+            "Students can contact their HOD for membership and participation details.",
+            "Certification courses (JAVA, Oracle, Red Hat Linux, Android Programming, CFD, etc.) are offered in collaboration with certifying agencies.",
+            "Contact the HOD for details on fees, course duration, and enrolment."
+          ]
+        }
+      }
+    },
+
+    "section_6_student_wellbeing": {
+      "title": "Student Well-being",
+      "rules": {
+        "safety_and_security": {
+          "key_points": [
+            "The institute gives top priority to the safety and security of students, staff, and visitors.",
+            "A first-aid kit is available in the office for minor emergencies.",
+            "Water purifiers and water coolers are available on every floor.",
+            "Fire extinguishers and fire-fighting systems are installed in each building.",
+            "Wearing a helmet is compulsory for all two-wheeler riders entering and exiting campus. Non-compliance results in restricted entry or a penalty of Rs. 500."
+          ]
+        },
+        "counselling_and_mentoring": {
+          "key_points": [
+            "Students can freely approach their teacher for guidance or help.",
+            "Counsellors are available on campus twice a week for emotional support.",
+            "Students can also meet the Campus Minister for help.",
+            "Teachers are available for career and professional guidance."
+          ]
+        },
+        "grievance_redressal": {
+          "key_points": [
+            "Aggrieved students should first submit a written petition to their Class Teacher, who will try to resolve it within 10 days.",
+            "If unsatisfied, the student can escalate to the HOD.",
+            "If still unresolved, the matter can be taken to the Principal through the HOD.",
+            "If not redressed, the grievance is forwarded to the Grievance Redressal Committee with written acknowledgment.",
+            "The committee will submit its recommendations and report within one month.",
+            "All discussions are minuted and kept confidential.",
+            "If dissatisfied with the committee's decision, the student may directly approach the Director/management.",
+            "The committee includes teaching and non-teaching staff, the Principal, and a management representative.",
+            "Members of the Women's Development Cell (WDC) are included for women's grievances."
+          ]
+        },
+        "womens_development_cell": {
+          "description": "The Women's Development Cell (WDC) at DBIT ensures a safe working and studying environment for all women.",
+          "members": "All female students, faculty, and staff of DBIT.",
+          "objectives": [
+            "Create an environment of gender justice with personal security and dignity for all.",
+            "Enhance self-esteem and self-confidence of girl students, women faculty, and staff.",
+            "Create awareness about problems faced by women due to gender issues, especially working women.",
+            "Promote a healthy study and work culture with a sense of responsibility.",
+            "Foster decision-making ability in girl students for informed choices in education, employment, and health.",
+            "Create awareness about issues related to youth and girls in particular.",
+            "Disseminate knowledge about rights and laws related to women.",
+            "Implement policies regarding sexual harassment at the workplace.",
+            "Train women students and staff in self-defence techniques."
+          ]
+        }
+      }
+    }
+  },
+
+  "chatbot_training_qa": [
+    {
+      "question": "Do I need to wear my ID card on campus?",
+      "answer": "Yes, all students are required to carry and wear their ID card at all times. Entry into the college premises is strictly based on possession of a valid ID card."
+    },
+    {
+      "question": "What is the dress code at DBIT?",
+      "answer": "Students must wear semi-formals. T-shirts with objectionable content, shorts for boys, and short skirts/pants for girls (above knee length) are not allowed. Closed shoes are mandatory in workshops and mechanical labs. Formals are required for oral exams, presentations, interviews, and placement activities."
+    },
+    {
+      "question": "Is smoking allowed on campus?",
+      "answer": "No, smoking is strictly prohibited on campus. Consumption of alcohol and drugs is also not allowed. Being found under the influence of alcohol or drugs may result in rustication from the college."
+    },
+    {
+      "question": "What is the minimum attendance required?",
+      "answer": "Students must maintain a minimum of 75% attendance per subject as per university norms. Failing to meet this requirement will result in the term not being granted and ineligibility to appear for the semester examination."
+    },
+    {
+      "question": "What happens if I am late to class?",
+      "answer": "Faculty will not permit latecomers into the class. Any student who is late will be marked partially absent for that class. Students are expected to arrive at least 5 minutes before the class starts."
+    },
+    {
+      "question": "How do I apply for leave?",
+      "answer": "You must give prior written intimation for leave. Leave of more than 3 days requires supporting documents (medical, personal, or official). All leave must be sanctioned by the Head of the Department. You are also responsible for completing any missed assignments or term work during the leave period."
+    },
+    {
+      "question": "Are mobile phones allowed in class?",
+      "answer": "No. Mobile phones are strictly prohibited inside classrooms, library, laboratories, workshops, computer rooms, and examination halls."
+    },
+    {
+      "question": "What are the library rules?",
+      "answer": "You need a valid ID card to access the library. Bags, laptops, and personal possessions are not allowed inside. You must maintain silence and switch off or silence your phone. Photography and filming are prohibited. Reference books cannot be issued. Journals cannot be taken outside, only photocopied for personal use. Fines are charged for overdue books."
+    },
+    {
+      "question": "When can I use the computer lab?",
+      "answer": "Computers are available on all working days from 9:00 AM to 5:00 PM, but not during lectures, practicals, or tutorials."
+    },
+    {
+      "question": "When is the canteen open?",
+      "answer": "Students are permitted to visit the canteen only during short breaks, long breaks, or after college hours."
+    },
+    {
+      "question": "When can I use the playground?",
+      "answer": "The playground is available on weekdays during these slots: 8:00 AM–8:45 AM, 1:15 PM–2:00 PM, and 5:00 PM–6:00 PM. Holiday use requires prior permission from the Administrator."
+    },
+    {
+      "question": "Is ragging allowed at DBIT?",
+      "answer": "No, DBIT is a strict No Ragging campus. Any form of ragging is completely prohibited and will be dealt with seriously."
+    },
+    {
+      "question": "Can I participate in inter-collegiate events?",
+      "answer": "Yes, with prior written approval from the faculty-in-charge. You must submit the approval to your class teacher or HOD before the event, and you are responsible for making up any academic work missed. FE Semester I students are generally not permitted to participate, except state-level athletes with prior written permission."
+    },
+    {
+      "question": "What is NSS and who can join?",
+      "answer": "NSS (National Service Scheme) has two units at DBIT with 100 students. Only SE, TE, and BE students can enrol. Students who fulfil the service criteria receive 10 extra marks in the even semester from the university."
+    },
+    {
+      "question": "Who can I contact for counselling?",
+      "answer": "Counsellors are available on campus twice a week for emotional support. You can also freely approach any teacher for guidance, or meet the Campus Minister for help."
+    },
+    {
+      "question": "How do I raise a grievance?",
+      "answer": "First, submit a written petition to your Class Teacher who will try to resolve it within 10 days. If unresolved, escalate to the HOD, then to the Principal through the HOD. If still unresolved, it is forwarded to the Grievance Redressal Committee who will respond within one month. You may also approach the Director/management directly if you are not satisfied with the committee's decision."
+    },
+    {
+      "question": "What is the Women's Development Cell (WDC)?",
+      "answer": "The WDC at DBIT is established to ensure a safe working and studying environment for all women. All female students, faculty, and staff are its members. It works to promote gender justice, women's rights awareness, self-defence training, and addresses issues of sexual harassment."
+    },
+    {
+      "question": "Is a helmet required to enter campus on a two-wheeler?",
+      "answer": "Yes, wearing a helmet is compulsory for all two-wheeler riders entering and exiting campus. Non-compliance will result in restricted entry or a penalty of Rs. 500."
+    },
+    {
+      "question": "What happens if I damage lab equipment?",
+      "answer": "The cost of any damage caused to laboratory or workshop equipment will be recovered from the student. A written record must be maintained in the maintenance register by the lab assistant or faculty."
+    },
+    {
+      "question": "What is the penalty for using unfair means in exams?",
+      "answer": "Use of unfair means during exams is not tolerated and will be dealt with according to University norms. In the examination room, the invigilator is the sole authority for any disputes."
+    },
+    {
+      "question": "What professional body chapters are available at DBIT?",
+      "answer": "Every department has a student chapter of a professional body, including SAE, ISHRAE, IEEE, IETE, CSI, ACM, ISTE, Literary Club, Maths Club, Physics Club, and more. Contact your HOD for membership and participation details."
+    },
+    {
+      "question": "What certification courses does DBIT offer?",
+      "answer": "DBIT offers certification courses in JAVA, Oracle, Red Hat Linux, Android Programming, and CFD, in collaboration with certifying agencies. Contact the HOD for details on fees, course duration, and enrolment."
+    },
+    {
+      "question": "What festivals does DBIT organise?",
+      "answer": "DBIT organises a technical festival called COLOSSEUM and a cultural festival called CREXTAL every year. Intra-collegiate sports events are also organised annually. Details are displayed on the main notice boards."
+    },
+    {
+      "question": "Can I carry food into the classroom?",
+      "answer": "No. Students are not permitted to carry eatables into the classroom, library, or computer centre."
+    },
+    {
+      "question": "What safety facilities are available on campus?",
+      "answer": "The campus has a first-aid kit in the office, water purifiers and water coolers on every floor, and fire extinguishers and fire-fighting systems in each building. The institute maintains safety standards throughout the campus."
+    }
+  ]
+}

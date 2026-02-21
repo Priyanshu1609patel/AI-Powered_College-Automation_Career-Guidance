@@ -150,8 +150,18 @@ def send_message():
         (chat_id, user_id, user_message)
     )
 
-    # Process with chatbot engine
-    result = chatbot.process(user_message, user_id=user_id)
+    # Load last 6 messages as conversation history for AI context
+    recent = query_db(
+        "SELECT sender, content FROM messages WHERE chat_id = %s ORDER BY created_at DESC LIMIT 6",
+        (chat_id,)
+    ) or []
+    chat_history = [
+        {"role": "user" if m['sender'] == 'user' else "assistant", "content": m['content']}
+        for m in reversed(recent)
+    ]
+
+    # Process with chatbot engine (AI + pattern fallback)
+    result = chatbot.process(user_message, user_id=user_id, chat_history=chat_history)
 
     # Save bot response
     execute_db(
@@ -163,11 +173,12 @@ def send_message():
     execute_db("UPDATE chats SET updated_at = NOW() WHERE id = %s", (chat_id,))
 
     return jsonify({
-        'response': result['response'],
-        'intent': result['intent'],
-        'confidence': result['confidence'],
-        'chat_id': chat_id,
+        'response':         result['response'],
+        'intent':           result['intent'],
+        'confidence':       result['confidence'],
+        'chat_id':          chat_id,
         'response_time_ms': result['response_time_ms'],
+        'ai_provider':      result.get('ai_provider', 'pattern'),
     })
 
 
@@ -178,3 +189,11 @@ def delete_chat(chat_id):
     user_id = session['user_id']
     execute_db("DELETE FROM chats WHERE id = %s AND user_id = %s", (chat_id, user_id))
     return jsonify({'success': True})
+
+
+@main_bp.route('/api/ai/status')
+@login_required
+def ai_status():
+    """Check status of all 5 AI providers (available/blocked/no-key)."""
+    from chatbot.ai_engine import provider_status
+    return jsonify({'providers': provider_status()})

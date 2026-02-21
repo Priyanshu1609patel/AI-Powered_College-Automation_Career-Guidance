@@ -1,0 +1,242 @@
+{
+  "university": "Indus University",
+  "department": "Training & Placement Department (T&P Dept.)",
+  "source_url": "https://indusuni.ac.in/placement.php",
+  "contact": {
+    "training_and_placement_officer": "+91 9879611169"
+  },
+
+  "overview": {
+    "description": "Indus University has an independent vertical — the Training & Placement Department (T&P Dept.) — that acts as a bridge between the academic institutions (input-end) and the industry (output-end). It is the epicenter for career guidance to students of all programmes and streams at the University.",
+    "established": "2006",
+    "history": "Initially associated with the Indus Institute of Technology & Engineering (IITE). Became a part of Indus University from 2012 onwards.",
+    "role": "Connects schools/constituent institutes of the University with the industry for campus recruitment, internships, and career development."
+  },
+
+  "placement_statistics": {
+    "highest_package": {
+      "amount": "Rs. 30 LPA",
+      "company": "LUMMO, Jakarta, Indonesia"
+    },
+    "average_package": "Rs. 6.8 LPA"
+  },
+
+  "objectives": [
+    "To sharpen the organizational and creative skills inherent in students.",
+    "To help students express their education in an atmosphere that brings experienced values and teaches a modern attitude.",
+    "To create analytical skills for making crucial strategic decisions in a complex corporate environment.",
+    "To create the best learning process using a comprehensive understanding of industry best practices.",
+    "To establish long-term relationships with companies.",
+    "To provide 100% placements to graduates."
+  ],
+
+  "how_we_achieve_this": [
+    "Carrying regular relations with companies through Seminars, Guest Lectures, Conferences, and Corporate Meets.",
+    "Designing and managing On-Campus and Off-Campus recruitment exercises.",
+    "Helping students in conducting summer training assignments.",
+    "Creating a database of researchers and delivering their curriculum to different industries.",
+    "Providing management consultancy for live research projects.",
+    "Managing Inter-Cultural exchange with other institutions and industries."
+  ],
+
+  "activities": {
+
+    "training": {
+      "description": "Comprehensive training programs to prepare students for the job market.",
+      "programs": [
+        "CV Writing – Internal",
+        "Communication Skills (Written/Spoken) – Internal and External",
+        "Employability Skill Tests",
+        "Domain-Specific Technical Training",
+        "Soft-skills and Technical Training Workshops",
+        "Practice Sessions for Aptitude, Technical, and Psychometric Tests",
+        "Group Discussion (GD) Sessions and Mock Interviews by Industry Experts",
+        "Finishing School Training before Campus Drives"
+      ]
+    },
+
+    "placements": {
+      "description": "End-to-end management of campus recruitment process.",
+      "activities": [
+        "Review, revise, and diversify the Employers database.",
+        "Liaise with Employer Talent Acquisition Teams for Campus Recruitment.",
+        "Execute Campus Drives meticulously.",
+        "Ensure choice-based placement.",
+        "Collect Employer Feedback after each Campus Drive and share with Department Management, HODs, and Placement Coordinators."
+      ]
+    },
+
+    "entrepreneurship": {
+      "description": "Supporting students who wish to build their own ventures.",
+      "activities": [
+        "Identify students keen on Entrepreneurship and extend all possible assistance.",
+        "Invite successful entrepreneurs for interactions with students at frequent intervals."
+      ]
+    },
+
+    "industry_academia_interface": {
+      "description": "Bridging gap between academic learning and industry requirements.",
+      "activities": [
+        "Expert Sessions and Guest Lectures",
+        "Industrial Visits",
+        "Workshops – Technical, Domain-specific, and Profile-based",
+        "Internships and Projects",
+        "Campus Placements",
+        "Faculty Training in Industry",
+        "Tie-ups and Empanelment with Industry and Academic Institutions"
+      ]
+    }
+  },
+
+  "our_strengths": [
+    "Team with a proven track record and most comprehensive experience.",
+    "Industry interaction, Communication, Negotiation, and Conversion skills.",
+    "Widest Network and Database.",
+    "Promise less and Deliver more.",
+    "Adherence to commitments and deliverables.",
+    "Easy accessibility to Students and Employers.",
+    "Enviable track record of Placements, Internships, and related activities."
+  ],
+
+  "facts_and_figures": [
+    "Fastest Placements in Prime Companies.",
+    "Appropriate role with the highest package.",
+    "Full support to students in shaping their dream careers."
+  ],
+
+  "recruiting_companies": [
+    "42 Gears", "Adani", "AIA", "AKKKL", "Amazon", "Apollo Munich",
+    "Arastu", "Atul", "Audi", "Bajaj Allianz", "Bridgestone", "BYJU's",
+    "Cadila", "Capgemini", "Capital First", "Cigna", "Collabera", "Decathlon",
+    "Desigumate", "eClinicalWorks", "e-Infochips", "Electrotherm", "Forbes",
+    "Gateway Group", "Godrej", "Harsha", "Highly", "HiTech", "Hyperlink",
+    "HyperTeq", "IDFC First Bank", "IndusInd Bank", "Irada", "Jaro Education",
+    "JSW Paints", "KIA", "Knovos", "LEA", "Magneto", "Maxxis", "Meditab",
+    "O2H", "Odoo", "Oracle", "POSCO", "Rishabh", "Samsung", "Siemens",
+    "SKF", "Synoptek", "Tata Motors", "Windsor", "Wingify", "Yazaki"
+  ],
+
+  "recent_placement_highlights": [
+    {
+      "student": "Agam Butani",
+      "placed_at": "Adani"
+    },
+    {
+      "student": "Rishabh Maheshwari",
+      "programme": "IIMS-MBA",
+      "placed_at": "Axis Bank"
+    },
+    {
+      "student": "Sarvesh Mehta",
+      "programme": "B.Tech – CSE",
+      "placed_at": "AllianceTek Inc."
+    },
+    {
+      "student": "Bhavya Mistry",
+      "programme": "B.Tech – IT",
+      "placed_at": "AllianceTek Inc."
+    }
+  ],
+
+  "industrial_visits_highlights": [
+    "Indus Institute of Pharmacy and Research – Trip to Mundra under Project Udaan",
+    "IIICT – Industrial visit to Odoo India HQ, Gandhinagar for IMCA and IMSc (CA & IT) students",
+    "IICT – Industrial visit to Heritage Cyber World LLP"
+  ],
+
+  "institutes_covered": [
+    { "code": "IITE", "name": "Indus Institute of Technology & Engineering", "url": "https://iite.indusuni.ac.in" },
+    { "code": "IAS", "name": "Indus Architecture School", "url": "https://ias.indusuni.ac.in" },
+    { "code": "IDS", "name": "Indus Design School", "url": "https://ids.indusuni.ac.in" },
+    { "code": "IIICT", "name": "Indus Institute of Information & Communication Technology", "url": "https://iiict.indusuni.ac.in" },
+    { "code": "IIMS", "name": "Indus Institute of Management Studies", "url": "https://iims.indusuni.ac.in" },
+    { "code": "IISHLS", "name": "Indus Institute of Sciences Humanities & Liberal Studies", "url": "https://iishls.indusuni.ac.in" },
+    { "code": "IISS", "name": "Indus Institute of Special Studies", "url": "https://iiss.indusuni.ac.in" },
+    { "code": "IIPR", "name": "Indus Institute of Pharmacy and Research", "url": "https://iipr.indusuni.ac.in" },
+    { "code": "IIATE", "name": "Indus Institute of Aviation Technology and Engineering", "url": "https://iiate.indusuni.ac.in" },
+    { "code": "IAGNI", "name": "Indus Advance Green Nanotechnology Institute", "url": "https://indusuni.ac.in/iagni/" }
+  ],
+
+  "chatbot_training_qa": [
+    {
+      "question": "Does Indus University have a placement department?",
+      "answer": "Yes. Indus University has an independent Training & Placement Department (T&P Dept.) that acts as a bridge between the university and industry. It has been operational since 2006 and became part of Indus University from 2012 onwards."
+    },
+    {
+      "question": "What is the highest placement package at Indus University?",
+      "answer": "The highest placement package is Rs. 30 LPA, offered by LUMMO, Jakarta, Indonesia."
+    },
+    {
+      "question": "What is the average placement package at Indus University?",
+      "answer": "The average placement package at Indus University is Rs. 6.8 LPA."
+    },
+    {
+      "question": "What is the goal of the Training & Placement Department?",
+      "answer": "The T&P Department aims to provide 100% placements to graduates. It also focuses on sharpening students' organizational and creative skills, building analytical abilities, establishing long-term industry relationships, and preparing students for their dream careers through comprehensive training and industry interaction."
+    },
+    {
+      "question": "What training programs does Indus University offer for placements?",
+      "answer": "The T&P Department offers CV writing, communication skills training (written and spoken), employability skill tests, domain-specific technical training, soft-skills and technical workshops, aptitude/technical/psychometric test practice sessions, group discussion sessions, mock interviews by industry experts, and finishing school training before campus drives."
+    },
+    {
+      "question": "How does Indus University help students get placed?",
+      "answer": "The T&P Department maintains an updated employer database, liaises with company talent acquisition teams for campus recruitment, conducts both on-campus and off-campus drives, ensures choice-based placement for students, organises expert sessions, guest lectures, industrial visits, internships, and collects employer feedback after each drive."
+    },
+    {
+      "question": "Which companies recruit from Indus University?",
+      "answer": "Many well-known companies recruit from Indus University, including Amazon, Capgemini, Oracle, Samsung, Siemens, Tata Motors, Godrej, Adani, BYJU's, Bajaj Allianz, IDFC First Bank, IndusInd Bank, Odoo, Decathlon, JSW Paints, KIA, and many more. The university has a wide and diverse recruiter base across sectors."
+    },
+    {
+      "question": "Does Indus University support entrepreneurship?",
+      "answer": "Yes. The T&P Department identifies students keen on entrepreneurship and extends all possible assistance to them. Successful entrepreneurs are also regularly invited to campus to interact with and inspire students."
+    },
+    {
+      "question": "What is the Industry-Academia Interface at Indus University?",
+      "answer": "The Industry-Academia Interface includes expert sessions and guest lectures, industrial visits, technical and domain-specific workshops, internships and live projects, campus placements, faculty training in industry, and tie-ups or empanelment with industry and academic institutions."
+    },
+    {
+      "question": "Does Indus University offer internship opportunities?",
+      "answer": "Yes. The T&P Department helps students with summer training assignments and facilitates internships and live projects through its industry tie-ups and academia-industry interface program."
+    },
+    {
+      "question": "How can I contact the Training & Placement Department?",
+      "answer": "You can reach the Training & Placement Officer at +91 9879611169."
+    },
+    {
+      "question": "When was the Training & Placement Department at Indus University established?",
+      "answer": "The Training & Placement Department was established in 2006, initially associated with the Indus Institute of Technology & Engineering (IITE). It became a part of Indus University from 2012 onwards."
+    },
+    {
+      "question": "Does Indus University conduct off-campus placements?",
+      "answer": "Yes. The T&P Department designs and manages both On-Campus and Off-Campus recruitment exercises for students."
+    },
+    {
+      "question": "Which institutes of Indus University are covered under the placement program?",
+      "answer": "All constituent institutes are covered, including IITE (Technology & Engineering), IAS (Architecture), IDS (Design), IIICT (Information & Communication Technology), IIMS (Management Studies), IISHLS (Sciences, Humanities & Liberal Studies), IISS (Special Studies), IIPR (Pharmacy), IIATE (Aviation Technology), and IAGNI (Nanotechnology)."
+    },
+    {
+      "question": "What kind of mock interviews or practice sessions does Indus University provide?",
+      "answer": "The T&P Department conducts Group Discussion (GD) sessions and Mock Interviews by industry experts, along with practice sessions for aptitude tests, technical tests, and psychometric tests to prepare students thoroughly before campus drives."
+    },
+    {
+      "question": "Does Indus University conduct industrial visits?",
+      "answer": "Yes. Industrial visits are conducted regularly as part of the Industry-Academia Interface. Recent visits include trips to Odoo India HQ in Gandhinagar, Heritage Cyber World LLP, and Mundra under Project Udaan organised by IIPR."
+    },
+    {
+      "question": "What are the key strengths of the Indus University placement department?",
+      "answer": "Key strengths include an experienced team with a proven track record, strong industry interaction and negotiation skills, the widest network and employer database, adherence to commitments, easy accessibility for both students and employers, and an enviable record of placements and internships."
+    },
+    {
+      "question": "Has any Indus University student been placed in an international company?",
+      "answer": "Yes. The highest package of Rs. 30 LPA was offered by LUMMO, an international company based in Jakarta, Indonesia."
+    },
+    {
+      "question": "What is choice-based placement at Indus University?",
+      "answer": "Indus University's T&P Department ensures choice-based placement, meaning students are guided and supported to secure placements aligned with their preferred career roles and aspirations rather than being placed arbitrarily."
+    },
+    {
+      "question": "Does Indus University get feedback from recruiters after campus drives?",
+      "answer": "Yes. After each campus drive, employer feedback is collected and shared with Department Management, HODs, and Placement Coordinators to continuously improve the quality of students and placement processes."
+    }
+  ]
+}

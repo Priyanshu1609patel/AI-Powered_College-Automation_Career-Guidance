@@ -1,0 +1,175 @@
+{
+  "university": "Indus University",
+  "scheme": "Examination & Evaluation Scheme",
+  "address": "PO: Rancharda, Via: Thaltej, Ahmedabad-382115",
+  "contact": {
+    "telefax": "+91 2764-260277/278/279",
+    "email": "info@indusuni.ac.in",
+    "website": "www.indusuni.ac.in"
+  },
+
+  "grading_system": {
+    "ug_programs": {
+      "marks_out_of": 100,
+      "grade_scale": [
+        { "marks_range": "80-100", "letter_grade": "A+", "grade_points": 10 },
+        { "marks_range": "70-79",  "letter_grade": "A",  "grade_points": 9  },
+        { "marks_range": "60-69",  "letter_grade": "B+", "grade_points": 8  },
+        { "marks_range": "55-59",  "letter_grade": "B",  "grade_points": 7  },
+        { "marks_range": "50-54",  "letter_grade": "C",  "grade_points": 6  },
+        { "marks_range": "45-49",  "letter_grade": "D",  "grade_points": 5  },
+        { "marks_range": "40-44",  "letter_grade": "P",  "grade_points": 4  },
+        { "marks_range": "<40",    "letter_grade": "F",  "grade_points": 0  },
+        { "marks_range": "Absent", "letter_grade": "AB", "grade_points": 0  }
+      ],
+      "note": "Top grade (A+) covers 20 marks range (80-100); all other passing grades cover 10 marks range."
+    },
+
+    "pg_programs": {
+      "marks_out_of": 100,
+      "grade_scale": [
+        { "marks_range": "80-100", "letter_grade": "A+", "grade_points": 10 },
+        { "marks_range": "70-79",  "letter_grade": "A",  "grade_points": 9  },
+        { "marks_range": "60-69",  "letter_grade": "B+", "grade_points": 8  },
+        { "marks_range": "55-59",  "letter_grade": "B",  "grade_points": 7  },
+        { "marks_range": "50-54",  "letter_grade": "B",  "grade_points": 6  },
+        { "marks_range": "<50",    "letter_grade": "F",  "grade_points": 0  },
+        { "marks_range": "Absent", "letter_grade": "AB", "grade_points": 0  }
+      ],
+      "note": "Top grade (A+) covers 20 marks range (80-100); all other passing grades cover 10 marks range."
+    },
+
+    "ug_200_marks": {
+      "marks_out_of": 200,
+      "grade_scale": [
+        { "marks_range": "160-200", "letter_grade": "A+", "grade_points": 10 },
+        { "marks_range": "140-159", "letter_grade": "A",  "grade_points": 9  },
+        { "marks_range": "120-139", "letter_grade": "B+", "grade_points": 8  },
+        { "marks_range": "110-119", "letter_grade": "B",  "grade_points": 7  },
+        { "marks_range": "100-109", "letter_grade": "C",  "grade_points": 6  },
+        { "marks_range": "90-99",   "letter_grade": "D",  "grade_points": 5  },
+        { "marks_range": "80-89",   "letter_grade": "P",  "grade_points": 4  },
+        { "marks_range": "<80",     "letter_grade": "F",  "grade_points": 0  },
+        { "marks_range": "Absent",  "letter_grade": "AB", "grade_points": 0  }
+      ],
+      "note": "Top grade (A+) covers 40 marks range (160-200); all other passing grades cover 20 marks range. This is a scaled version of the 100-marks scheme."
+    },
+
+    "pg_200_marks": {
+      "marks_out_of": 200,
+      "grade_scale": [
+        { "marks_range": "160-200", "letter_grade": "A+", "grade_points": 10 },
+        { "marks_range": "140-159", "letter_grade": "A",  "grade_points": 9  },
+        { "marks_range": "120-139", "letter_grade": "B+", "grade_points": 8  },
+        { "marks_range": "110-119", "letter_grade": "B",  "grade_points": 7  },
+        { "marks_range": "100-109", "letter_grade": "B",  "grade_points": 6  },
+        { "marks_range": "<100",    "letter_grade": "F",  "grade_points": 0  },
+        { "marks_range": "Absent",  "letter_grade": "AB", "grade_points": 0  }
+      ],
+      "note": "Top grade (A+) covers 40 marks range (160-200); all other passing grades cover 20 marks range."
+    }
+  },
+
+  "special_grade_indicators": {
+    "AB": "Absence in examination, considered as backlog",
+    "F": "Fail in Examination, considered as backlog. Marks forwarded from the last examinations.",
+    "*": "Indicates carry forwarded marks from the last examinations",
+    "+": "Indicates subject passed with grace marks"
+  },
+
+  "terminology": {
+    "CIE": "Continuous Internal Evaluation or Internal Assessment",
+    "ESE": "End Semester Examination",
+    "GPA": "Semester Grade Point Average = Σ(Credits × Grade) / Σ Credits",
+    "CGPA": "Cumulative Grade Point Average",
+    "FGPA": "Final Grade Point Average",
+    "Min": "Minimum Marks",
+    "Max": "Maximum Marks",
+    "Obt": "Obtained Marks"
+  },
+
+  "gpa_formula": {
+    "formula": "GPA = Σ(Credits × Grade Points) / Σ Credits",
+    "cgpa_basis": "CGPA is calculated based on the last four semesters' performance"
+  },
+
+  "degree_class": {
+    "ug_programmes": [
+      { "class": "First Class with Distinction", "fgpa_range": "FGPA ≥ 7.50" },
+      { "class": "First Class",                  "fgpa_range": "6.50 ≤ FGPA ≤ 7.49" },
+      { "class": "Second Class",                 "fgpa_range": "5.50 ≤ FGPA ≤ 6.49" },
+      { "class": "Pass Class",                   "fgpa_range": "4.50 ≤ FGPA ≤ 5.49" }
+    ],
+    "pg_programmes": [
+      { "class": "First Class with Distinction", "fgpa_range": "FGPA ≥ 7.50" },
+      { "class": "First Class",                  "fgpa_range": "6.50 ≤ FGPA ≤ 7.49" },
+      { "class": "Second Class",                 "fgpa_range": "5.50 ≤ FGPA ≤ 6.49" },
+      { "class": "Pass Class",                   "fgpa_range": "5.00 ≤ FGPA ≤ 5.49" }
+    ],
+    "integrated_programmes_and_b_arch": [
+      { "class": "First Class with Distinction", "fgpa_range": "FGPA ≥ 7.50" },
+      { "class": "First Class",                  "fgpa_range": "6.50 ≤ FGPA ≤ 7.49" },
+      { "class": "Second Class",                 "fgpa_range": "5.50 ≤ FGPA ≤ 6.49" },
+      { "class": "Pass Class",                   "fgpa_range": "5.00 ≤ FGPA ≤ 5.49" }
+    ]
+  },
+
+  "cgpa_to_percentage_conversion": {
+    "formula": "Percentage = (Obtained CGPA - 0.5) × 10"
+  },
+
+  "chatbot_training_qa": [
+    {
+      "question": "What grade do I get if I score 85 out of 100 in a UG exam?",
+      "answer": "You get grade A+ with 10 grade points, as your marks (85) fall in the 80-100 range."
+    },
+    {
+      "question": "What grade do I get if I score 72 out of 100?",
+      "answer": "You get grade A with 9 grade points, as your marks (72) fall in the 70-79 range."
+    },
+    {
+      "question": "What grade do I get if I score 38 out of 100?",
+      "answer": "You get grade F with 0 grade points, as your marks (38) are below 40. This is considered a fail/backlog."
+    },
+    {
+      "question": "What grade do I get if I score 170 out of 200?",
+      "answer": "You get grade A+ with 10 grade points, as your marks (170) fall in the 160-200 range for a 200-mark exam."
+    },
+    {
+      "question": "What grade do I get if I score 130 out of 200?",
+      "answer": "You get grade B+ with 8 grade points, as your marks (130) fall in the 120-139 range for a 200-mark exam."
+    },
+    {
+      "question": "What does AB grade mean?",
+      "answer": "AB stands for Absent. It indicates absence in the examination and is considered as a backlog."
+    },
+    {
+      "question": "How is GPA calculated?",
+      "answer": "GPA (Grade Point Average) = Σ(Credits × Grade Points) / Σ Credits. It represents your Semester Grade Point Average."
+    },
+    {
+      "question": "How do I convert CGPA to percentage at Indus University?",
+      "answer": "Use the formula: Percentage = (Obtained CGPA - 0.5) × 10"
+    },
+    {
+      "question": "What CGPA do I need for First Class with Distinction?",
+      "answer": "You need FGPA ≥ 7.50 to be awarded First Class with Distinction."
+    },
+    {
+      "question": "What is the minimum marks to pass a 100-mark UG exam?",
+      "answer": "You need at least 40 marks out of 100 to pass. Scoring below 40 results in an F grade (fail)."
+    },
+    {
+      "question": "What is the minimum marks to pass a 200-mark UG exam?",
+      "answer": "You need at least 80 marks out of 200 to pass. Scoring below 80 results in an F grade (fail)."
+    },
+    {
+      "question": "What does the * symbol on my marksheet mean?",
+      "answer": "The * symbol indicates that the marks were carry forwarded from the last examination."
+    },
+    {
+      "question": "What does the + symbol on my marksheet mean?",
+      "answer": "The + symbol indicates that the subject was passed with grace marks."
+    }
+  ]
+}

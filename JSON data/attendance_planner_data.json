@@ -1,0 +1,62 @@
+{
+  "attendance_planner": {
+    "description": "Calculates how many upcoming lectures a student must attend (or can skip) to hit a target attendance percentage",
+    "default_target_percent": 80,
+    "supported_targets": [60, 65, 70, 75, 80, 85, 90],
+
+    "key_thresholds": {
+      "exam_eligibility": {
+        "percent": 80,
+        "label": "Exam Eligibility",
+        "note": "Indus University minimum to appear in Semester Exams"
+      },
+      "mysy_scholarship": {
+        "percent": 75,
+        "label": "MYSY Scholarship Renewal",
+        "note": "Minimum for Gujarat State MYSY scholarship renewal"
+      },
+      "safe_zone": {
+        "percent": 85,
+        "label": "Safe Zone",
+        "note": "Recommended buffer — 5% above the 80% minimum"
+      },
+      "excellent": {
+        "percent": 90,
+        "label": "Excellent",
+        "note": "Top attendance category — full marks in internal attendance component"
+      }
+    },
+
+    "formula": {
+      "total_final_lectures":      "attended_so_far_total + remaining_upcoming_lectures",
+      "required_to_attend_total":  "ceil( target_percent / 100  ×  total_final_lectures )",
+      "more_you_must_attend":      "required_to_attend_total  −  already_attended",
+      "lectures_you_can_skip":     "remaining_upcoming_lectures  −  more_you_must_attend"
+    },
+
+    "worked_example": {
+      "scenario":          "Attended 12 out of 15 so far; 20 lectures remaining; target 80%",
+      "step1_total_final": "15 + 20 = 35 total lectures",
+      "step2_required":    "ceil(80/100 × 35) = ceil(28.0) = 28",
+      "step3_more_attend": "28 − 12 = 16 more lectures to attend",
+      "step4_can_skip":    "20 − 16 = 4 lectures can be skipped",
+      "conclusion":        "Attend at least 16 of the 20 remaining. You can skip 4."
+    },
+
+    "trigger_phrases": [
+      "remaining lectures", "lectures remaining", "classes remaining",
+      "lectures left", "classes left", "next N lectures",
+      "future attendance", "attendance plan", "plan my attendance",
+      "how many can i skip", "how many can i bunk", "how many can i miss",
+      "how many lectures to attend", "how many must i attend",
+      "baaki lectures", "aage kitni lectures", "kitni chhuti le sakta"
+    ],
+
+    "response_hints": {
+      "already_eligible":  "You have already reached {target}%. You can skip {can_skip} of the {remaining} remaining lectures.",
+      "must_attend":       "Attend {more} of the {remaining} upcoming lectures. You can skip {can_skip}.",
+      "impossible":        "Even attending all {remaining} remaining lectures gives only {max_final}% — below your target of {target}%.",
+      "missing_info":      "Tell me: (1) current attendance e.g. 12/15, (2) upcoming lectures e.g. next 20, (3) target % — default is 80%."
+    }
+  }
+}
