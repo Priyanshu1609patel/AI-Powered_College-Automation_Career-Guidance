@@ -16,31 +16,48 @@
             <div class="stat-card">
                 <h5 class="fw-bold mb-2" style="color: var(--dark);">{{ project.title }}</h5>
                 <p style="color: var(--gray); font-size: 0.88rem;">{{ project.description }}</p>
+
                 {% if project.skills %}
                 <div class="mb-2">
                     <small class="text-muted">Skills:</small>
                     <span class="fw-medium" style="font-size: 0.85rem;">{{ project.skills }}</span>
                 </div>
                 {% endif %}
+
                 {% if project.link %}
                 <div class="mb-2">
-                    <a href="{{ project.link }}" target="_blank" style="color: var(--primary); font-size: 0.85rem;"><i class="bi bi-link-45deg me-1"></i>{{ project.link }}</a>
+                    <a href="{{ project.link }}" target="_blank" style="color: var(--primary); font-size: 0.85rem;">
+                        <i class="bi bi-link-45deg me-1"></i>{{ project.link }}
+                    </a>
                 </div>
                 {% endif %}
+
                 <small class="text-muted d-block mb-3">Added: {{ project.created_at.strftime('%Y-%m-%d') }}</small>
 
-                <form method="POST" action="/edit_project/{{ project.id }}" class="mb-2">
-                    <input type="text" name="title" class="form-control form-control-sm mb-1" value="{{ project.title }}" required>
-                    <textarea name="description" class="form-control form-control-sm mb-1" rows="2">{{ project.description }}</textarea>
-                    <input type="text" name="skills" class="form-control form-control-sm mb-1" value="{{ project.skills }}" placeholder="Skills">
-                    <input type="text" name="link" class="form-control form-control-sm mb-2" value="{{ project.link }}" placeholder="Project link">
-                    <div class="d-flex gap-2">
-                        <button type="submit" class="btn btn-career btn-sm flex-grow-1">Save</button>
+                <!-- Edit form -->
+                <form method="POST" action="{{ url_for('edit_project', project_id=project.id) }}" class="mb-2">
+                    <input type="text" name="title" class="form-control form-control-sm mb-1"
+                           value="{{ project.title }}" required>
+                    <textarea name="description" class="form-control form-control-sm mb-1"
+                              rows="2">{{ project.description }}</textarea>
+                    <input type="text" name="skills" class="form-control form-control-sm mb-1"
+                           value="{{ project.skills }}" placeholder="Skills">
+                    <input type="text" name="link" class="form-control form-control-sm mb-2"
+                           value="{{ project.link }}" placeholder="Project link">
+                    <button type="submit" class="btn btn-career btn-sm w-100">
+                        <i class="bi bi-save me-1"></i>Save Changes
+                    </button>
                 </form>
-                <form method="POST" action="/delete_project/{{ project.id }}" onsubmit="return confirm('Delete this project?');" class="flex-grow-1">
-                    <button type="submit" class="btn btn-sm w-100" style="background: var(--danger); color: #fff; border-radius: 10px; font-weight: 600;">Delete</button>
+
+                <!-- Delete form (separate, fixed) -->
+                <form method="POST"
+                      action="{{ url_for('delete_project', project_id=project.id) }}"
+                      onsubmit="return confirm('Delete this project?');">
+                    <button type="submit" class="btn btn-sm w-100"
+                            style="background: var(--danger); color: #fff; border-radius: 10px; font-weight: 600;">
+                        <i class="bi bi-trash me-1"></i>Delete
+                    </button>
                 </form>
-                    </div>
             </div>
         </div>
         {% endfor %}
@@ -57,8 +74,9 @@
     <div class="modal fade" id="addProjectModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content" style="border-radius: 14px; border: none;">
-                <form method="POST" action="/add_project">
-                    <div class="modal-header" style="background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 14px 14px 0 0;">
+                <form method="POST" action="{{ url_for('add_project') }}">
+                    <div class="modal-header"
+                         style="background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 14px 14px 0 0;">
                         <h5 class="modal-title text-white fw-bold">Add New Project</h5>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                     </div>

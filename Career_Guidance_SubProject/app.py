@@ -41,8 +41,23 @@ def get_db():
     return psycopg2.connect(
         DATABASE_URL,
         sslmode='require',
-        cursor_factory=psycopg2.extras.RealDictCursor
+        cursor_factory=psycopg2.extras.RealDictCursor,
+        options='-c client_encoding=UTF8'
     )
+
+def _fix_utf8(s):
+    """
+    Repair text corrupted by Windows-1252 (CP1252) mis-decoding of UTF-8 bytes.
+    e.g. the 3 chars U+00E2 U+2020 U+2019 come from UTF-8 bytes E2 86 92 (the arrow ->)
+    being decoded through CP1252 instead of UTF-8.
+    If the string is already correct Unicode it is returned unchanged.
+    """
+    if not s or not isinstance(s, str):
+        return s
+    try:
+        return s.encode('cp1252').decode('utf-8')
+    except (UnicodeEncodeError, UnicodeDecodeError):
+        return s
 
 def add_notification(user_id, message):
     conn = get_db()
@@ -81,6 +96,372 @@ def get_course_links_for_skills(skills):
             'khan': f'https://www.khanacademy.org/search?page_search_query={q}'
         })
     return links
+
+# ── Career domain keyword mapping for project-based matching ─────────────────
+CAREER_PROJECT_KEYWORDS = {
+    'Software Developer': [
+        'app', 'application', 'software', 'web app', 'system', 'api',
+        'backend', 'frontend', 'full stack', 'react', 'django', 'flask',
+        'spring', 'node', 'website', 'platform', 'portal', 'developed',
+        'built', 'created', 'implemented', 'deployed', 'rest api',
+    ],
+    'Data Analyst': [
+        'data analysis', 'analytics', 'dashboard', 'visualization', 'report',
+        'excel', 'tableau', 'power bi', 'sql', 'dataset', 'statistics',
+        'insight', 'trend', 'business intelligence', 'kpi', 'metric',
+    ],
+    'Data Scientist': [
+        'machine learning', 'ml', 'model', 'prediction', 'classification',
+        'regression', 'neural network', 'deep learning', 'nlp', 'ai',
+        'training', 'scikit', 'tensorflow', 'pytorch', 'xgboost', 'bert',
+        'lstm', 'computer vision', 'feature engineering',
+    ],
+    'UI/UX Designer': [
+        'design', 'ui', 'ux', 'figma', 'prototype', 'wireframe',
+        'user interface', 'user experience', 'mockup', 'redesign',
+        'creative', 'visual', 'branding', 'graphic', 'adobe xd',
+    ],
+    'Cloud Engineer': [
+        'cloud', 'aws', 'azure', 'gcp', 'deploy', 'docker', 'kubernetes',
+        'devops', 'ci/cd', 'infrastructure', 'server', 'microservice',
+        'container', 'jenkins', 'terraform', 'heroku', 'vercel',
+    ],
+    'Project Manager': [
+        'manage', 'team', 'project management', 'agile', 'scrum',
+        'sprint', 'planning', 'coordination', 'stakeholder', 'milestone',
+        'budget', 'timeline', 'delivery', 'leadership', 'led team',
+    ],
+    'Support Engineer': [
+        'support', 'helpdesk', 'troubleshoot', 'maintenance', 'documentation',
+        'ticket', 'technical support', 'client', 'customer support',
+    ],
+    'Business Analyst': [
+        'business', 'requirement', 'process', 'strategy', 'stakeholder',
+        'workflow', 'analysis', 'report', 'business intelligence', 'erp',
+    ],
+}
+
+CAREER_EDU_KEYWORDS = {
+    'Software Developer': ['computer', 'software', 'bca', 'mca', 'b.tech', 'btech', 'cse', 'it ', 'information technology'],
+    'Data Analyst': ['statistics', 'mathematics', 'data', 'analytics', 'msc', 'computer', 'it '],
+    'Data Scientist': ['statistics', 'mathematics', 'data science', 'machine learning', 'computer', 'msc', 'phd'],
+    'UI/UX Designer': ['design', 'computer', 'art', 'media', 'hci', 'it '],
+    'Cloud Engineer': ['computer', 'networking', 'it ', 'software', 'b.tech', 'btech', 'information technology'],
+    'Project Manager': ['management', 'mba', 'computer', 'business', 'b.tech', 'btech'],
+    'Support Engineer': ['computer', 'networking', 'it ', 'information technology'],
+    'Business Analyst': ['business', 'mba', 'management', 'commerce', 'economics', 'bba'],
+}
+
+
+def detect_resume_profile(resume):
+    """Detect domain clusters present in the resume for quiz personalisation."""
+    skills_raw = (resume.get('skills', '') or '').lower()
+    edu_raw    = (resume.get('education', '') or '').lower()
+    exp_raw    = (resume.get('experience', '') or '').lower()
+    combined   = skills_raw + ' ' + edu_raw + ' ' + exp_raw
+    return {
+        'webdev':      any(kw in combined for kw in [
+            'html', 'css', 'javascript', 'react', 'angular', 'vue', 'django',
+            'flask', 'node.js', 'nodejs', 'php', 'bootstrap', 'jquery',
+            'next.js', 'express', 'spring boot', 'asp.net', 'laravel',
+        ]),
+        'ml_ai':       any(kw in combined for kw in [
+            'machine learning', 'deep learning', 'tensorflow', 'pytorch',
+            'keras', 'scikit-learn', 'nlp', 'natural language processing',
+            'computer vision', 'neural network', 'bert', 'lstm', 'xgboost',
+        ]),
+        'data':        any(kw in combined for kw in [
+            'pandas', 'numpy', 'tableau', 'power bi', 'data analysis',
+            'matplotlib', 'data science', 'statistics', 'hadoop', 'spark',
+            'etl', 'data visualization', 'seaborn', 'data mining',
+        ]),
+        'mobile':      any(kw in combined for kw in [
+            'android', 'ios', 'flutter', 'react native', 'kotlin', 'swift',
+            'mobile app', 'android studio',
+        ]),
+        'cloud_devops': any(kw in combined for kw in [
+            'aws', 'azure', 'gcp', 'google cloud', 'docker', 'kubernetes',
+            'jenkins', 'ci/cd', 'devops', 'terraform', 'ansible', 'heroku',
+        ]),
+        'security':    any(kw in combined for kw in [
+            'cybersecurity', 'ethical hacking', 'penetration testing',
+            'kali linux', 'network security', 'cryptography', 'vulnerability',
+        ]),
+        'design':      any(kw in combined for kw in [
+            'figma', 'photoshop', 'ui/ux', 'ui design', 'ux design',
+            'illustrator', 'sketch', 'wireframe', 'prototype', 'adobe xd',
+        ]),
+        'java':        any(kw in combined for kw in [
+            'java', 'spring', 'spring boot', 'hibernate', 'servlet', 'j2ee',
+        ]),
+        'python':      'python' in combined,
+        'database':    any(kw in combined for kw in [
+            'mysql', 'postgresql', 'mongodb', 'redis', 'oracle', 'sqlite',
+            'nosql', 'sql server', 'database',
+        ]),
+        'cs_edu':      any(kw in edu_raw for kw in [
+            'computer', 'information technology', 'software', 'bca', 'mca',
+            'b.tech', 'btech', 'b.e', 'cse', 'it ',
+        ]),
+        'data_edu':    any(kw in edu_raw for kw in [
+            'statistics', 'mathematics', 'data', 'analytics', 'msc',
+        ]),
+        'mgmt_edu':    any(kw in edu_raw for kw in [
+            'mba', 'management', 'business administration', 'commerce', 'bba',
+        ]),
+    }
+
+
+def generate_resume_quiz(resume):
+    """
+    Generate 10 personalised quiz questions based on the selected resume's
+    skills, education, and project/experience content.
+    Each question has 4 options; each option maps to a career category:
+    Technical | Data | Creative | Management | Business.
+    """
+    profile  = detect_resume_profile(resume)
+    exp_raw  = (resume.get('experience', '') or '').lower()
+    skill_list = [s.strip().title() for s in (resume.get('skills', '') or '').split(',') if s.strip()][:5]
+    skills_str = ', '.join(skill_list) if skill_list else 'your technical skills'
+
+    questions = []
+
+    # ── Q1 : Primary domain opening ──────────────────────────────────────────
+    if profile['ml_ai']:
+        questions.append({'q': 'You have ML/AI skills in your resume. Which direction interests you most?', 'a': [
+            ('Building and training ML models for predictions', 'Data'),
+            ('Developing AI-powered web/mobile applications', 'Technical'),
+            ('Analysing datasets and visualising insights', 'Data'),
+            ('Managing AI product development & team', 'Management'),
+        ]})
+    elif profile['webdev']:
+        questions.append({'q': 'You have web development experience. What aspect excites you most?', 'a': [
+            ('Crafting interactive frontend UIs', 'Technical'),
+            ('Building scalable backend systems & APIs', 'Technical'),
+            ('Designing visually appealing user experiences', 'Creative'),
+            ('Planning sprints and overseeing deliverables', 'Management'),
+        ]})
+    elif profile['data']:
+        questions.append({'q': 'You have data/analytics skills. Where would you like to focus your career?', 'a': [
+            ('Deep data analysis & business reporting', 'Data'),
+            ('Building ML models from data', 'Data'),
+            ('Creating data visualisation dashboards', 'Data'),
+            ('Communicating data insights to business teams', 'Business'),
+        ]})
+    elif profile['mobile']:
+        questions.append({'q': 'You have mobile development skills. What draws you most?', 'a': [
+            ('Building feature-rich mobile applications', 'Technical'),
+            ('Designing smooth mobile UI/UX', 'Creative'),
+            ('Developing cross-platform apps (Flutter/React Native)', 'Technical'),
+            ('Managing mobile app releases & team', 'Management'),
+        ]})
+    elif profile['cloud_devops']:
+        questions.append({'q': 'You have cloud/DevOps skills. Which area interests you most?', 'a': [
+            ('Architecting cloud infrastructure', 'Technical'),
+            ('Automating CI/CD pipelines', 'Technical'),
+            ('Monitoring system performance & reliability', 'Technical'),
+            ('Managing cloud project budgets & teams', 'Management'),
+        ]})
+    elif profile['security']:
+        questions.append({'q': 'You have cybersecurity skills. What role appeals to you most?', 'a': [
+            ('Performing penetration testing & ethical hacking', 'Technical'),
+            ('Securing network infrastructure', 'Technical'),
+            ('Analysing threats and writing security reports', 'Data'),
+            ('Managing security audits & compliance teams', 'Management'),
+        ]})
+    elif profile['design']:
+        questions.append({'q': 'You have design skills. What type of design work do you prefer?', 'a': [
+            ('Creating user interface mockups in Figma', 'Creative'),
+            ('User research and UX strategy', 'Creative'),
+            ('Visual branding and graphic design', 'Creative'),
+            ('Leading design sprints and product strategy', 'Management'),
+        ]})
+    else:
+        questions.append({'q': 'Which activity do you enjoy most?', 'a': [
+            ('Solving coding and technical problems', 'Technical'),
+            ('Analysing data and drawing insights', 'Data'),
+            ('Leading teams and managing projects', 'Management'),
+            ('Designing creative content or interfaces', 'Creative'),
+        ]})
+
+    # ── Q2 : Project / experience based ───────────────────────────────────────
+    if any(kw in exp_raw for kw in ['machine learning', ' ml ', 'deep learning', 'neural', 'prediction model']):
+        questions.append({'q': 'Your projects seem ML/AI focused. How do you see yourself using that expertise?', 'a': [
+            ('As an ML Engineer building production models', 'Data'),
+            ('As a Data Scientist finding patterns in data', 'Data'),
+            ('As a Full-Stack dev with ML integrations', 'Technical'),
+            ('As an AI Product Manager', 'Management'),
+        ]})
+    elif any(kw in exp_raw for kw in ['website', 'web app', 'web application', 'frontend', 'backend', 'full stack', 'react app', 'django app', 'flask app']):
+        questions.append({'q': 'You have web/application projects. What kind of software projects do you enjoy?', 'a': [
+            ('Consumer-facing web apps (frontend heavy)', 'Technical'),
+            ('Enterprise backend systems (APIs, databases)', 'Technical'),
+            ('Full-stack products from idea to deployment', 'Technical'),
+            ('Coordinating and managing the development team', 'Management'),
+        ]})
+    elif any(kw in exp_raw for kw in ['data analysis', 'data analytics', 'dataset', 'visualization', 'dashboard']):
+        questions.append({'q': 'Your experience includes data projects. Which type of data work fits you best?', 'a': [
+            ('Exploratory data analysis and visualisation', 'Data'),
+            ('Building predictive ML models', 'Data'),
+            ('ETL pipelines and data engineering', 'Technical'),
+            ('Presenting data stories to business stakeholders', 'Business'),
+        ]})
+    else:
+        questions.append({'q': 'What type of project would you prefer to lead?', 'a': [
+            ('A software product with a development team', 'Technical'),
+            ('A data analytics initiative', 'Data'),
+            ('A UX research and redesign project', 'Creative'),
+            ('A business process optimisation effort', 'Business'),
+        ]})
+
+    # ── Q3 : Skill-specific question ──────────────────────────────────────────
+    if profile['python']:
+        questions.append({'q': 'You know Python. How would you most like to use it professionally?', 'a': [
+            ('Web development (Django/Flask/FastAPI)', 'Technical'),
+            ('Data analysis and visualisation (Pandas, Matplotlib)', 'Data'),
+            ('Machine learning and AI (TensorFlow, scikit-learn)', 'Data'),
+            ('Scripting and automation for DevOps', 'Technical'),
+        ]})
+    elif profile['java']:
+        questions.append({'q': 'You have Java skills. Where would you most like to apply them?', 'a': [
+            ('Enterprise backend development (Spring Boot)', 'Technical'),
+            ('Android mobile development', 'Technical'),
+            ('Large-scale distributed systems', 'Technical'),
+            ('Technical project leadership & architecture', 'Management'),
+        ]})
+    elif skill_list:
+        questions.append({'q': f'You have skills in {skills_str}. How do you prefer to apply your technical knowledge?', 'a': [
+            ('Building and shipping software products', 'Technical'),
+            ('Extracting insights from data', 'Data'),
+            ('Designing user experiences', 'Creative'),
+            ('Planning and overseeing tech projects', 'Management'),
+        ]})
+    else:
+        questions.append({'q': 'Which technical skill would you most like to master?', 'a': [
+            ('A programming language (Python, Java, JS)', 'Technical'),
+            ('Data analytics tools (Tableau, SQL, Python)', 'Data'),
+            ('Design tools (Figma, Photoshop)', 'Creative'),
+            ('Project management tools (Jira, Trello)', 'Management'),
+        ]})
+
+    # ── Q4 : Education-stream question ────────────────────────────────────────
+    if profile['cs_edu']:
+        questions.append({'q': 'With your CS/IT background, what area best aligns with your goal?', 'a': [
+            ('Software engineering & system development', 'Technical'),
+            ('Data science & machine learning', 'Data'),
+            ('Cybersecurity & networking', 'Technical'),
+            ('IT project management', 'Management'),
+        ]})
+    elif profile['mgmt_edu']:
+        questions.append({'q': 'With your management/business education, which career path fits you?', 'a': [
+            ('Business analyst and process optimisation', 'Business'),
+            ('IT project or product management', 'Management'),
+            ('Data-driven business intelligence', 'Data'),
+            ('Technical product ownership', 'Technical'),
+        ]})
+    elif profile['data_edu']:
+        questions.append({'q': 'With your mathematics/statistics background, where do you see yourself?', 'a': [
+            ('Data scientist building predictive models', 'Data'),
+            ('Quantitative analyst or researcher', 'Data'),
+            ('Business intelligence analyst', 'Business'),
+            ('ML engineer building AI systems', 'Technical'),
+        ]})
+    else:
+        questions.append({'q': 'Which subject or course did you enjoy the most?', 'a': [
+            ('Programming / Computer Science', 'Technical'),
+            ('Mathematics / Statistics', 'Data'),
+            ('Art / Design / Media', 'Creative'),
+            ('Business / Economics', 'Business'),
+        ]})
+
+    # ── Q5–Q10 : General preference questions (always included) ───────────────
+    questions += [
+        {'q': 'What type of work environment suits you best?', 'a': [
+            ('Writing code and solving engineering problems', 'Technical'),
+            ('Crunching numbers and discovering insights', 'Data'),
+            ('Designing and creating visual solutions', 'Creative'),
+            ('Leading people and driving business strategy', 'Management'),
+        ]},
+        {'q': 'Which tool would you rather become an expert in?', 'a': [
+            ('A programming IDE and version control (Git, VS Code)', 'Technical'),
+            ('Data tools (SQL, Tableau, Python notebooks)', 'Data'),
+            ('Design suite (Figma, Adobe XD, Photoshop)', 'Creative'),
+            ('Agile/PM tools (Jira, Confluence, Trello)', 'Management'),
+        ]},
+        {'q': 'What role do you naturally take in a team project?', 'a': [
+            ('Developer/Engineer — I build the solution', 'Technical'),
+            ('Analyst/Researcher — I derive insights from data', 'Data'),
+            ('Designer — I craft the look and feel', 'Creative'),
+            ('Leader/Coordinator — I organise and drive the team', 'Management'),
+        ]},
+        {'q': 'What outcome makes you most proud of your work?', 'a': [
+            ('A working app or system deployed to real users', 'Technical'),
+            ('A model that accurately predicts outcomes', 'Data'),
+            ('A design that users find intuitive and beautiful', 'Creative'),
+            ('A project delivered on time and within budget', 'Management'),
+        ]},
+        {'q': 'Which career title sounds most appealing to you?', 'a': [
+            ('Software Developer / Full-Stack Engineer', 'Technical'),
+            ('Data Scientist / Machine Learning Engineer', 'Data'),
+            ('UI/UX Designer / Product Designer', 'Creative'),
+            ('Project Manager / Product Manager', 'Management'),
+        ]},
+        {'q': 'Which industry would you most like to work in?', 'a': [
+            ('Technology / Software / SaaS', 'Technical'),
+            ('Finance / Healthcare / Research (data-driven)', 'Data'),
+            ('Media / Advertising / Gaming (creative)', 'Creative'),
+            ('Consulting / Enterprise / Startups (strategy)', 'Business'),
+        ]},
+    ]
+
+    return questions[:10]
+
+
+def calculate_comprehensive_score(career, user_skills, user_education, user_experience, quiz_interest_area):
+    """
+    Calculate a comprehensive match score (0–100) for a career recommendation.
+    Weights: Projects/Experience 40% | Skills 35% | Education 15% | Quiz 10%
+    """
+    career_title    = career.get('title', '')
+    career_category = career.get('category', '')
+    required_skills = [s.strip().lower() for s in (career.get('required_skills', '') or '').split(',') if s.strip()]
+
+    score = 0
+
+    # 1. Project / experience match  (max 40 pts) ─────────────────────────────
+    project_keywords = CAREER_PROJECT_KEYWORDS.get(career_title, [])
+    if project_keywords and user_experience:
+        exp_lower = user_experience.lower()
+        matched   = sum(1 for kw in project_keywords if kw in exp_lower)
+        # Scale: ≥5 keyword matches → full 40 pts
+        score += min(40, int(matched / max(len(project_keywords), 1) * 160))
+    elif user_experience:
+        title_words = [w.lower() for w in career_title.split() if len(w) > 3]
+        if any(w in user_experience.lower() for w in title_words):
+            score += 15
+
+    # 2. Skill match  (max 35 pts) ────────────────────────────────────────────
+    if required_skills and user_skills:
+        available    = [s for s in required_skills if s in user_skills]
+        skill_ratio  = len(available) / len(required_skills)
+        score       += int(skill_ratio * 35)
+
+    # 3. Education match  (max 15 pts) ────────────────────────────────────────
+    edu_keywords = CAREER_EDU_KEYWORDS.get(career_title, [])
+    if edu_keywords and user_education:
+        if any(kw in user_education.lower() for kw in edu_keywords):
+            score += 15
+
+    # 4. Quiz interest area alignment  (max 10 pts) ───────────────────────────
+    if quiz_interest_area and career_category:
+        if career_category.lower() == quiz_interest_area.lower():
+            score += 10
+        elif (career_category.lower() in quiz_interest_area.lower()
+              or quiz_interest_area.lower() in career_category.lower()):
+            score += 5
+
+    return min(score, 100)
+
 
 @app.route('/')
 def index():
@@ -491,11 +872,32 @@ def interest_quiz():
     if not selected_resume_id:
         flash('Please select a resume first.', 'warning')
         return redirect(url_for('upload_resume'))
+
+    # Fetch the selected resume to generate personalised questions
+    resume = None
+    conn = get_db()
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute('SELECT * FROM resumes WHERE id = %s AND user_id = %s',
+                           (selected_resume_id, session['user_id']))
+            resume = cursor.fetchone()
+    finally:
+        conn.close()
+
+    if not resume:
+        flash('Resume not found. Please select a valid resume.', 'warning')
+        return redirect(url_for('upload_resume'))
+
+    # Generate 10 personalised questions from this specific resume
+    questions = generate_resume_quiz(dict(resume))
+
     previous_answers = {}
     conn = get_db()
     try:
         with conn.cursor() as cursor:
-            cursor.execute('SELECT quiz_answers FROM interests WHERE user_id = %s AND resume_id = %s ORDER BY id DESC LIMIT 1', (session['user_id'], selected_resume_id))
+            cursor.execute(
+                'SELECT quiz_answers FROM interests WHERE user_id = %s AND resume_id = %s ORDER BY id DESC LIMIT 1',
+                (session['user_id'], selected_resume_id))
             row = cursor.fetchone()
             if row and row['quiz_answers']:
                 try:
@@ -504,6 +906,7 @@ def interest_quiz():
                     previous_answers = {}
     finally:
         conn.close()
+
     if request.method == 'POST':
         responses = {f'q{i}': request.form.get(f'q{i}') for i in range(1, 11)}
         scores = {}
@@ -512,21 +915,23 @@ def interest_quiz():
                 scores[ans] = scores.get(ans, 0) + 1
         if not scores:
             flash('Please answer all questions.', 'danger')
-            return render_template('interest_quiz.html', previous_answers=responses)
-        max_score = max(scores.values())
-        top_areas = [area for area, score in scores.items() if score == max_score]
+            return render_template('interest_quiz.html', questions=questions, previous_answers=responses)
+        max_score  = max(scores.values())
+        top_areas  = [area for area, sc in scores.items() if sc == max_score]
         interest_area = top_areas[0]
         conn = get_db()
         try:
             with conn.cursor() as cursor:
-                cursor.execute('INSERT INTO interests (user_id, resume_id, interest_area, quiz_answers) VALUES (%s, %s, %s, %s)',
+                cursor.execute(
+                    'INSERT INTO interests (user_id, resume_id, interest_area, quiz_answers) VALUES (%s, %s, %s, %s)',
                     (session['user_id'], selected_resume_id, interest_area, json.dumps(responses)))
             conn.commit()
         finally:
             conn.close()
-        flash(f'Your dominant interest area is {interest_area}.', 'success')
-        return redirect(url_for('dashboard'))
-    return render_template('interest_quiz.html', previous_answers=previous_answers)
+        flash(f'Quiz submitted! Showing career recommendations based on your resume and answers.', 'success')
+        return redirect(url_for('recommendations'))
+
+    return render_template('interest_quiz.html', questions=questions, previous_answers=previous_answers)
 
 @app.route('/recommendations')
 def recommendations():
@@ -548,14 +953,16 @@ def recommendations():
             if not resume or not interest:
                 flash('Please upload your resume and complete the interest quiz first.', 'warning')
                 return redirect(url_for('dashboard'))
-            cursor.execute('SELECT * FROM careers WHERE category = %s', (interest['interest_area'],))
+            # Fetch ALL careers for comprehensive matching (not just by quiz category)
+            cursor.execute('SELECT * FROM careers')
             careers = cursor.fetchall()
     finally:
         conn.close()
-    user_skills = [skill.strip().lower() for skill in resume['skills'].split(',')] if resume['skills'] else []
+    user_skills    = [skill.strip().lower() for skill in resume['skills'].split(',')] if resume['skills'] else []
     user_education = resume['education'].lower() if resume['education'] else ''
-    user_experience = resume['experience'].lower() if resume['experience'] else ''
-    interest_area = interest['interest_area']
+    user_experience= resume['experience'].lower() if resume['experience'] else ''
+    interest_area  = interest['interest_area']
+
     # Expanded project ideas with step-by-step guides
     project_ideas_dict = {
         'Software Developer': [
@@ -604,6 +1011,26 @@ def recommendations():
                 'Interpret and present your findings'
             ]}
         ],
+        'Data Scientist': [
+            {'title': 'Build a Sentiment Analysis Model', 'steps': [
+                'Collect or download a text dataset (e.g., IMDB reviews)',
+                'Preprocess and tokenize the text',
+                'Train an NLP model (LSTM or BERT)',
+                'Evaluate accuracy and deploy as an API'
+            ]},
+            {'title': 'Image Classification with CNN', 'steps': [
+                'Choose a dataset (e.g., CIFAR-10, Flowers)',
+                'Build a CNN model with TensorFlow/PyTorch',
+                'Train, validate, and tune hyperparameters',
+                'Deploy and test with new images'
+            ]},
+            {'title': 'Recommendation System', 'steps': [
+                'Use a public dataset (e.g., MovieLens)',
+                'Implement collaborative filtering',
+                'Evaluate with precision/recall metrics',
+                'Build a simple demo interface'
+            ]}
+        ],
         'UI/UX Designer': [
             {'title': 'Redesign a Popular App', 'steps': [
                 'Choose an app and analyze its UI/UX',
@@ -646,43 +1073,75 @@ def recommendations():
                 'Set up a virtual server or app service',
                 'Deploy your app and configure DNS',
                 'Set up monitoring and scaling'
+            ]},
+            {'title': 'Build a CI/CD Pipeline', 'steps': [
+                'Set up a GitHub Actions or Jenkins pipeline',
+                'Configure build, test, and deploy stages',
+                'Add notifications on success/failure',
+                'Document the pipeline architecture'
             ]}
-        ]
+        ],
+        'Business Analyst': [
+            {'title': 'Business Process Mapping', 'steps': [
+                'Identify a business process to analyse',
+                'Create an AS-IS process diagram',
+                'Identify inefficiencies and propose improvements',
+                'Present your TO-BE process diagram'
+            ]}
+        ],
     }
-    # For each career, calculate available/missing skills and course links
+
+    # ── Comprehensive scoring for ALL careers ────────────────────────────────
     enhanced_careers = []
     for career in careers:
-        required_skills = [s.strip().lower() for s in career['required_skills'].split(',')] if career['required_skills'] else []
+        required_skills  = [s.strip().lower() for s in career['required_skills'].split(',')] if career['required_skills'] else []
         available_skills = [s for s in required_skills if s in user_skills]
-        missing_skills = [s for s in required_skills if s not in user_skills]
-        course_links = get_course_links_for_skills(missing_skills)
-        # Project ideas with steps
-        ideas = project_ideas_dict.get(career['title'], [])
-        # Advanced match explanation
+        missing_skills   = [s for s in required_skills if s not in user_skills]
+        course_links     = get_course_links_for_skills(missing_skills)
+        ideas            = project_ideas_dict.get(career['title'], [])
+
+        # Calculate comprehensive score (0–100)
+        raw_score = calculate_comprehensive_score(
+            dict(career), user_skills, user_education, user_experience, interest_area
+        )
+
+        # Build human-readable match explanation
         explanation = []
+        # Project/experience signals
+        proj_kws = CAREER_PROJECT_KEYWORDS.get(career['title'], [])
+        if proj_kws and user_experience:
+            matched_proj = [kw for kw in proj_kws if kw in user_experience]
+            if matched_proj:
+                explanation.append(f"Project match: your experience mentions {', '.join(matched_proj[:3])}")
         if available_skills:
-            explanation.append(f"Matched skills: {', '.join([s.title() for s in available_skills])}")
+            explanation.append(f"Matched skills: {', '.join(s.title() for s in available_skills)}")
         if missing_skills:
-            explanation.append(f"Missing skills: {', '.join([s.title() for s in missing_skills])}")
-        if user_education and any(e.lower() in user_education for e in career['title'].split()):
-            explanation.append("Your education matches this field.")
-        if user_experience and any(e.lower() in user_experience for e in career['title'].split()):
-            explanation.append("Your experience matches this field.")
-        match_score = len(available_skills)
-        # Salary insight
+            explanation.append(f"Skills to develop: {', '.join(s.title() for s in missing_skills[:4])}")
+        edu_kws = CAREER_EDU_KEYWORDS.get(career['title'], [])
+        if edu_kws and any(kw in user_education for kw in edu_kws):
+            explanation.append("Your education background aligns with this career.")
+        if career['category'].lower() == interest_area.lower():
+            explanation.append(f"Matches your quiz interest area: {interest_area}")
+
+        # Scale raw_score (0–100) to a display bar out of 10
+        display_score = round(raw_score / 10, 1)
+
         avg_salary = get_average_salary(career['title'])
         enhanced_careers.append({
             **career,
-            'available_skills': available_skills,
-            'missing_skills': missing_skills,
-            'course_links': course_links,
-            'project_ideas': ideas,
+            'available_skills':  available_skills,
+            'missing_skills':    missing_skills,
+            'course_links':      course_links,
+            'project_ideas':     ideas,
             'match_explanation': explanation,
-            'match_score': min(match_score, 5),
-            'avg_salary': avg_salary
+            'match_score':       display_score,   # 0.0 – 10.0
+            'raw_score':         raw_score,        # 0 – 100 (used for sorting)
+            'avg_salary':        avg_salary
         })
-    recommendations = sorted(enhanced_careers, key=lambda x: x['match_score'], reverse=True)[:5]
-    return render_template('recommendations.html', careers=recommendations)
+
+    # Sort by raw_score descending, show top 8 most relevant careers
+    result = sorted(enhanced_careers, key=lambda x: x['raw_score'], reverse=True)[:8]
+    return render_template('recommendations.html', careers=result)
 
 @app.route('/career_path/<int:career_id>')
 def career_path(career_id):
@@ -746,9 +1205,15 @@ def saved_careers():
     try:
         with conn.cursor() as cursor:
             cursor.execute('SELECT * FROM saved_careers WHERE user_id = %s', (user_id,))
-            careers = cursor.fetchall()
+            raw = cursor.fetchall()
     finally:
         conn.close()
+    # Repair any path text that was stored with wrong Latin-1 decoding (e.g. â†' → →)
+    careers = []
+    for row in raw:
+        r = dict(row)
+        r['path'] = _fix_utf8(r.get('path', '') or '')
+        careers.append(r)
     return render_template('saved_careers.html', careers=careers)
 
 @app.route('/save_career/<int:career_id>', methods=['POST'])
@@ -771,7 +1236,7 @@ def save_career(career_id):
                     VALUES (%s, %s, %s, %s, %s, %s, %s)
                 ''', (
                     session['user_id'], career['id'], career['title'], career['category'],
-                    career['required_skills'], career['description'], career['path']
+                    career['required_skills'], career['description'], _fix_utf8(career.get('path') or '')
                 ))
             conn.commit()
         finally:
@@ -788,6 +1253,29 @@ def remove_saved_career(saved_id):
         with conn.cursor() as cursor:
             cursor.execute('DELETE FROM saved_careers WHERE id = %s AND user_id = %s', (saved_id, user_id))
         conn.commit()
+    finally:
+        conn.close()
+    return redirect(url_for('saved_careers'))
+
+@app.route('/update_notes/<int:saved_id>', methods=['POST'])
+def update_notes(saved_id):
+    if 'user_id' not in session:
+        return redirect('/login')
+    note = request.form.get('note', '')
+    conn = get_db()
+    try:
+        with conn.cursor() as cursor:
+            # Ensure the notes column exists (safe for repeated calls)
+            cursor.execute('ALTER TABLE saved_careers ADD COLUMN IF NOT EXISTS notes TEXT')
+            cursor.execute(
+                'UPDATE saved_careers SET notes = %s WHERE id = %s AND user_id = %s',
+                (note, saved_id, session['user_id'])
+            )
+        conn.commit()
+        flash('Note saved!', 'success')
+    except Exception:
+        conn.rollback()
+        flash('Could not save note.', 'danger')
     finally:
         conn.close()
     return redirect(url_for('saved_careers'))
