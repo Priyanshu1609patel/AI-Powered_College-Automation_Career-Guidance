@@ -2,67 +2,174 @@
 {% block title %}Upload Resume - Career Guidance AI{% endblock %}
 {% block content %}
 <div class="page-wrapper">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
+    <div class="row g-4 align-items-start">
+
+        <!-- ── LEFT COLUMN: Upload Form + Resume List ── -->
+        <div class="col-lg-4">
+
             <!-- Upload Form -->
-            <div class="stat-card mb-4">
-                <div class="text-center mb-4">
-                    <div class="stat-icon mx-auto mb-3" style="background: var(--secondary); width: 56px; height: 56px; font-size: 1.5rem;">
+            <div class="stat-card mb-3">
+                <h6 class="fw-bold mb-3 d-flex align-items-center gap-2" style="color: var(--dark);">
+                    <span class="stat-icon mb-0" style="background: var(--secondary); width: 32px; height: 32px; font-size: 0.95rem; border-radius: 8px; flex-shrink: 0;">
                         <i class="bi bi-upload"></i>
-                    </div>
-                    <h3 class="fw-bold" style="color: var(--dark);">Upload Your Resume</h3>
-                    <p style="color: var(--gray);">Get AI-powered analysis and career recommendations</p>
-                </div>
+                    </span>
+                    Upload Resume
+                </h6>
                 {% if success %}
-                <div class="alert alert-success py-2"><i class="bi bi-check-circle me-1"></i>Resume uploaded and parsed successfully!</div>
+                <div class="alert alert-success py-2 mb-2" style="font-size: 0.82rem;">
+                    <i class="bi bi-check-circle me-1"></i>Uploaded &amp; analysed successfully!
+                </div>
                 {% endif %}
                 <form method="POST" enctype="multipart/form-data">
-                    <div class="mb-3">
-                        <label for="resume" class="form-label fw-bold">Select Resume (PDF or DOCX)</label>
-                        <input type="file" class="form-control" id="resume" name="resume" accept=".pdf,.docx" required>
+                    <div class="mb-2">
+                        <label for="resume" class="form-label mb-1" style="font-size: 0.82rem; font-weight: 600;">PDF or DOCX</label>
+                        <input type="file" class="form-control form-control-sm" id="resume" name="resume" accept=".pdf,.docx" required>
                     </div>
-                    <button type="submit" class="btn btn-career w-100">
-                        <i class="bi bi-cloud-upload me-2"></i>Upload & Analyze
+                    <button type="submit" class="btn btn-career btn-sm w-100">
+                        <i class="bi bi-cloud-upload me-1"></i>Upload &amp; Analyze
                     </button>
                 </form>
             </div>
 
-            <!-- Analysis Results -->
-            {% if analysis and score is not none %}
-            <div class="stat-card mb-4">
-                <div class="d-flex align-items-center mb-3">
-                    <div class="stat-icon me-3" style="background: var(--primary);">
-                        <i class="bi bi-file-earmark-person"></i>
+            <!-- Resume List -->
+            <div class="stat-card">
+                <h6 class="fw-bold mb-3 d-flex align-items-center gap-2" style="color: var(--dark);">
+                    <span class="stat-icon mb-0" style="background: var(--primary); width: 32px; height: 32px; font-size: 0.95rem; border-radius: 8px; flex-shrink: 0;">
+                        <i class="bi bi-files"></i>
+                    </span>
+                    Your Resumes
+                </h6>
+                {% if resumes %}
+                <form method="POST" id="resumeSelectForm">
+                    <div class="d-flex flex-column gap-2 mb-3">
+                        {% for resume in resumes %}
+                        {% set resume_num = loop.index %}
+                        <div class="p-2 rounded-3"
+                             style="border: 1.5px solid {% if selected_resume_id == resume.id %}var(--primary){% else %}#e9ecef{% endif %};
+                                    background: {% if selected_resume_id == resume.id %}rgba(67,97,238,0.05){% else %}#fafafa{% endif %};">
+
+                            <!-- Row 1: radio + label + delete -->
+                            <div class="d-flex align-items-center gap-2 mb-1">
+                                <input type="radio" name="selected_resume" value="{{ resume.id }}"
+                                    {% if selected_resume_id == resume.id %}checked{% endif %}
+                                    class="form-check-input resume-radio flex-shrink-0 mt-0">
+                                <span class="fw-bold flex-grow-1" style="font-size: 0.82rem; color: var(--dark);">
+                                    Resume #{{ resume_num }}
+                                    <span style="color: var(--gray); font-weight: 400; font-size: 0.72rem;">(ID: {{ resume.id }})</span>
+                                </span>
+                                <button type="button"
+                                    class="btn btn-sm flex-shrink-0"
+                                    style="background: var(--danger); color: #fff; border-radius: 6px;
+                                           padding: 1px 7px; font-size: 0.72rem; line-height: 1.5;"
+                                    onclick="deleteResume({{ resume.id }}, '{{ url_for('delete_resume', resume_id=resume.id) }}')">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+
+                            <!-- Row 2: Skills chips -->
+                            <div class="mb-1">
+                                <div style="font-size: 0.7rem; color: var(--gray); margin-bottom: 3px;">
+                                    <i class="bi bi-tools me-1"></i>Skills
+                                </div>
+                                <div class="d-flex flex-wrap gap-1">
+                                    {% if resume.skills %}
+                                        {% for skill in resume.skills.split(',') %}
+                                        <span style="background: rgba(67,97,238,0.1); color: var(--primary);
+                                                     border-radius: 20px; padding: 1px 8px; font-size: 0.7rem; font-weight: 500;">
+                                            {{ skill.strip() }}
+                                        </span>
+                                        {% endfor %}
+                                    {% else %}
+                                        <span style="color: var(--gray); font-size: 0.72rem;">Not detected</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <!-- Row 3: Education -->
+                            <div class="mb-1">
+                                <div style="font-size: 0.7rem; color: var(--gray); margin-bottom: 2px;">
+                                    <i class="bi bi-mortarboard me-1"></i>Education
+                                </div>
+                                <div style="font-size: 0.75rem; color: var(--dark);">
+                                    {{ resume.education or 'Not detected' }}
+                                </div>
+                            </div>
+
+                            <!-- Row 4: Experience -->
+                            <div>
+                                <div style="font-size: 0.7rem; color: var(--gray); margin-bottom: 2px;">
+                                    <i class="bi bi-briefcase me-1"></i>Experience
+                                </div>
+                                <div style="font-size: 0.75rem; color: var(--dark);">
+                                    {{ resume.experience or 'Not detected' }}
+                                </div>
+                            </div>
+
+                        </div>
+                        {% endfor %}
                     </div>
-                    <div>
-                        <h5 class="fw-bold mb-0" style="color: var(--dark);">Resume Analysis</h5>
-                        <span class="badge" style="background: var(--success); color: #fff; font-size: 1rem;">Score: {{ score }}/100</span>
-                    </div>
+                    <button type="submit" class="btn btn-career btn-sm w-100" id="useResumeBtn">
+                        <i class="bi bi-stars me-1"></i>Use Selected for Recommendations
+                    </button>
+                </form>
+                {% else %}
+                <div class="text-center py-3" style="color: var(--gray);">
+                    <i class="bi bi-file-earmark d-block mb-1" style="font-size: 2rem; opacity: 0.35;"></i>
+                    <small>No resumes uploaded yet</small>
                 </div>
-                <div class="row g-3">
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- ── RIGHT COLUMN: Analysis Results ── -->
+        <div class="col-lg-8">
+            {% if analysis and score is not none %}
+            <div class="stat-card">
+
+                <!-- Score Header -->
+                <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="stat-icon mb-0" style="background: var(--primary); width: 40px; height: 40px; font-size: 1.1rem; border-radius: 10px;">
+                            <i class="bi bi-file-earmark-person"></i>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold mb-0" style="color: var(--dark); font-size: 1rem;">Resume Analysis</h5>
+                            <small style="color: var(--gray);">AI-powered insights</small>
+                        </div>
+                    </div>
+                    <span class="badge px-3 py-2" style="background: var(--success); color: #fff; font-size: 0.95rem; border-radius: 10px;">
+                        Score: {{ score }}/100
+                    </span>
+                </div>
+
+                <!-- Category Grid -->
+                <div class="row g-2 mb-3">
                     {% for cat, vals in analysis_categories.items() %}
-                    <div class="col-md-6">
-                        <div class="p-3 rounded-3" style="background: rgba(67,97,238,0.04);">
-                            <h6 class="fw-bold mb-2"><i class="bi bi-check2-circle me-1" style="color: var(--primary);"></i>{{ cat }}</h6>
+                    <div class="col-sm-6">
+                        <div class="p-2 rounded-3 h-100"
+                             style="background: rgba(67,97,238,0.04); border: 1px solid rgba(67,97,238,0.09);">
+                            <div class="fw-bold mb-1" style="font-size: 0.82rem; color: var(--dark);">
+                                <i class="bi bi-check2-circle me-1" style="color: var(--primary);"></i>{{ cat }}
+                            </div>
                             {% if cat == 'Skills' %}
-                            <div class="mb-2" style="font-size: 0.85rem;"><strong>Extracted:</strong> {{ analysis.skills or 'Not detected' }}</div>
+                            <div class="mb-1" style="font-size: 0.78rem;"><strong>Extracted:</strong> {{ analysis.skills or 'Not detected' }}</div>
                             {% elif cat == 'Education' %}
-                            <div class="mb-2" style="font-size: 0.85rem;"><strong>Extracted:</strong> {{ analysis.education or 'Not detected' }}</div>
+                            <div class="mb-1" style="font-size: 0.78rem;"><strong>Extracted:</strong> {{ analysis.education or 'Not detected' }}</div>
                             {% elif cat == 'Experience' %}
-                            <div class="mb-2" style="font-size: 0.85rem;"><strong>Extracted:</strong> {{ analysis.experience or 'Not detected' }}</div>
+                            <div class="mb-1" style="font-size: 0.78rem;"><strong>Extracted:</strong> {{ analysis.experience or 'Not detected' }}</div>
                             {% endif %}
                             {% if vals.positive %}
-                            <ul class="mb-1" style="font-size: 0.85rem; color: var(--success);">
+                            <ul class="mb-1 ps-3" style="font-size: 0.76rem; color: var(--success);">
                                 {% for pos in vals.positive %}<li>{{ pos }}</li>{% endfor %}
                             </ul>
                             {% endif %}
                             {% if vals.issues %}
-                            <ul class="mb-1" style="font-size: 0.85rem; color: var(--danger);">
+                            <ul class="mb-1 ps-3" style="font-size: 0.76rem; color: var(--danger);">
                                 {% for issue in vals.issues %}<li>{{ issue }}</li>{% endfor %}
                             </ul>
                             {% endif %}
                             {% if vals.solutions %}
-                            <ul class="mb-0" style="font-size: 0.85rem; color: var(--primary);">
+                            <ul class="mb-0 ps-3" style="font-size: 0.76rem; color: var(--primary);">
                                 {% for sol in vals.solutions %}<li><strong>Tip:</strong> {{ sol }}</li>{% endfor %}
                             </ul>
                             {% endif %}
@@ -70,76 +177,50 @@
                     </div>
                     {% endfor %}
                 </div>
+
+                <!-- Improvements Table (scrollable, capped height) -->
                 {% if score < 100 and zipped_issues %}
-                <div class="p-3 rounded-3 mt-3" style="background: rgba(239,71,111,0.06);">
-                    <h6 class="fw-bold mb-2" style="color: var(--danger);"><i class="bi bi-exclamation-triangle me-1"></i>Areas for Improvement</h6>
-                    <div class="table-card">
-                        <div class="table-responsive">
-                            <table class="table table-hover mb-0" style="font-size: 0.85rem;">
-                                <thead><tr><th>Category</th><th>Issue</th><th>Solution</th></tr></thead>
-                                <tbody>
-                                    {% for issue, solution, category in zipped_issues %}
-                                    <tr><td>{{ category }}</td><td>{{ issue }}</td><td>{{ solution }}</td></tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
+                <div class="p-2 rounded-3" style="background: rgba(239,71,111,0.05); border: 1px solid rgba(239,71,111,0.1);">
+                    <div class="fw-bold mb-2" style="font-size: 0.82rem; color: var(--danger);">
+                        <i class="bi bi-exclamation-triangle me-1"></i>Areas for Improvement
+                    </div>
+                    <div class="table-responsive" style="max-height: 200px; overflow-y: auto;">
+                        <table class="table table-sm table-hover mb-0" style="font-size: 0.78rem;">
+                            <thead style="position: sticky; top: 0; background: #fff8f9; z-index: 1;">
+                                <tr><th>Category</th><th>Issue</th><th>Solution</th></tr>
+                            </thead>
+                            <tbody>
+                                {% for issue, solution, category in zipped_issues %}
+                                <tr>
+                                    <td>{{ category }}</td>
+                                    <td>{{ issue }}</td>
+                                    <td>{{ solution }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 {% endif %}
+            </div>
+
+            {% else %}
+            <!-- Placeholder when no analysis -->
+            <div class="stat-card d-flex align-items-center justify-content-center"
+                 style="min-height: 220px;">
+                <div class="text-center" style="color: var(--gray);">
+                    <i class="bi bi-file-earmark-bar-graph d-block mb-2"
+                       style="font-size: 3rem; opacity: 0.2;"></i>
+                    <p class="mb-0" style="font-size: 0.9rem;">Upload a resume to see AI analysis here</p>
+                </div>
             </div>
             {% endif %}
-
-            <!-- Uploaded Resumes -->
-            <div class="stat-card">
-                <h5 class="fw-bold mb-3" style="color: var(--dark);"><i class="bi bi-file-earmark-text me-2"></i>Your Uploaded Resumes</h5>
-                {% if resumes %}
-                <form method="POST" id="resumeSelectForm">
-                    <div class="table-card">
-                        <div class="table-responsive">
-                            <table class="table table-hover mb-0">
-                                <thead><tr><th>Select</th><th>Skills</th><th>Education</th><th>Experience</th><th>Action</th></tr></thead>
-                                <tbody>
-                                    {% for resume in resumes %}
-                                    <tr>
-                                        <td class="text-center">
-                                            <input type="radio" name="selected_resume" value="{{ resume.id }}"
-                                                {% if selected_resume_id == resume.id %}checked{% endif %}
-                                                class="form-check-input resume-radio">
-                                        </td>
-                                        <td style="font-size: 0.85rem;">{{ resume.skills }}</td>
-                                        <td style="font-size: 0.85rem;">{{ resume.education }}</td>
-                                        <td style="font-size: 0.85rem;">{{ resume.experience }}</td>
-                                        <td>
-                                            <button type="button" class="btn btn-sm"
-                                                style="background: var(--danger); color: #fff; border-radius: 8px; font-size: 0.8rem;"
-                                                onclick="deleteResume({{ resume.id }}, '{{ url_for('delete_resume', resume_id=resume.id) }}')">
-                                                Delete
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-career w-100 mt-3">
-                        <i class="bi bi-stars me-2"></i>Use Selected Resume for Recommendations
-                    </button>
-                </form>
-                {% else %}
-                <div class="empty-state py-3">
-                    <i class="bi bi-file-earmark d-block" style="font-size: 2rem;"></i>
-                    <p class="mb-0">No resumes uploaded yet</p>
-                </div>
-                {% endif %}
-            </div>
         </div>
-    </div>
-</div>
+
+    </div><!-- /row -->
+</div><!-- /page-wrapper -->
 
 <script>
-    // Fix 1: Delete resume using a separate dynamically-created form (avoids nested form issue)
     function deleteResume(resumeId, deleteUrl) {
         if (confirm('Are you sure you want to delete this resume?')) {
             var form = document.createElement('form');
@@ -150,10 +231,9 @@
         }
     }
 
-    // Fix 2: Allow radio buttons to be deselected by clicking the already-checked one
     document.addEventListener('DOMContentLoaded', function () {
+        // Allow deselect by clicking already-checked radio
         var lastChecked = document.querySelector('input.resume-radio:checked') || null;
-
         document.querySelectorAll('input.resume-radio').forEach(function (radio) {
             radio.addEventListener('click', function () {
                 if (this === lastChecked) {
@@ -164,6 +244,33 @@
                 }
             });
         });
+
+        // Validate selection before submit
+        var resumeSelectForm = document.getElementById('resumeSelectForm');
+        if (resumeSelectForm) {
+            resumeSelectForm.addEventListener('submit', function (e) {
+                if (!document.querySelector('input.resume-radio:checked')) {
+                    e.preventDefault();
+                    bootstrap.Modal.getOrCreateInstance(document.getElementById('noResumeModal')).show();
+                }
+            });
+        }
     });
 </script>
+
+<!-- No Resume Selected Modal -->
+<div class="modal fade" id="noResumeModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border-radius: 16px; border: none;">
+            <div class="modal-body text-center p-4">
+                <div class="mb-3" style="font-size: 3rem; color: #f4a261;">
+                    <i class="bi bi-exclamation-circle"></i>
+                </div>
+                <h5 class="fw-bold mb-2" style="color: var(--dark);">No Resume Selected</h5>
+                <p style="color: var(--gray);">Please select a resume from the list before proceeding to recommendations.</p>
+                <button type="button" class="btn btn-career px-4" data-bs-dismiss="modal">OK, Got it</button>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
