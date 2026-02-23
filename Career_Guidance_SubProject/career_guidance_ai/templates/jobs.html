@@ -86,17 +86,17 @@
                 </div>
                 <p class="mb-2" style="color: var(--gray); font-size: 0.88rem;">{{ job.description[:120] }}{% if job.description and job.description|length > 120 %}...{% endif %}</p>
                 <div class="d-flex flex-column gap-2">
-                    <a href="/job/{{ job.id }}" class="btn btn-career-outline btn-sm w-100"><i class="bi bi-eye me-1"></i>View Detail</a>
+                    <a href="{{ url_for('job_detail', job_id=job.id) }}" class="btn btn-career-outline btn-sm w-100"><i class="bi bi-eye me-1"></i>View Detail</a>
                     <a href="{{ job.url }}" target="_blank" class="btn btn-career btn-sm w-100"><i class="bi bi-box-arrow-up-right me-1"></i>View Job</a>
                 </div>
                 <div class="mt-2">
                     {% if job.id in saved %}
                     <span class="badge" style="background: var(--success); color: #fff;"><i class="bi bi-bookmark-heart me-1"></i>Saved</span>
-                    <form method="POST" action="/unsave_job/{{ job.id }}" class="d-inline">
+                    <form method="POST" action="{{ url_for('unsave_job', job_id=job.id) }}" class="d-inline">
                         <button type="submit" class="btn btn-sm" style="background: var(--warning); color: var(--dark); border-radius: 8px; font-size: 0.8rem;"><i class="bi bi-x-circle"></i> Unsave</button>
                     </form>
                     {% else %}
-                    <form method="POST" action="/save_job/{{ job.id }}" class="d-inline">
+                    <form method="POST" action="{{ url_for('save_job', job_id=job.id) }}" class="d-inline">
                         <button type="submit" class="btn btn-sm" style="background: var(--success); color: #fff; border-radius: 8px; font-size: 0.8rem;"><i class="bi bi-bookmark-plus"></i> Save</button>
                     </form>
                     {% endif %}
@@ -136,7 +136,7 @@ searchInput.addEventListener('input', function() {
     const q = this.value.trim();
     if (q.length < 1 || q === lastQuery) return;
     lastQuery = q;
-    fetch(`/autocomplete_job_titles?q=${encodeURIComponent(q)}`)
+    fetch(`{{ url_for('autocomplete_job_titles') }}?q=${encodeURIComponent(q)}`)
         .then(res => res.json())
         .then(data => {
             datalist.innerHTML = '';

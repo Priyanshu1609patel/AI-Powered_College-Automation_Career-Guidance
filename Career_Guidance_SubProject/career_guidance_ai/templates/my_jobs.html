@@ -20,22 +20,8 @@
                 </div>
                 <p class="mb-2" style="color: var(--gray); font-size: 0.88rem;">{{ job.description[:120] }}{% if job.description and job.description|length > 120 %}...{% endif %}</p>
                 <a href="{{ url_for('job_detail', job_id=job.id) }}" class="btn btn-career-outline btn-sm w-100 mb-2"><i class="bi bi-eye me-1"></i>View Details</a>
-                <form method="POST" action="/unsave_job/{{ job.id }}" class="mb-2">
+                <form method="POST" action="{{ url_for('unsave_job', job_id=job.id) }}">
                     <button type="submit" class="btn btn-sm w-100" style="background: var(--warning); color: var(--dark); border-radius: 10px; font-weight: 600;"><i class="bi bi-x-circle me-1"></i>Unsave</button>
-                </form>
-                <form method="POST" action="/apply_job/{{ job.id }}">
-                    <div class="input-group input-group-sm">
-                        <select class="form-select" name="status">
-                            <option value="Applied" {% if job.status == 'Applied' %}selected{% endif %}>Applied</option>
-                            <option value="Interview" {% if job.status == 'Interview' %}selected{% endif %}>Interview</option>
-                            <option value="Offer" {% if job.status == 'Offer' %}selected{% endif %}>Offer</option>
-                            <option value="Rejected" {% if job.status == 'Rejected' %}selected{% endif %}>Rejected</option>
-                            <option value="Saved" {% if job.status == 'Saved' or not job.status %}selected{% endif %}>Saved</option>
-                        </select>
-                        <input type="text" class="form-control" name="notes" placeholder="Notes" value="{{ job.notes or '' }}">
-                        <button class="btn btn-career btn-sm" type="submit"><i class="bi bi-check2"></i></button>
-                    </div>
-                    {% if job.status %}<span class="badge mt-1" style="background: var(--primary); color: #fff;">{{ job.status }}</span>{% endif %}
                 </form>
             </div>
         </div>

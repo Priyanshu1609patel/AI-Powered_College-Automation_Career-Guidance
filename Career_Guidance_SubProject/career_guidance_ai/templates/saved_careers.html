@@ -15,21 +15,38 @@
                     <h5 class="fw-bold mb-0" style="color: var(--dark);">{{ career.title }}</h5>
                 </div>
                 <p style="color: var(--gray); font-size: 0.9rem;">{{ career.description }}</p>
-                <div class="mb-2"><small class="text-muted">Required Skills:</small> <span class="fw-medium">{{ career.required_skills }}</span></div>
-                <div class="mb-2"><small class="text-muted">Category:</small> <span class="badge bg-primary-soft" style="color: var(--primary);">{{ career.category }}</span></div>
-                <div class="mb-3"><small class="text-muted">Career Path:</small> <span class="fw-medium">{{ career.path }}</span></div>
-                <div class="d-flex gap-2 mb-2">
-                    <form method="POST" action="/remove_saved_career/{{ career.saved_id }}">
-                        <button type="submit" class="btn btn-sm" style="background: var(--danger); color: #fff; border-radius: 8px;">
-                            <i class="bi bi-trash me-1"></i>Remove
-                        </button>
-                    </form>
+                <div class="mb-2">
+                    <small class="text-muted">Required Skills:</small>
+                    <span class="fw-medium">{{ career.required_skills }}</span>
                 </div>
-                <form method="POST" action="/update_notes/{{ career.saved_id }}">
+                <div class="mb-2">
+                    <small class="text-muted">Category:</small>
+                    <span class="badge bg-primary-soft" style="color: var(--primary);">{{ career.category }}</span>
+                </div>
+                <div class="mb-3">
+                    <small class="text-muted">Career Path:</small>
+                    <span class="fw-medium">{{ career.path }}</span>
+                </div>
+                <!-- Save Note -->
+                <form method="POST" action="{{ url_for('update_notes', saved_id=career.id) }}" class="mb-2">
                     <div class="input-group input-group-sm">
-                        <input type="text" class="form-control" name="note" value="{{ career.notes or '' }}" placeholder="Add a note...">
-                        <button class="btn btn-career-outline btn-sm" type="submit">Save Note</button>
+                        <input type="text" class="form-control" name="note"
+                               value="{{ career.notes or '' }}"
+                               placeholder="Add a note...">
+                        <button class="btn btn-career-outline btn-sm" type="submit">
+                            <i class="bi bi-save me-1"></i>Save Note
+                        </button>
                     </div>
+                </form>
+
+                <!-- Remove Career -->
+                <form method="POST"
+                      action="{{ url_for('remove_saved_career', saved_id=career.id) }}"
+                      onsubmit="return confirm('Remove this saved career?');">
+                    <button type="submit" class="btn btn-sm"
+                            style="background: var(--danger); color: #fff; border-radius: 8px; font-weight: 600;">
+                        <i class="bi bi-trash me-1"></i>Remove
+                    </button>
                 </form>
             </div>
         </div>
@@ -40,7 +57,7 @@
         <i class="bi bi-bookmark d-block"></i>
         <h5>No saved careers yet</h5>
         <p>Save careers from recommendations to track them here</p>
-        <a href="/recommendations" class="btn btn-career btn-sm">Get Recommendations</a>
+        <a href="{{ url_for('recommendations') }}" class="btn btn-career btn-sm">Get Recommendations</a>
     </div>
     {% endif %}
 </div>

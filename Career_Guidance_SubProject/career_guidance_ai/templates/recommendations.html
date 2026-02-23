@@ -4,7 +4,10 @@
 <div class="page-wrapper">
     <div class="p-4 mb-4 rounded-4 text-white" style="background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);">
         <h4 class="fw-bold mb-1"><i class="bi bi-stars me-2"></i>Your Career Recommendations</h4>
-        <p class="mb-0 opacity-75">AI-powered career matches based on your profile</p>
+        <p class="mb-0 opacity-75">
+            <i class="bi bi-file-earmark-person me-1"></i>
+            Ranked by: Projects &amp; Experience (40%) &middot; Skills (35%) &middot; Education (15%) &middot; Quiz Interest (10%)
+        </p>
     </div>
 
     {% if careers %}
@@ -19,7 +22,15 @@
                     </div>
                     <div>
                         <h5 class="fw-bold mb-0" style="color: var(--dark);">{{ career.title }}</h5>
-                        <span class="badge" style="background: var(--success); color: #fff;">Match: {{ career.match_score }}/5</span>
+                        <span class="badge" style="background: var(--success); color: #fff;">Match: {{ career.match_score }}/10</span>
+                        <div class="mt-1" style="width:140px;">
+                            <div class="progress" style="height:6px; border-radius:4px;">
+                                <div class="progress-bar" role="progressbar"
+                                     style="width: {{ (career.match_score / 10 * 100)|int }}%; background: var(--success);"
+                                     aria-valuenow="{{ (career.match_score / 10 * 100)|int }}"
+                                     aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -79,20 +90,29 @@
                         {% for idea in career.project_ideas %}
                         <div class="accordion-item border-0 mb-1">
                             <h2 class="accordion-header">
-                                <button class="accordion-button collapsed py-2 px-3 rounded-3" style="font-size: 0.88rem; background: rgba(67,97,238,0.05);" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ acc_id }}-{{ loop.index }}">
+                                <button class="accordion-button collapsed py-2 px-3 rounded-3"
+                                        style="font-size: 0.88rem; background: rgba(67,97,238,0.05);"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapse{{ acc_id }}-{{ loop.index }}">
                                     <i class="bi bi-lightbulb me-2" style="color: var(--warning);"></i>{{ idea.title }}
                                 </button>
                             </h2>
-                            <div id="collapse{{ acc_id }}-{{ loop.index }}" class="accordion-collapse collapse" data-bs-parent="#accordion{{ acc_id }}">
+                            <div id="collapse{{ acc_id }}-{{ loop.index }}"
+                                 class="accordion-collapse collapse"
+                                 data-bs-parent="#accordion{{ acc_id }}">
                                 <div class="accordion-body py-2 px-3">
                                     <ol class="mb-2" style="font-size: 0.85rem;">
                                         {% for step in idea.steps %}<li>{{ step }}</li>{% endfor %}
                                     </ol>
-                                    <form method="POST" action="/add_project_from_idea">
+                                    <form method="POST" action="{{ url_for('add_project_from_idea') }}">
                                         <input type="hidden" name="title" value="{{ idea.title }}">
-                                        <input type="hidden" name="description" value="{{ idea.steps|join(', ') }}">
+                                        <input type="hidden" name="description" value="{{ idea.steps|join(' | ') }}">
                                         <input type="hidden" name="skills" value="{{ career.required_skills }}">
-                                        <button type="submit" class="btn btn-sm" style="background: var(--success); color: #fff; border-radius: 8px; font-size: 0.8rem;"><i class="bi bi-plus-circle me-1"></i>Add to Projects</button>
+                                        <button type="submit" class="btn btn-sm"
+                                                style="background: var(--primary); color: #fff; border-radius: 8px; font-size: 0.8rem;">
+                                            <i class="bi bi-plus-circle me-1"></i>Add to My Projects
+                                        </button>
                                     </form>
                                 </div>
                             </div>
@@ -103,16 +123,25 @@
                 {% endif %}
 
                 <div class="d-flex flex-wrap gap-2">
-                    <a href="/career_path/{{ career.id }}" class="btn btn-career-outline btn-sm"><i class="bi bi-compass me-1"></i>View Path</a>
-                    <form method="POST" action="/save_career/{{ career.id }}" class="d-inline">
-                        <button type="submit" class="btn btn-sm" style="background: var(--success); color: #fff; border-radius: 10px; font-weight: 600;"><i class="bi bi-bookmark-plus me-1"></i>Save</button>
+                    <a href="{{ url_for('track_progress') }}" class="btn btn-career-outline btn-sm">
+                        <i class="bi bi-compass me-1"></i>View Path
+                    </a>
+                    <form method="POST" action="{{ url_for('save_career', career_id=career.id) }}" class="d-inline">
+                        <button type="submit" class="btn btn-sm"
+                                style="background: var(--success); color: #fff; border-radius: 10px; font-weight: 600;">
+                            <i class="bi bi-bookmark-plus me-1"></i>Save
+                        </button>
                     </form>
-                    <a href="/interview_prep/{{ career.title|replace(' ', '-') }}" class="btn btn-career-outline btn-sm"><i class="bi bi-question-circle me-1"></i>Interview Prep</a>
+                    <a href="{{ url_for('interview_prep', career_title=career.title|replace(' ', '-')) }}" class="btn btn-career-outline btn-sm">
+                        <i class="bi bi-question-circle me-1"></i>Interview Prep
+                    </a>
                 </div>
 
                 {% if career.avg_salary %}
                 <div class="p-2 rounded-3 mt-2" style="background: rgba(6,214,160,0.08); font-size: 0.85rem;">
-                    <i class="bi bi-currency-rupee" style="color: var(--success);"></i><strong>Avg. Salary:</strong> <span style="color: var(--success);">&#8377;{{ career.avg_salary|int|default('N/A') }}</span>
+                    <i class="bi bi-currency-rupee" style="color: var(--success);"></i>
+                    <strong>Avg. Salary:</strong>
+                    <span style="color: var(--success);">&#8377;{{ career.avg_salary|int|default('N/A') }}</span>
                 </div>
                 {% endif %}
             </div>
@@ -125,8 +154,8 @@
         <h5>No recommendations yet</h5>
         <p>Upload your resume and complete the interest quiz to get personalized career recommendations</p>
         <div class="d-flex gap-2 justify-content-center">
-            <a href="/upload_resume" class="btn btn-career btn-sm">Upload Resume</a>
-            <a href="/interest_quiz" class="btn btn-career-outline btn-sm">Take Quiz</a>
+            <a href="{{ url_for('upload_resume') }}" class="btn btn-career btn-sm">Upload Resume</a>
+            <a href="{{ url_for('interest_quiz') }}" class="btn btn-career-outline btn-sm">Take Quiz</a>
         </div>
     </div>
     {% endif %}
