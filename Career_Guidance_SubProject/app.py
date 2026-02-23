@@ -3,7 +3,7 @@ import os
 from config import *
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
-from resume_parser.parser import extract_text, extract_resume_data
+from resume_parser.parser import extract_text, extract_resume_data, _INST_RE as _INST_RE_APP
 from reportlab.pdfgen import canvas
 from io import BytesIO
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -211,77 +211,205 @@ def upload_resume():
     if request.method == 'POST':
         file = request.files.get('resume')
         if file and file.filename:
-            filename = secure_filename(file.filename)
+            # Fix: unique filename per upload to prevent file collision/overwrite
+            ext = os.path.splitext(secure_filename(file.filename))[1].lower()
+            filename = f"{user_id}_{uuid.uuid4().hex}{ext}"
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(filepath)
             text = extract_text(filepath)
             parsed = extract_resume_data(text)
             feedback = []
-            score = 100
-            # Categorized feedback and solutions
-            # analysis_categories = {
-            #     'Skills': {'issues': [], 'solutions': [], 'positive': []},
-            #     'Education': {'issues': [], 'solutions': [], 'positive': []},
-            #     'Experience': {'issues': [], 'solutions': [], 'positive': []},
-            #     'General': {'issues': [], 'solutions': [], 'positive': []}
-            # }
-            # why_not_100_categorized = []
-            # Skills
-            skills = parsed.get('skills', '')
-            if not skills or len(skills.split(',')) < 3:
-                analysis_categories['Skills']['issues'].append('Too few skills listed.')
-                analysis_categories['Skills']['solutions'].append('List at least 5 technical and soft skills relevant to your target job.')
-                score -= 15
-            else:
-                analysis_categories['Skills']['positive'].append('Good number of skills listed.')
-            # Education
+            score = 0                        # build score upward from 0 (max 100)
+            ftl   = text.lower()             # full-text lowercase for all checks
+
+            skills    = parsed.get('skills', '')
             education = parsed.get('education', '')
-            if not education or len(education) < 5:
-                analysis_categories['Education']['issues'].append('Education section is missing or too short.')
-                analysis_categories['Education']['solutions'].append('Add a detailed education section with degree, institution, and years attended.')
-                score -= 15
+            experience= parsed.get('experience', '')
+
+            # ── Skills  (max 30 pts) ─────────────────────────────────────────
+            skill_list  = [s.strip() for s in skills.split(',') if s.strip()]
+            skill_count = len(skill_list)
+
+            # Separate technical vs soft skills for diversity check
+            soft_kws = ['leadership','communication','teamwork','problem solving',
+                        'project management','time management','critical thinking',
+                        'collaboration','presentation','negotiation','mentoring']
+            soft_count = sum(1 for s in skill_list if s.lower() in soft_kws)
+            tech_count = skill_count - soft_count
+
+            if skill_count == 0:
+                analysis_categories['Skills']['issues'].append('No recognisable skills detected in the resume.')
+                analysis_categories['Skills']['solutions'].append('Add a dedicated "Skills" section listing 6–10 technical tools and soft skills.')
+            elif skill_count < 4:
+                score += 8
+                analysis_categories['Skills']['issues'].append(f'Only {skill_count} skill(s) detected — too few for most roles.')
+                analysis_categories['Skills']['solutions'].append('List at least 6–8 skills including domain-specific tools and languages.')
+            elif skill_count < 7:
+                score += 18
+                analysis_categories['Skills']['positive'].append(f'{skill_count} skills detected.')
+                if soft_count == 0:
+                    analysis_categories['Skills']['issues'].append('No soft skills listed.')
+                    analysis_categories['Skills']['solutions'].append('Add 2–3 soft skills like Communication, Leadership, or Teamwork.')
+                if tech_count < 3:
+                    analysis_categories['Skills']['issues'].append('Very few technical skills found.')
+                    analysis_categories['Skills']['solutions'].append('Add relevant technical tools, languages, or frameworks for your target role.')
             else:
-                analysis_categories['Education']['positive'].append('Education section present.')
-            # Experience
-            experience = parsed.get('experience', '')
-            if not experience or len(experience) < 5:
-                analysis_categories['Experience']['issues'].append('Experience section is missing or too short.')
-                analysis_categories['Experience']['solutions'].append('Add at least one relevant work or project experience with details.')
-                score -= 15
+                score += 30
+                analysis_categories['Skills']['positive'].append(f'{skill_count} skills detected — well-rounded skill set.')
+                if soft_count >= 2 and tech_count >= 4:
+                    analysis_categories['Skills']['positive'].append('Good balance of technical and soft skills.')
+                elif soft_count == 0:
+                    analysis_categories['Skills']['issues'].append('No soft skills listed.')
+                    analysis_categories['Skills']['solutions'].append('Add 2–3 soft skills such as Leadership, Communication, or Teamwork.')
+
+            # ── Education  (max 25 pts) ──────────────────────────────────────
+            has_degree  = bool(re.search(
+                r'\b(b\.?\s*tech|b\.?\s*e\.?|b\.?\s*sc\.?|b\.?\s*com\.?|b\.?\s*a\.?'
+                r'|bca|mca|m\.?\s*tech|m\.?\s*e\.?|m\.?\s*sc\.?|mba|bba|phd'
+                r'|bachelor|master|diploma|10th|12th|ssc|hsc|secondary)\b',
+                ftl, re.IGNORECASE))
+            has_inst    = bool(_INST_RE_APP.search(ftl))
+            has_year    = bool(re.search(r'\b(19|20)\d{2}\b', ftl))
+            has_grade   = bool(re.search(r'(\b\d{1,3}\s*%|\bcgpa\b|\bgpa\b|\bpercentage\b|\bgrade\b|\bmarks\b)', ftl))
+
+            if not has_degree and not education:
+                analysis_categories['Education']['issues'].append('Education section not detected.')
+                analysis_categories['Education']['solutions'].append('Add an Education section with degree name, institution, and year of passing.')
             else:
-                analysis_categories['Experience']['positive'].append('Experience section present.')
-            # Strong action verbs
-            strong_verbs = ['developed', 'led', 'designed', 'managed', 'created', 'built', 'implemented', 'analyzed', 'improved', 'launched']
-            experience_text = experience.lower()
-            if not any(verb in experience_text for verb in strong_verbs):
-                analysis_categories['Experience']['issues'].append('Weak or missing action verbs in experience.')
-                analysis_categories['Experience']['solutions'].append('Start each experience bullet with a strong action verb (e.g., developed, led, designed).')
-                score -= 10
-            # Quantifiable achievements
-            if not re.search(r'\b(\d+|percent|%|increase|decrease|growth|revenue|users|clients|projects)\b', experience_text):
-                analysis_categories['Experience']['issues'].append('No quantifiable achievements in experience.')
-                analysis_categories['Experience']['solutions'].append('Include numbers or measurable results (e.g., "Increased sales by 20%", "Managed 5 projects").')
-                score -= 10
-            # Certifications (General)
-            if 'certification' not in education.lower() and 'certified' not in education.lower():
+                edu_pts = 0
+                if has_degree:
+                    edu_pts += 10
+                    analysis_categories['Education']['positive'].append('Degree qualification detected.')
+                else:
+                    analysis_categories['Education']['issues'].append('Degree name not clearly mentioned.')
+                    analysis_categories['Education']['solutions'].append('State your degree (e.g., B.Tech, MBA) clearly.')
+                if has_inst:
+                    edu_pts += 8
+                    analysis_categories['Education']['positive'].append('Institution name present.')
+                else:
+                    analysis_categories['Education']['issues'].append('Institution/university name not detected.')
+                    analysis_categories['Education']['solutions'].append('Add your university or college name.')
+                if has_year:
+                    edu_pts += 4
+                    analysis_categories['Education']['positive'].append('Passing year mentioned.')
+                else:
+                    analysis_categories['Education']['issues'].append('Year of passing not found.')
+                    analysis_categories['Education']['solutions'].append('Include the year you completed / expect to complete your degree.')
+                if has_grade:
+                    edu_pts += 3
+                    analysis_categories['Education']['positive'].append('GPA / percentage / grade mentioned.')
+                else:
+                    analysis_categories['Education']['issues'].append('GPA / percentage not mentioned.')
+                    analysis_categories['Education']['solutions'].append('Include your GPA or percentage — recruiters appreciate it.')
+                score += edu_pts
+
+            # ── Experience  (max 30 pts) ─────────────────────────────────────
+            # Use BOTH the parsed experience AND full-text signals so the check
+            # is never accidentally empty for a well-formatted resume.
+            strong_verbs = [
+                'developed','led','designed','managed','created','built',
+                'implemented','analyzed','improved','launched','deployed',
+                'researched','contributed','maintained','automated','optimized',
+                'delivered','collaborated','engineered','resolved','coordinated',
+                'trained','mentored','architected','spearheaded','streamlined',
+            ]
+            has_exp_parsed   = bool(experience and len(experience) > 10)
+            has_exp_keywords = bool(re.search(
+                r'\b(intern|internship|project|experience|employed|position'
+                r'|role|company|organisation|organization|worked at|trainee'
+                r'|apprentice|freelance|consultant)\b', ftl))
+            has_exp_years    = bool(re.search(
+                r'(20\d{2}\s*[-–—to]+\s*(?:20\d{2}|present|current|now)|'
+                r'\d+\s*(month|year)s?\s*(of\s+)?(experience|exp))', ftl))
+
+            has_experience_section = has_exp_parsed or has_exp_keywords or has_exp_years
+
+            has_action_verbs  = any(v in ftl for v in strong_verbs)
+            has_quantifiable  = bool(re.search(
+                r'(\d+\s*(%|percent|projects?|users?|clients?|months?|years?'
+                r'|teams?|members?|apps?|systems?|services?|modules?|features?)'
+                r'|\bincrease[d]?\b|\bimprove[d]?\b|\breduced?\b|\bsaved?\b'
+                r'|\bdelivered?\b|\blaunch(ed)?\b)', ftl))
+            has_multiple_exp  = len(re.findall(
+                r'\b(intern|internship|project|worked at|position|role|company)\b', ftl)) >= 2
+
+            if not has_experience_section:
+                analysis_categories['Experience']['issues'].append('No work experience, internship, or project section detected.')
+                analysis_categories['Experience']['solutions'].append('Add an Experience or Projects section with role titles, company names, and descriptions.')
+            else:
+                exp_pts = 10
+                analysis_categories['Experience']['positive'].append('Experience / Projects section present.')
+                if has_multiple_exp:
+                    exp_pts += 5
+                    analysis_categories['Experience']['positive'].append('Multiple experiences or projects found.')
+                else:
+                    analysis_categories['Experience']['issues'].append('Only one experience or project detected.')
+                    analysis_categories['Experience']['solutions'].append('Add more projects or internship details to strengthen this section.')
+                if has_action_verbs:
+                    exp_pts += 8
+                    analysis_categories['Experience']['positive'].append('Strong action verbs used (e.g., developed, built, led).')
+                else:
+                    analysis_categories['Experience']['issues'].append('Weak or missing action verbs.')
+                    analysis_categories['Experience']['solutions'].append('Start each bullet point with a power verb: developed, designed, built, led.')
+                if has_quantifiable:
+                    exp_pts += 7
+                    analysis_categories['Experience']['positive'].append('Quantifiable achievements found — excellent for recruiters.')
+                else:
+                    analysis_categories['Experience']['issues'].append('No measurable results found.')
+                    analysis_categories['Experience']['solutions'].append('Add numbers: "Reduced load time by 30%", "Led a team of 4", "Served 200+ users".')
+                score += exp_pts
+
+            # ── General  (max 15 pts) ────────────────────────────────────────
+            has_cert    = bool(re.search(r'\b(certif|certified|certification|certificate|nptel|coursera|udemy|edx)\b', ftl))
+            has_links   = bool(re.search(r'(github|linkedin|portfolio|behance|dribbble|leetcode|kaggle|hackerrank)', ftl))
+            has_contact = bool(re.search(r'(\+?\d[\d\s\-]{8,}|\b[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}\b)', ftl))
+            has_summary = bool(re.search(r'\b(objective|summary|profile|about me|career objective|professional summary)\b', ftl))
+
+            gen_pts = 0
+            if has_contact:
+                gen_pts += 3
+                analysis_categories['General']['positive'].append('Contact information (phone/email) present.')
+            else:
+                analysis_categories['General']['issues'].append('Contact details not clearly detected.')
+                analysis_categories['General']['solutions'].append('Add your email and phone number prominently at the top.')
+            if has_links:
+                gen_pts += 4
+                analysis_categories['General']['positive'].append('GitHub / LinkedIn / portfolio link found.')
+            else:
+                analysis_categories['General']['issues'].append('No GitHub, LinkedIn, or portfolio link.')
+                analysis_categories['General']['solutions'].append('Add profile links so recruiters can see your work directly.')
+            if has_cert:
+                gen_pts += 5
+                analysis_categories['General']['positive'].append('Certifications detected — adds credibility.')
+            else:
                 analysis_categories['General']['issues'].append('No certifications listed.')
-                analysis_categories['General']['solutions'].append('Add relevant certifications (e.g., AWS Certified, PMP, Google Analytics).')
-                score -= 5
-            # Project links (General)
-            if 'github' not in experience_text and 'portfolio' not in experience_text and 'linkedin' not in experience_text:
-                analysis_categories['General']['issues'].append('No links to projects or portfolio.')
-                analysis_categories['General']['solutions'].append('Include links to your GitHub, portfolio, or LinkedIn for recruiters to view your work.')
-                score -= 5
-            # Positive general
+                analysis_categories['General']['solutions'].append('Add courses or certifications from Coursera, NPTEL, Udemy, or similar platforms.')
+            if has_summary:
+                gen_pts += 3
+                analysis_categories['General']['positive'].append('Objective / summary section present.')
+            else:
+                analysis_categories['General']['issues'].append('No career objective or summary found.')
+                analysis_categories['General']['solutions'].append('Add a 2–3 line professional summary at the top of your resume.')
+            score += gen_pts
+
+            # Score band feedback
             if score >= 90:
-                analysis_categories['General']['positive'].append('Resume is strong overall!')
-            if score < 0:
-                score = 0
+                analysis_categories['General']['positive'].append('Excellent resume — highly recruiter-ready!')
+            elif score >= 75:
+                analysis_categories['General']['positive'].append('Strong resume with a few areas to polish.')
+            elif score >= 55:
+                analysis_categories['General']['positive'].append('Decent resume — targeted improvements will boost your chances.')
+            else:
+                analysis_categories['General']['issues'].append('Resume needs significant improvement across multiple areas.')
+                analysis_categories['General']['solutions'].append('Focus on adding complete Education, Experience, and Skills sections.')
+
+            score = max(0, min(score, 100))
+
             analysis = {
-                'skills': skills,
+                'skills':    skills,
                 'education': education,
-                'experience': experience,
-                'feedback': feedback,
+                'experience':experience,
+                'feedback':  feedback,
             }
             # Prepare why_not_100_categorized for table
             for cat, vals in analysis_categories.items():
@@ -290,6 +418,7 @@ def upload_resume():
                     why_not_100_categorized.append({'category': cat, 'issue': issue, 'solution': solution})
             # Save to DB
             conn = get_db()
+            new_resume_id = None
             try:
                 with conn.cursor() as cursor:
                     cursor.execute('''
@@ -301,9 +430,14 @@ def upload_resume():
                         education,
                         experience
                     ))
+                    new_resume_id = cursor.lastrowid  # capture before cursor closes
                     conn.commit()
             finally:
                 conn.close()
+            # Auto-select the newly uploaded resume so the user doesn't accidentally
+            # proceed with the previously selected (old) resume.
+            if new_resume_id:
+                session['selected_resume_id'] = new_resume_id
             add_notification(user_id, "Your resume was uploaded and parsed successfully.")
             flash('Resume uploaded and parsed successfully!', 'success')
             # Fetch updated resumes list
