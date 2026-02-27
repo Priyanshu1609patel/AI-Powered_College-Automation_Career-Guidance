@@ -278,6 +278,33 @@ INTENTS = [
     },
 
     # ----------------------------------------------------------------
+    # Passing / Minimum Marks
+    # ----------------------------------------------------------------
+    {
+        'name': 'passing_marks',
+        'patterns': [
+            r'(?:passing|minimum|pass|min)[\s\-]*marks?',
+            r'(?:minimum|min|how\s*many|what)\s+marks?.*(?:pass|clear|need|requir)',
+            r'marks?.*(?:need|requir|minimum|to\s*pass|to\s*clear)',
+            r'(?:fail|below|under|less\s*than)\s+(?:\d+\s+)?marks?',
+            r'how\s*many\s*marks?.*(?:pass|fail|need|clear)',
+            r'marks?\s*(?:required|needed|minimum)\s*(?:to\s*pass|to\s*clear|for\s*pass)',
+            r'(?:pass|clear)\s+(?:\w+\s+){0,4}(?:subject|paper|exam|course)',
+            r'(?:minimum|min)\s+(?:marks?|score)\s+(?:for|in|of)',
+            r'(?:i\s+(?:fail|passed)|will\s+i\s+(?:fail|pass))\s+(?:if|with)',
+            r'(?:need|require).*(?:\d+).*(?:pass|clear)',
+        ],
+        'keywords': {
+            'passing marks', 'minimum marks', 'pass marks', 'marks to pass',
+            'minimum to pass', 'fail marks', 'marks required', 'marks needed',
+            'how many marks', 'passing criteria', 'pass criteria',
+            'minimum passing', 'will i fail', 'will i pass',
+            'marks for pass', 'kya marks chahiye', 'pass hone ke liye',
+        },
+        'priority': 10,
+    },
+
+    # ----------------------------------------------------------------
     # Re-Assessment & Re-Checking
     # ----------------------------------------------------------------
     {

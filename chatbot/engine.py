@@ -37,9 +37,11 @@ _ALWAYS_PATTERN = {
     'attendance_future_plan',    # needs arithmetic
     'cgpa_to_percentage',        # needs arithmetic
     'grade_for_marks',           # needs arithmetic
+    'passing_marks',             # needs arithmetic + subject lookup
     'cgpa_calculate',
     'sgpa_calculate',
     'notices',                   # reads live DB
+    'study_material',            # needs exact drive-link pairing
 }
 
 
@@ -68,8 +70,9 @@ class ChatbotEngine:
         else:
             # ── Step 2: try AI fallback chain ─────────────────────────────────
             extras = {
-                'semester': extracted.get('semester'),
-                'keyword':  self._extract_subject_query(user_message),
+                'semester':    extracted.get('semester'),
+                'keyword':     self._extract_subject_query(user_message),
+                'raw_message': user_message,
             }
             ai_text, provider_name = ai_respond(
                 user_message=user_message,
@@ -123,6 +126,7 @@ class ChatbotEngine:
             'exam_format':            self._handle_exam_format,
             'grading_system':         self._handle_grading_system,
             'grade_for_marks':        self._handle_grade_for_marks,
+            'passing_marks':          self._handle_passing_marks,
             'cgpa_calculate':         self._handle_cgpa,
             'sgpa_calculate':         self._handle_sgpa,
             'cgpa_to_percentage':     self._handle_cgpa_to_percent,
@@ -605,21 +609,35 @@ class ChatbotEngine:
                     s_code = subj_info.get('subject_code', '')
                     if link:
                         return (
-                            f"**{s_name}** ({s_code}) is in **Semester {sem_num}**.\n\n"
-                            f"Access all Semester {sem_num} study materials here:\n"
-                            f"**[Semester {sem_num} Study Materials]({link})**\n\n"
-                            f"_Includes notes, practicals, PYQs and more for all Sem {sem_num} subjects._"
+                            f"Study Materials for {s_name}" + (f" ({s_code})" if s_code else "") + "\n\n"
+                            f"You can access the study materials for {s_name}" + (f" ({s_code})" if s_code else "") + " on the following Google Drive link:\n\n"
+                            f"{link}\n\n"
+                            f"This link contains all the necessary study materials, including lecture notes, assignments, and other relevant documents, for the {s_name} course.\n\n"
+                            f"If you have any issues accessing the link or need further assistance, please don't hesitate to ask.\n\n"
+                            f"Subject Code: {s_code}\n"
+                            f"Subject Name: {s_name}\n"
+                            f"Semester: {sem_num}"
                         )
             if matches:
-                m = matches[0]
-                sem = m.get('semester')
+                m    = matches[0]
+                sem  = m.get('semester')
+                name = m.get('name', keyword)
+                code = m.get('code', '')
                 link = kb.get_semester_drive_link(sem)
+                # Get subject code from subjects_list if not in study_materials
+                if not code:
+                    subj_info2, _ = kb.find_subject_in_list(keyword)
+                    code = (subj_info2 or {}).get('subject_code', '')
                 if link:
                     return (
-                        f"**{m.get('name')}** is in **Semester {sem}**.\n\n"
-                        f"Access all Semester {sem} study materials here:\n"
-                        f"**[Semester {sem} Study Materials]({link})**\n\n"
-                        f"_This folder contains notes, practicals, PYQs and more for all Sem {sem} subjects._"
+                        f"Study Materials for {name}" + (f" ({code})" if code else "") + "\n\n"
+                        f"You can access the study materials for {name}" + (f" ({code})" if code else "") + " on the following Google Drive link:\n\n"
+                        f"{link}\n\n"
+                        f"This link contains all the necessary study materials, including lecture notes, assignments, and other relevant documents, for the {name} course.\n\n"
+                        f"If you have any issues accessing the link or need further assistance, please don't hesitate to ask.\n\n"
+                        f"Subject Code: {code}\n"
+                        f"Subject Name: {name}\n"
+                        f"Semester: {sem}"
                     )
 
             # Return all drive links
@@ -704,17 +722,133 @@ class ChatbotEngine:
         if marks is None:
             return "Please tell me the marks. Example: 'What grade for 75 marks?' or 'I scored 145 out of 200'"
 
-        total = 200 if marks > 100 else 100
+        # Try subject lookup to auto-detect correct total marks
+        total = None
+        subject_name = None
+        keyword = self._extract_subject_query(msg)
+        if keyword:
+            subj_info, _ = kb.find_subject_in_list(keyword)
+            if subj_info:
+                total = subj_info.get('evaluation_scheme', {}).get('total_marks')
+                subject_name = subj_info.get('subject_name', keyword)
+
+        if total is None:
+            total = 200 if marks > 100 else 100
+
         grade, points = kb.get_grade_for_marks(marks, total)
         percentage = round((marks / total) * 100, 1)
-
         status = "PASS" if grade not in ('F', 'AB') else "FAIL/BACKLOG"
+
+        header = f"**Grade for {marks}/{total} marks"
+        if subject_name:
+            header += f" in {subject_name}"
+        header += ":**\n"
+
         return (
-            f"**Grade for {marks}/{total} marks:**\n\n"
+            f"{header}\n"
             f"- Percentage: **{percentage}%**\n"
             f"- Letter Grade: **{grade}**\n"
             f"- Grade Points: **{points}**\n"
             f"- Status: **{status}**"
+        )
+
+    # ----------------------------------------------------------------
+    # Passing / Minimum Marks
+    # ----------------------------------------------------------------
+
+    def _handle_passing_marks(self, msg, ext):
+        """Answer 'what are the passing marks for [subject]?' and similar questions."""
+        # Check if a specific total is explicitly mentioned (100 or 200)
+        explicit_total = None
+        for n in ext.get('numbers', []):
+            if n in (100, 200):
+                explicit_total = int(n)
+                break
+
+        # Try to find a subject name in the message
+        keyword = self._extract_subject_query(msg)
+        subj_info, sem_num = (None, None)
+        if keyword:
+            subj_info, sem_num = kb.find_subject_in_list(keyword)
+
+        if subj_info:
+            # Subject-specific response
+            name    = subj_info.get('subject_name', keyword)
+            code    = subj_info.get('subject_code', '')
+            scheme  = subj_info.get('evaluation_scheme', {})
+            theory  = scheme.get('theory', {})
+            prac    = scheme.get('practical', {})
+            total   = scheme.get('total_marks', 100)
+            has_prac = (prac.get('CIE', 0) + prac.get('ESE', 0)) > 0
+
+            pass_total = int(total * 0.40)
+            grade, points = kb.get_grade_for_marks(pass_total, total)
+
+            subj_label = f"**{name}**" + (f" ({code})" if code else "")
+            lines = [
+                f"**Passing Marks — {subj_label}**\n",
+                f"- **Total Marks:** {total}",
+                f"- **Minimum Marks to Pass:** {pass_total}/{total} (40%)",
+                f"- **Passing Grade:** {grade} ({points} grade points)",
+            ]
+            if sem_num:
+                lines.append(f"- **Semester:** {sem_num}")
+
+            if has_prac:
+                t_total = theory.get('CIE', 60) + theory.get('ESE', 40)
+                p_total = prac.get('CIE', 60) + prac.get('ESE', 40)
+                t_pass  = int(t_total * 0.40)
+                p_pass  = int(p_total * 0.40)
+                lines += [
+                    "\n**Component Breakdown:**",
+                    f"- Theory  (CIE {theory.get('CIE',60)} + ESE {theory.get('ESE',40)} = **{t_total}** marks) → min **{t_pass}** marks",
+                    f"- Practical (CIE {prac.get('CIE',60)} + ESE {prac.get('ESE',40)} = **{p_total}** marks) → min **{p_pass}** marks",
+                ]
+            else:
+                t_cie = theory.get('CIE', 60)
+                t_ese = theory.get('ESE', 40)
+                lines += [
+                    "\n**Component Breakdown:**",
+                    f"- CIE (Internal): {t_cie} marks",
+                    f"- ESE (End Semester Exam): {t_ese} marks",
+                ]
+
+            lines.append(
+                f"\nScoring below **{pass_total}** → **Grade F** (Fail / Backlog)"
+            )
+            return '\n'.join(lines)
+
+        total = explicit_total
+
+        if total:
+            # Generic response for a known total (100 or 200)
+            pass_marks = int(total * 0.40)
+            grade, points = kb.get_grade_for_marks(pass_marks, total)
+            return (
+                f"**Passing Marks for a {total}-mark Subject:**\n\n"
+                f"- **Minimum Marks to Pass:** {pass_marks}/{total} (40%)\n"
+                f"- **Passing Grade:** {grade} ({points} grade points)\n\n"
+                f"Scoring below **{pass_marks}** → **Grade F** (Fail / Backlog)\n\n"
+                "**At Indus University:**\n"
+                "- 100-mark subjects (theory only): minimum **40 marks**\n"
+                "- 200-mark subjects (theory + practical): minimum **80 marks**"
+            )
+
+        # Generic overview of all passing thresholds
+        return (
+            "**Passing Marks — Indus University (UG Programs)**\n\n"
+            "**Theory-only subjects (100 marks total):**\n"
+            "- CIE (Internal): 60 marks + ESE (Exam): 40 marks = **100 total**\n"
+            "- **Minimum to pass: 40 out of 100 (40%)**\n"
+            "- Passing Grade: **P** (40–44 marks, 4 grade points)\n\n"
+            "**Theory + Practical subjects (200 marks total):**\n"
+            "- Theory: CIE 60 + ESE 40 = 100 marks\n"
+            "- Practical: CIE 60 + ESE 40 = 100 marks\n"
+            "- **Minimum to pass: 80 out of 200 (40%)**\n"
+            "- Passing Grade: **P** (80–89 marks, 4 grade points)\n\n"
+            "Scoring below the minimum → **Grade F** (Fail / Backlog)\n\n"
+            "Ask about a specific subject, e.g. _'passing marks for AJT'_ or "
+            "_'minimum marks for Operating System'_ for exact details."
         )
 
     # ----------------------------------------------------------------
@@ -1077,6 +1211,79 @@ class ChatbotEngine:
         )
 
     def _handle_unknown(self, msg, ext):
+        """
+        Smart fallback when AI is unavailable and intent is unknown.
+        Tries keyword matching against all knowledge-base topics before
+        giving up with the generic response.
+        """
+        msg_lower = msg.lower()
+
+        # Fee related
+        if any(w in msg_lower for w in ('fee', 'tuition', 'cost', 'pay', 'installment', 'emi')):
+            return self._handle_fee_structure(msg, ext)
+
+        # Attendance related
+        if any(w in msg_lower for w in ('attendance', 'present', 'absent', 'lecture', 'bunk', 'eligible')):
+            return self._handle_attendance_rule(msg, ext)
+
+        # MYSY scholarship
+        if any(w in msg_lower for w in ('mysy', 'scholarship', 'grant')):
+            return self._handle_mysy(msg, ext)
+
+        # Academic calendar / dates
+        if any(w in msg_lower for w in ('exam', 'date', 'schedule', 'calendar', 'holiday', 'vacation', 'term', 'when')):
+            return self._handle_academic_calendar(msg, ext)
+
+        # Grading / CGPA
+        if any(w in msg_lower for w in ('grade', 'cgpa', 'sgpa', 'gpa', 'percentage', 'distinction', 'first class')):
+            return self._handle_grading_system(msg, ext)
+
+        # Passing marks
+        if any(w in msg_lower for w in ('pass', 'passing', 'minimum mark', 'fail', 'backlog', 'clear')):
+            return self._handle_passing_marks(msg, ext)
+
+        # Subjects / syllabus
+        if any(w in msg_lower for w in ('subject', 'syllabus', 'course', 'topic', 'unit', 'credit')):
+            # Try to find a specific subject first
+            keyword = self._extract_subject_query(msg)
+            if keyword:
+                return self._handle_subject_info(msg, ext)
+            sem = ext.get('semester')
+            if sem:
+                return self._handle_semester_subjects(msg, ext)
+            return self._handle_semester_subjects(msg, ext)
+
+        # Study materials
+        if any(w in msg_lower for w in ('note', 'material', 'drive', 'link', 'pdf', 'pyq', 'study material')):
+            return self._handle_study_material(msg, ext)
+
+        # Exam format
+        if any(w in msg_lower for w in ('cie', 'ese', 'internal', 'external', 'exam pattern', 'marking', 'format')):
+            return self._handle_exam_format(msg, ext)
+
+        # Library
+        if any(w in msg_lower for w in ('library', 'book', 'borrow', 'fine', 'overdue')):
+            return self._handle_library(msg, ext)
+
+        # Placement
+        if any(w in msg_lower for w in ('placement', 'job', 'company', 'package', 'salary', 'recruit', 'internship')):
+            return self._handle_placement(msg, ext)
+
+        # Discipline
+        if any(w in msg_lower for w in ('discipline', 'dress', 'mobile', 'hostel', 'ragging', 'penalty', 'rule')):
+            return self._handle_discipline(msg, ext)
+
+        # Re-assessment
+        if any(w in msg_lower for w in ('reassess', 'recheck', 'back paper', 'supplementary', 'supply', 'reappear')):
+            return self._handle_reassessment(msg, ext)
+
+        # Subject keyword lookup as last resort
+        keyword = self._extract_subject_query(msg)
+        if keyword:
+            result = self._handle_subject_info(msg, ext)
+            if 'couldn\'t find' not in result.lower():
+                return result
+
         return UNKNOWN_RESPONSE
 
     # ----------------------------------------------------------------
@@ -1098,6 +1305,12 @@ class ChatbotEngine:
             'course', 'please', 'can', 'you', 'i', 'want', 'need', 'get', 'share',
             'send', 'provide', 'info', 'information', 'on', 'in', 'a', 'an', 'to',
             'my', 'explain', 'details', 'detail', 'drive', 'link', 'google',
+            # passing / grading query words
+            'passing', 'minimum', 'marks', 'mark', 'pass', 'fail', 'score',
+            'how', 'many', 'required', 'needed', 'clear', 'min', 'max',
+            'maximum', 'total', 'out', 'grade', 'grading', 'minimum',
+            'criteria', 'will', 'if', 'with', 'below', 'above', 'under',
+            'least', 'least', 'than', 'more', 'less', 'and', 'or', 'not',
         }
         # 1. Subject code (e.g., CE0317)
         code_match = re.search(r'\b([A-Za-z]{2}\d{3,4}[A-Za-z]?)\b', msg)

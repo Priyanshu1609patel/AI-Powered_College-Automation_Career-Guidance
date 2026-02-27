@@ -19,7 +19,7 @@ RUN pip install --no-cache-dir -r requirements.txt \
 # Download spaCy model used by resume_parser/parser.py
 # Install directly from GitHub releases to avoid spacy download URL resolution issues
 RUN pip install --no-cache-dir \
-    https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl
+    https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1-py3-none-any.whl
 
 # Copy project source (venv/, .env, __pycache__ etc. excluded via .dockerignore)
 COPY . .

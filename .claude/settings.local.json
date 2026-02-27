@@ -37,7 +37,14 @@
       "WebFetch(domain:docs.mistral.ai)",
       "WebFetch(domain:share.google)",
       "WebFetch(domain:www.google.com)",
-      "WebFetch(domain:prismic.io)"
+      "WebFetch(domain:prismic.io)",
+      "Bash(wc:*)",
+      "Bash(tail:*)",
+      "Bash(cd /c/Users/91910/OneDrive/Documents/career_guidance_ai && docker compose up -d 2>&1)",
+      "Bash(cd /c/Users/91910/OneDrive/Documents/career_guidance_ai && docker compose down && docker compose build 2>&1 | tail -8 && docker compose up -d 2>&1)",
+      "Bash(cd /c/Users/91910/OneDrive/Documents/career_guidance_ai && docker compose down 2>&1)",
+      "Bash(cd /c/Users/91910/OneDrive/Documents/career_guidance_ai && docker compose build 2>&1)",
+      "Bash(cd /c/Users/91910/OneDrive/Documents/career_guidance_ai && docker compose down && docker compose build && docker compose up -d 2>&1)"
     ]
   }
 }

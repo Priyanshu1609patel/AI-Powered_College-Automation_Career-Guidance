@@ -283,8 +283,8 @@ class KnowledgeBase:
         for kw in search_terms:
             for sem in self.subjects_list.get('semesters', []):
                 for subj in sem.get('subjects', []):
-                    raw_name = subj.get('subject_name', '')
-                    code = subj.get('subject_code', '').lower()
+                    raw_name = subj.get('subject_name') or ''
+                    code = (subj.get('subject_code') or '').lower()
 
                     # Exact code match
                     if kw == code:
