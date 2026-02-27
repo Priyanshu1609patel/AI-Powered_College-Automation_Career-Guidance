@@ -90,5 +90,30 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     {% block extra_js %}{% endblock %}
+
+    <!-- Animation System (Scroll Reveal + Shiny Card) -->
+    <script>
+    (function () {
+        /* 1. Scroll Reveal – trigger .visible when element enters viewport */
+        var ro = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    ro.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.12 });
+        document.querySelectorAll('.reveal').forEach(function (el) { ro.observe(el); });
+
+        /* 2. Shiny Card – track cursor position as CSS custom properties */
+        document.querySelectorAll('.shine-card').forEach(function (card) {
+            card.addEventListener('mousemove', function (e) {
+                var r = card.getBoundingClientRect();
+                card.style.setProperty('--cx', ((e.clientX - r.left) / r.width  * 100) + '%');
+                card.style.setProperty('--cy', ((e.clientY - r.top)  / r.height * 100) + '%');
+            });
+        });
+    })();
+    </script>
 </body>
 </html>

@@ -198,7 +198,7 @@
 
     <!-- === Auth Card === -->
     <div class="auth-wrapper">
-        <div class="auth-card">
+        <div class="auth-card shine-card">
             <div class="text-center mb-3">
                 <div style="font-size: 2.5rem; color: var(--primary);">
                     <span class="auth-icon-wrap"><i class="bi bi-mortarboard-fill"></i></span>
@@ -375,6 +375,19 @@
             `;
             floatContainer.appendChild(el);
         }
+    </script>
+
+    <!-- Shiny Card animation (register page) -->
+    <script>
+    (function () {
+        document.querySelectorAll('.shine-card').forEach(function (card) {
+            card.addEventListener('mousemove', function (e) {
+                var r = card.getBoundingClientRect();
+                card.style.setProperty('--cx', ((e.clientX - r.left) / r.width  * 100) + '%');
+                card.style.setProperty('--cy', ((e.clientY - r.top)  / r.height * 100) + '%');
+            });
+        });
+    })();
     </script>
 </body>
 </html>

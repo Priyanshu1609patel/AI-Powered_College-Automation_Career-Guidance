@@ -15,7 +15,10 @@
       "Bash(cmd:*)",
       "Bash(powershell -Command:*)",
       "Bash(xcopy:*)",
-      "Bash(ren \"C:\\\\Users\\\\91910\\\\OneDrive\\\\Documents\\\\career_guidance_ai\\\\career_old\" \"Career_Guidance_SubProject\")"
+      "Bash(ren \"C:\\\\Users\\\\91910\\\\OneDrive\\\\Documents\\\\career_guidance_ai\\\\career_old\" \"Career_Guidance_SubProject\")",
+      "WebFetch(domain:share.google)",
+      "WebFetch(domain:www.google.com)",
+      "WebFetch(domain:prismic.io)"
     ]
   }
 }
