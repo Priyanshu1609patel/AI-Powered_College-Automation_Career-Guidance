@@ -34,7 +34,10 @@
       "WebFetch(domain:console.mistral.ai)",
       "WebSearch",
       "WebFetch(domain:ai.google.dev)",
-      "WebFetch(domain:docs.mistral.ai)"
+      "WebFetch(domain:docs.mistral.ai)",
+      "WebFetch(domain:share.google)",
+      "WebFetch(domain:www.google.com)",
+      "WebFetch(domain:prismic.io)"
     ]
   }
 }

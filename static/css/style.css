@@ -700,6 +700,90 @@ body {
 .notice-badge-urgent { background: #ff7675; color: #fff; }
 .notice-badge-general { background: #74b9ff; color: #fff; }
 
+/* ============================================================
+   4 ANIMATIONS — inspired by Prismic CSS Animation Examples
+   ============================================================ */
+
+/* 1. SCROLL REVEAL — fade-up on viewport entry
+   Source: Text Animations / scroll-triggered fade patterns */
+.reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+.reveal-d1 { transition-delay: 0.1s; }
+.reveal-d2 { transition-delay: 0.2s; }
+.reveal-d3 { transition-delay: 0.3s; }
+.reveal-d4 { transition-delay: 0.4s; }
+
+/* 2. SHINY CARD HOVER — radial gradient sheen follows cursor
+   Source: Card Animations — shiny tile hover with mask-image/gradients */
+.shine-card {
+    position: relative;
+    overflow: hidden;
+}
+.shine-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        circle at var(--cx, 50%) var(--cy, 50%),
+        rgba(255, 255, 255, 0.22) 0%,
+        transparent 60%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    border-radius: inherit;
+    z-index: 1;
+}
+.shine-card:hover::after {
+    opacity: 1;
+}
+
+/* 3. ANIMATED GRADIENT TEXT — colour-shifting gradient on headings
+   Source: Text Animations — rotation, scaling, sliding combinations */
+.gradient-text-animate {
+    background: linear-gradient(
+        90deg,
+        var(--primary) 0%,
+        var(--secondary) 33%,
+        var(--accent)   66%,
+        var(--primary)  100%
+    );
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: grad-slide 5s linear infinite;
+}
+@keyframes grad-slide {
+    0%   { background-position: 0%   50%; }
+    100% { background-position: 300% 50%; }
+}
+
+/* 4. BUTTON GLOW PULSE — voltage/pulsing glow on CTA buttons
+   Source: Button Animations — voltage/glowing effects using keyframes */
+.btn-glow {
+    animation: glow-pulse 2.5s ease-in-out infinite;
+}
+@keyframes glow-pulse {
+    0%, 100% {
+        box-shadow: 0 0 8px  rgba(67, 97, 238, 0.40),
+                    0 4px 14px rgba(67, 97, 238, 0.20);
+    }
+    50% {
+        box-shadow: 0 0 22px rgba(67, 97, 238, 0.75),
+                    0 0 44px rgba(114,  9, 183, 0.30),
+                    0 6px 20px rgba(67, 97, 238, 0.35);
+    }
+}
+
 /* Empty state */
 .empty-state {
     text-align: center;

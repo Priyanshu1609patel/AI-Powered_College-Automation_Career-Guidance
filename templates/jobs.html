@@ -3,7 +3,7 @@
 {% block content %}
 <div class="space-y-6">
     <!-- Header -->
-    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 reveal">
         <div>
             <h1 class="text-2xl sm:text-3xl font-bold text-primary-800">Job Board</h1>
             <p class="text-primary-500 mt-1">Find your next opportunity</p>
@@ -19,7 +19,7 @@
     </div>
 
     <!-- Search Bar -->
-    <div class="bg-white rounded-2xl shadow-sm border border-primary-100 p-4 sm:p-6">
+    <div class="shine-card reveal reveal-d1 bg-white rounded-2xl shadow-sm border border-primary-100 p-4 sm:p-6">
         <form method="GET" class="flex flex-col sm:flex-row gap-3">
             <div class="flex-1 relative">
                 <span class="absolute left-4 top-1/2 -translate-y-1/2 text-primary-400">
@@ -37,7 +37,7 @@
     </div>
 
     <!-- Filters -->
-    <div class="bg-white rounded-2xl shadow-sm border border-primary-100 p-4 sm:p-6">
+    <div class="shine-card reveal reveal-d2 bg-white rounded-2xl shadow-sm border border-primary-100 p-4 sm:p-6">
         <form method="GET" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3">
             <input type="text" name="company" placeholder="Company" value="{{ request.args.get('company', '') }}" list="company-list"
                 class="px-4 py-2.5 border border-primary-200 rounded-lg text-primary-700 text-sm focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500">

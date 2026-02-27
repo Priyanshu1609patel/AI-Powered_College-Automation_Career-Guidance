@@ -4,7 +4,7 @@
 {% block content %}
 <div class="page-wrapper">
     <!-- Welcome Banner -->
-    <div class="p-4 mb-4 rounded-4 text-white" style="background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);">
+    <div class="p-4 mb-4 rounded-4 text-white reveal" style="background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);">
         <div class="row align-items-center">
             <div class="col">
                 <h4 class="fw-bold mb-1">Welcome, {{ session.get('user_name', 'Student') }}!</h4>
@@ -20,10 +20,10 @@
     </div>
 
     <!-- Quick Actions -->
-    <h5 class="section-title">Quick Actions</h5>
+    <h5 class="section-title reveal">Quick Actions</h5>
     <div class="row g-3 mb-4">
         <div class="col-6 col-md-3">
-            <a href="{{ url_for('main.chatbot_page') }}" class="quick-action">
+            <a href="{{ url_for('main.chatbot_page') }}" class="quick-action shine-card reveal reveal-d1">
                 <div class="qa-icon" style="background: var(--primary);">
                     <i class="bi bi-robot"></i>
                 </div>
@@ -34,7 +34,7 @@
             </a>
         </div>
         <div class="col-6 col-md-3">
-            <a href="/Career_Guidance_SubProject/dashboard" target="_blank" class="quick-action">
+            <a href="/Career_Guidance_SubProject/dashboard" target="_blank" class="quick-action shine-card reveal reveal-d2">
                 <div class="qa-icon" style="background: var(--secondary);">
                     <i class="bi bi-compass"></i>
                 </div>
@@ -45,7 +45,7 @@
             </a>
         </div>
         <div class="col-6 col-md-3">
-            <a href="{{ url_for('main.chatbot_page') }}" class="quick-action" onclick="localStorage.setItem('autoMsg','My attendance is ')">
+            <a href="{{ url_for('main.chatbot_page') }}" class="quick-action shine-card reveal reveal-d3" onclick="localStorage.setItem('autoMsg','My attendance is ')">
                 <div class="qa-icon" style="background: var(--success);">
                     <i class="bi bi-calculator"></i>
                 </div>
@@ -56,7 +56,7 @@
             </a>
         </div>
         <div class="col-6 col-md-3">
-            <a href="{{ url_for('main.chatbot_page') }}" class="quick-action" onclick="localStorage.setItem('autoMsg','How to calculate CGPA?')">
+            <a href="{{ url_for('main.chatbot_page') }}" class="quick-action shine-card reveal reveal-d4" onclick="localStorage.setItem('autoMsg','How to calculate CGPA?')">
                 <div class="qa-icon" style="background: var(--accent);">
                     <i class="bi bi-graph-up"></i>
                 </div>
@@ -78,7 +78,7 @@
                     <i class="bi bi-book me-1"></i>
                     Your Semester {{ session.get('semester') }} Subjects
                 </h5>
-                <div class="table-card">
+                <div class="table-card shine-card reveal reveal-d1">
                     <div class="table-responsive">
                         <table class="table table-hover mb-0">
                             <thead>
@@ -135,13 +135,13 @@
         <!-- Right Column -->
         <div class="col-lg-4">
             <!-- Notices -->
-            <div class="mb-4">
+            <div class="mb-4 reveal">
                 <h5 class="section-title">
                     <i class="bi bi-megaphone me-1"></i> Notices
                 </h5>
                 {% if notices %}
                 {% for notice in notices %}
-                <div class="stat-card mb-3">
+                <div class="stat-card shine-card mb-3">
                     <span class="badge notice-badge-{{ notice.notice_type }} mb-2">{{ notice.notice_type|upper }}</span>
                     <h6 class="fw-bold mb-1" style="font-size: 0.9rem;">{{ notice.title }}</h6>
                     <small class="text-muted">{{ notice.created_at.strftime('%d %b %Y') if notice.created_at else '' }}</small>
@@ -156,7 +156,7 @@
             </div>
 
             <!-- Chatbot Tips -->
-            <div class="stat-card">
+            <div class="stat-card shine-card reveal reveal-d1">
                 <h6 class="fw-bold mb-3"><i class="bi bi-lightbulb me-1 text-warning"></i> Try Asking...</h6>
                 <div class="d-flex flex-column gap-2">
                     <small class="text-muted">"What subjects are in semester 5?"</small>
