@@ -42,11 +42,16 @@
                     <small class="text-muted d-block mb-1">Career Path</small>
                     <span class="fw-medium">{{ career.path }}</span>
                 </div>
-                <form method="GET" action="/start_plan/{{ career.id }}">
-                    <button type="submit" class="btn btn-career btn-lg w-100">
+                <div class="d-flex gap-2">
+                    <a href="{{ url_for('recommendations') }}" class="btn btn-career-outline btn-lg flex-fill">
+                        <i class="bi bi-arrow-left me-2"></i>Back
+                    </a>
+                    <a href="{{ url_for('start_plan', career_id=career.id) }}"
+                       class="btn btn-career btn-lg flex-fill"
+                       onclick="return confirm('Start the \'{{ career.title }}\' career plan? Milestones will be created for you to track.')">
                         <i class="bi bi-rocket-takeoff me-2"></i>Start This Career Plan
-                    </button>
-                </form>
+                    </a>
+                </div>
             </div>
         </div>
     </div>

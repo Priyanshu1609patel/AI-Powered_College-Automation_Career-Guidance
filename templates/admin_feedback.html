@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base_career_admin.html' %}
 {% block title %}Feedback Review | Admin | Career Guidance AI{% endblock %}
 {% block content %}
 <div class="container py-4">
@@ -21,7 +21,7 @@
           <td>{{ fb.message }}</td>
           <td>{{ fb.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
           <td>
-            <form method="POST" action="/admin_delete_feedback/{{ fb.id }}" style="display:inline;">
+            <form method="POST" action="{{ url_for('career.admin_delete_feedback', feedback_id=fb.id) }}" style="display:inline;">
               <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete this feedback?');">Delete</button>
             </form>
           </td>

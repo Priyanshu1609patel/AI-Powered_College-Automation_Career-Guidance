@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base_career_admin.html' %}
 {% block title %}Admin Profile | Career Guidance AI{% endblock %}
 {% block content %}
 <div class="container py-5">
@@ -11,7 +11,7 @@
             <i class="bi bi-person-circle" style="font-size: 3rem;"></i>
           </div>
           <h5 class="mb-2">Username: <span class="text-info">{{ admin.username }}</span></h5>
-          <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline-secondary mt-3">Back to Dashboard</a>
+          <a href="{{ url_for('career.admin_dashboard') }}" class="btn btn-outline-secondary mt-3">Back to Dashboard</a>
         </div>
       </div>
     </div>
