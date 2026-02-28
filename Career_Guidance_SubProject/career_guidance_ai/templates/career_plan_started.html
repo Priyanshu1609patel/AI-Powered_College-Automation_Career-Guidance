@@ -3,32 +3,92 @@
 {% block content %}
 <div class="page-wrapper">
     <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <div class="stat-card text-center mb-4">
-                <div class="stat-icon mx-auto mb-3" style="background: var(--success); width: 64px; height: 64px; font-size: 2rem;">
-                    <i class="bi bi-check-circle"></i>
+        <div class="col-lg-7 col-xl-6">
+
+            <!-- ── Success Banner ─────────────────────────────────── -->
+            <div class="stat-card mb-4" style="background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: #fff;">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <div style="width:56px;height:56px;background:rgba(255,255,255,0.2);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;flex-shrink:0;">
+                        <i class="bi bi-rocket-takeoff-fill"></i>
+                    </div>
+                    <div>
+                        <h4 class="fw-bold mb-1" style="color:#fff;">Plan Started!</h4>
+                        <p class="mb-0" style="color:rgba(255,255,255,0.8);font-size:0.9rem;">{{ career.title }}</p>
+                    </div>
                 </div>
-                <h3 class="fw-bold mb-2" style="color: var(--dark);">{{ career.title }} Plan Started!</h3>
-                <p style="color: var(--gray);">{{ career.description }}</p>
+                {% if career.description %}
+                <p class="mb-0" style="color:rgba(255,255,255,0.85);font-size:0.88rem;line-height:1.5;">{{ career.description }}</p>
+                {% endif %}
             </div>
 
+            <!-- ── Milestones Card ────────────────────────────────── -->
             <div class="stat-card">
-                <h5 class="fw-bold mb-3" style="color: var(--dark);"><i class="bi bi-list-check me-2" style="color: var(--primary);"></i>Milestones</h5>
-                <div class="d-flex flex-column gap-2">
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <h5 class="fw-bold mb-0" style="color:var(--dark);">
+                        <i class="bi bi-list-check me-2" style="color:var(--primary);"></i>Your Milestones
+                    </h5>
+                    <span class="badge" style="background:rgba(67,97,238,0.12);color:var(--primary);font-size:0.8rem;padding:6px 12px;border-radius:20px;">
+                        {{ milestones|length }} steps
+                    </span>
+                </div>
+
+                {% if milestones %}
+                <!-- Timeline -->
+                <div class="position-relative" style="padding-left: 2rem;">
+                    <!-- vertical line -->
+                    <div style="position:absolute;left:11px;top:6px;bottom:6px;width:2px;background:rgba(67,97,238,0.15);border-radius:2px;"></div>
+
                     {% for m in milestones %}
-                    <div class="p-3 rounded-3" style="background: rgba(67,97,238,0.04); border-left: 3px solid var(--primary);">
-                        <div class="d-flex align-items-center">
-                            <i class="bi bi-circle me-2" style="color: var(--gray);"></i>
-                            <span class="fw-medium">{{ m.milestone }}</span>
-                            <span class="badge ms-auto" style="background: var(--gray); color: #fff;">{{ m.status }}</span>
+                    {% set is_done = m.status == 'Completed' %}
+                    {% set is_progress = m.status == 'In Progress' %}
+                    <div class="d-flex align-items-start gap-3 mb-3 {% if not loop.last %}pb-3{% endif %}"
+                         style="{% if not loop.last %}border-bottom:1px dashed rgba(67,97,238,0.1);{% endif %}">
+                        <!-- dot -->
+                        <div style="position:absolute;left:4px;margin-top:2px;width:16px;height:16px;border-radius:50%;
+                                    background:{% if is_done %}var(--success){% elif is_progress %}var(--warning){% else %}#dee2e6{% endif %};
+                                    border:2px solid #fff;box-shadow:0 0 0 2px {% if is_done %}var(--success){% elif is_progress %}var(--warning){% else %}#dee2e6{% endif %};
+                                    display:flex;align-items:center;justify-content:center;">
+                        </div>
+                        <!-- content -->
+                        <div class="flex-fill ps-1">
+                            <div class="d-flex align-items-center justify-content-between gap-2 flex-wrap">
+                                <span class="fw-medium" style="color:var(--dark);font-size:0.9rem;">
+                                    {% if is_done %}<s style="color:var(--gray);">{{ m.milestone }}</s>
+                                    {% else %}{{ m.milestone }}{% endif %}
+                                </span>
+                                <span class="badge"
+                                    style="font-size:0.72rem;padding:4px 10px;border-radius:20px;font-weight:600;
+                                           background:{% if is_done %}rgba(6,214,160,0.15){% elif is_progress %}rgba(255,209,102,0.2){% else %}rgba(108,117,125,0.12){% endif %};
+                                           color:{% if is_done %}var(--success){% elif is_progress %}#d68910{% else %}var(--gray){% endif %};">
+                                    {% if is_done %}<i class="bi bi-check-circle-fill me-1"></i>{% elif is_progress %}<i class="bi bi-play-circle-fill me-1"></i>{% else %}<i class="bi bi-circle me-1"></i>{% endif %}
+                                    {{ m.status }}
+                                </span>
+                            </div>
+                            {% if m.note %}
+                            <small class="text-muted d-block mt-1" style="font-size:0.78rem;">{{ m.note }}</small>
+                            {% endif %}
                         </div>
                     </div>
                     {% endfor %}
                 </div>
-                <a href="{{ url_for('track_progress') }}" class="btn btn-career w-100 mt-3">
-                    <i class="bi bi-graph-up-arrow me-2"></i>Go to Progress Tracker
-                </a>
+                {% else %}
+                <div class="text-center py-3" style="color:var(--gray);">
+                    <i class="bi bi-hourglass-split d-block mb-2" style="font-size:2rem;opacity:0.4;"></i>
+                    <p class="mb-0" style="font-size:0.9rem;">Milestones are being set up…</p>
+                </div>
+                {% endif %}
+
+                <!-- ── Action Buttons ─────────────────────────────── -->
+                <div class="d-flex gap-2 mt-4">
+                    <a href="{{ url_for('track_progress') }}" class="btn btn-career flex-fill">
+                        <i class="bi bi-graph-up-arrow me-2"></i>Track Progress
+                    </a>
+                    <a href="{{ url_for('recommendations') }}" class="btn btn-career-outline flex-fill">
+                        <i class="bi bi-stars me-2"></i>More Careers
+                    </a>
+                </div>
             </div>
+
         </div>
     </div>
 </div>

@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base_career_admin.html' %}
 {% block title %}Job Management | Admin | CareerAI{% endblock %}
 {% block content %}
 <div class="space-y-6">
@@ -8,7 +8,7 @@
             <h1 class="text-2xl sm:text-3xl font-bold text-primary-800">Job Management</h1>
             <p class="text-primary-500 mt-1">Add and manage job listings</p>
         </div>
-        <a href="{{ url_for('admin_dashboard') }}" class="px-4 py-2 border border-primary-200 text-primary-700 rounded-lg hover:bg-primary-50 transition-colors text-sm font-medium">
+        <a href="{{ url_for('career.admin_dashboard') }}" class="px-4 py-2 border border-primary-200 text-primary-700 rounded-lg hover:bg-primary-50 transition-colors text-sm font-medium">
             <i class="bi bi-arrow-left mr-1"></i> Dashboard
         </a>
     </div>
@@ -58,7 +58,7 @@
         <div class="divide-y divide-primary-100">
             {% for job in jobs %}
             <div class="p-6 hover:bg-primary-50/50 transition-colors">
-                <form method="POST" action="/admin_edit_job/{{ job.id }}">
+                <form method="POST" action="{{ url_for('career.admin_edit_job', job_id=job.id) }}">
                     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
                         <input type="text" name="title" value="{{ job.title }}" required placeholder="Title"
                             class="px-3 py-2 border border-primary-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500">
@@ -80,7 +80,7 @@
                             Save Changes
                         </button>
                 </form>
-                <form method="POST" action="/admin_delete_job/{{ job.id }}" class="inline">
+                <form method="POST" action="{{ url_for('career.admin_delete_job', job_id=job.id) }}" class="inline">
                     <button type="submit" onclick="return confirm('Delete this job?');"
                         class="px-4 py-1.5 bg-rose-100 text-rose-700 text-sm font-medium rounded-lg hover:bg-rose-200 transition-colors">
                         Delete

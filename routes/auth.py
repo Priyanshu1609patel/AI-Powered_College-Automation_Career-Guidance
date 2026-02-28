@@ -71,7 +71,7 @@ def login():
                 session['admin_username'] = username
                 session.permanent = True
                 flash('Admin login successful!', 'success')
-                return redirect('/career/admin_dashboard')
+                return redirect(url_for('career.admin_dashboard'))
             else:
                 flash('Invalid admin credentials.', 'danger')
         else:

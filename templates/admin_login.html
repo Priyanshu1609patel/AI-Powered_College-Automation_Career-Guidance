@@ -84,7 +84,7 @@
                 </div>
 
                 <div class="text-right">
-                    <a href="{{ url_for('admin_forgot_password') }}" class="text-sm font-medium text-accent-300 hover:text-accent-200 transition-colors">
+                    <a href="{{ url_for('career.admin_forgot_password') }}" class="text-sm font-medium text-accent-300 hover:text-accent-200 transition-colors">
                         Forgot password?
                     </a>
                 </div>
@@ -97,7 +97,7 @@
             </form>
 
             <div class="mt-6 pt-6 border-t border-white/10 space-y-3">
-                <a href="{{ url_for('login') }}"
+                <a href="{{ url_for('auth.login') }}"
                     class="flex items-center justify-center w-full py-3 px-4 border border-white/20 text-white font-medium rounded-xl hover:bg-white/10 transition-colors">
                     <i class="bi bi-person mr-2"></i>
                     User Login
@@ -105,7 +105,7 @@
 
                 <p class="text-center text-sm text-primary-400">
                     Need admin access?
-                    <a href="{{ url_for('admin_register') }}" class="font-medium text-accent-300 hover:text-accent-200 transition-colors">
+                    <a href="{{ url_for('career.admin_register') }}" class="font-medium text-accent-300 hover:text-accent-200 transition-colors">
                         Register
                     </a>
                 </p>

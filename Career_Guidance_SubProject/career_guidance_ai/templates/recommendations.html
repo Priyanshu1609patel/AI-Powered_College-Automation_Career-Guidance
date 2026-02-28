@@ -122,16 +122,34 @@
                 </div>
                 {% endif %}
 
-                <div class="d-flex flex-wrap gap-2">
-                    <a href="{{ url_for('track_progress') }}" class="btn btn-career-outline btn-sm">
-                        <i class="bi bi-compass me-1"></i>View Path
+                <div class="d-flex flex-wrap gap-2 mt-3">
+                    <!-- Add to Career Path -->
+                    <a href="{{ url_for('start_plan', career_id=career.id) }}"
+                       class="btn btn-sm fw-semibold"
+                       style="background: var(--primary); color: #fff; border-radius: 10px;"
+                       onclick="return confirm('Start the {{ career.title }} career plan? This will create milestones for you to track.')">
+                        <i class="bi bi-plus-circle me-1"></i>Add to Career Path
                     </a>
+
+                    <!-- View Career Path Details -->
+                    <a href="{{ url_for('career_path', career_id=career.id) }}" class="btn btn-career-outline btn-sm">
+                        <i class="bi bi-map me-1"></i>View Path Details
+                    </a>
+
+                    <!-- Save Career -->
                     <form method="POST" action="{{ url_for('save_career', career_id=career.id) }}" class="d-inline">
                         <button type="submit" class="btn btn-sm"
                                 style="background: var(--success); color: #fff; border-radius: 10px; font-weight: 600;">
                             <i class="bi bi-bookmark-plus me-1"></i>Save
                         </button>
                     </form>
+
+                    <!-- Track My Progress -->
+                    <a href="{{ url_for('track_progress') }}" class="btn btn-career-outline btn-sm">
+                        <i class="bi bi-bar-chart-steps me-1"></i>Track Progress
+                    </a>
+
+                    <!-- Interview Prep -->
                     <a href="{{ url_for('interview_prep', career_title=career.title|replace(' ', '-')) }}" class="btn btn-career-outline btn-sm">
                         <i class="bi bi-question-circle me-1"></i>Interview Prep
                     </a>

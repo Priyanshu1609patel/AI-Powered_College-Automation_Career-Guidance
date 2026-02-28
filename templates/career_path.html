@@ -11,9 +11,9 @@
       <p><b>Salary Range:</b> {{ career.salary_range }}</p>
       <p><b>Recommended Courses:</b> {{ career.courses }}</p>
       <p><b>Career Path:</b> {{ career.path }}</p>
-      <form method="GET" action="/start_plan/{{ career.id }}">
-        <button type="submit" class="btn btn-primary mt-2">Start This Career Plan</button>
-      </form>
+      <a href="{{ url_for('start_plan', career_id=career.id) }}" class="btn btn-primary mt-2">
+        <i class="bi bi-rocket-takeoff me-1"></i>Start This Career Plan
+      </a>
     </div>
   </div>
 </div>

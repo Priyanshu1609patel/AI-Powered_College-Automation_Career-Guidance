@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base_career_admin.html' %}
 {% block content %}
 <div class="container py-4">
   <h2 class="mb-4">Manage Mentors</h2>
@@ -15,7 +15,7 @@
   <div class="card mb-4">
     <div class="card-header">Add New Mentor</div>
     <div class="card-body">
-      <form method="post" action="{{ url_for('admin_add_mentor') }}" enctype="multipart/form-data">
+      <form method="post" action="{{ url_for('career.admin_add_mentor') }}" enctype="multipart/form-data">
         <div class="row g-3">
           <div class="col-md-4">
             <input type="text" name="name" class="form-control" placeholder="Name" required>
@@ -58,21 +58,21 @@
         <tbody>
           {% for mentor in mentors %}
           <tr>
-            <form method="post" action="{{ url_for('admin_edit_mentor', mentor_id=mentor.id) }}" enctype="multipart/form-data">
+            <form method="post" action="{{ url_for('career.admin_edit_mentor', mentor_id=mentor.id) }}" enctype="multipart/form-data">
               <td><input type="text" name="name" value="{{ mentor.name }}" class="form-control form-control-sm" required></td>
               <td><input type="text" name="expertise" value="{{ mentor.expertise }}" class="form-control form-control-sm" required></td>
               <td><input type="text" name="contact" value="{{ mentor.contact }}" class="form-control form-control-sm" required></td>
               <td><textarea name="bio" class="form-control form-control-sm" rows="1" required>{{ mentor.bio }}</textarea></td>
               <td>
                 {% if mentor.profile_pic %}
-                  <img src="{{ url_for('uploaded_file', filename=mentor.profile_pic) }}" alt="Profile" width="40" height="40" class="rounded-circle mb-1">
+                  <img src="{{ url_for('career.uploaded_file', filename=mentor.profile_pic) }}" alt="Profile" width="40" height="40" class="rounded-circle mb-1">
                 {% endif %}
                 <input type="file" name="profile_pic" class="form-control form-control-sm">
               </td>
               <td class="d-flex gap-1">
                 <button type="submit" class="btn btn-primary btn-sm">Save</button>
             </form>
-            <form method="post" action="{{ url_for('admin_delete_mentor', mentor_id=mentor.id) }}" onsubmit="return confirm('Delete this mentor?');">
+            <form method="post" action="{{ url_for('career.admin_delete_mentor', mentor_id=mentor.id) }}" onsubmit="return confirm('Delete this mentor?');">
                 <button type="submit" class="btn btn-danger btn-sm">Delete</button>
             </form>
               </td>
